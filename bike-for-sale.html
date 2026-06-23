@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bikes for Sale — Velotakas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@400;500;600;700;800&family=DM+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Lenis smooth scroll */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-stopped { overflow: hidden; }
+
+    body {
+      background: #f4fcfd;
+      color: #111827;
+      font-family: "Google Sans", "Product Sans", "Poppins", system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ===== custom cursor (spinning bike wheel on hover) ===== */
+    @media (hover: hover) and (pointer: fine) {
+      body, a, button, .menu-toggle, .feature, .img-layer { cursor: none; }
+    }
+    @media (hover: none) { .cursor { display: none; } }
+    .cursor {
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 2147483647;
+      will-change: transform;
+    }
+    .cursor-dot {
+      position: absolute; top: 50%; left: 50%;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #16bdcc;
+      transform: translate(-50%, -50%);
+      transition: opacity .2s ease;
+    }
+    .cursor-wheel {
+      position: absolute; top: 50%; left: 50%;
+      width: 48px; height: 48px;
+      transform: translate(-50%, -50%);
+      opacity: 0; transition: opacity .2s ease;
+    }
+    .cursor.spin .cursor-dot { opacity: 0; }
+    .cursor.spin .cursor-wheel { opacity: 1; animation: wheelspin .7s linear infinite; }
+    @keyframes wheelspin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+    /* ===== page transition: 3 rounded cyan blocks ===== */
+    .page-transition {
+      position: fixed; inset: 0; z-index: 9999;
+      pointer-events: none; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .t-block {
+      flex: 1;
+      box-shadow: 0 0 0 1px #16bdcc;  /* close sub-pixel seam between blocks */
+      width: 160vw;
+      margin-left: -30vw;            /* rounded ends hang off-screen when covering */
+      background: #16bdcc;
+      border-radius: 999px;          /* full round ends */
+      transform: translateX(0);      /* fully covers on load, then opens */
+      will-change: transform;
+    }
+
+    /* ===== news ticker at the very top ===== */
+    .ticker {
+      position: sticky; top: 6px; z-index: 30;
+      height: 30px; margin: 6px 12px 8px;
+      overflow: hidden; white-space: nowrap;
+      background: #f4f5f7; color: #00704a;
+      border: 1px solid #e5e7eb; border-radius: 999px;
+    }
+    .ticker-track { display: inline-flex; height: 30px; align-items: center; animation: ticker 32s linear infinite; }
+    .ticker:hover .ticker-track { animation-play-state: paused; }
+    .ticker-seg { flex: none; white-space: nowrap; font-size: .7rem; font-weight: 600; letter-spacing: .2px; }
+    .ticker-badges {
+      position: absolute; left: 0; top: 0; height: 30px; z-index: 2;
+      display: inline-flex; align-items: stretch;
+      box-shadow: 9px 0 12px -6px rgba(0,0,0,.18);
+    }
+    .ticker-badge {
+      display: inline-flex; align-items: center; gap: 7px; padding: 0 16px;
+      background: #f4f5f7; text-decoration: none; white-space: nowrap;
+      font-size: .7rem; font-weight: 700;
+    }
+    .ticker-badge + .ticker-badge { border-left: 1px solid #e3e6ea; }
+    .ticker-badge .tb-name { color: #00aa6c; font-weight: 800; }
+    .ticker-badge .tb-bubbles { color: #00aa6c; font-size: .58rem; letter-spacing: 1.5px; }
+    .ticker-badge .tb-count { color: #5b6573; font-weight: 600; }
+    .ticker-badge .g-name { font-weight: 800; }
+    .ticker-badge .g-stars { color: #fbbc04; font-size: .62rem; letter-spacing: 1px; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ===== sticky floating yellow header ===== */
+       .site-top {
+      position: sticky; top: 42px; z-index: 10;   /* floats below the 30px ticker */
+      margin: 18px 6vw 0;
+      background: #ffffff;
+      border: 1px solid #eef0f2;
+      border-radius: 22px;
+      box-shadow: 0 12px 34px rgba(0,0,0,.12);
+      color: #111827;
+    }
+    .util-bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+      padding: 7px 26px; font-size: .72rem; font-weight: 600; color: #5b6573;
+      border-bottom: 1px solid #eef0f2; flex-wrap: wrap;
+    }
+    .util-bar a { color: inherit; text-decoration: none; }
+    .util-bar a:hover { color: #16bdcc; }
+    .util-bar .flags { display: inline-flex; gap: 8px; }
+    .util-bar .flags a { font-size: 1.05rem; }
+    /* inline top navigation */
+    .topnav { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
+    .topnav .nav-link {
+      background: none; border: 0; cursor: pointer; font: inherit;
+      color: #111827; font-weight: 600; font-size: .95rem; text-decoration: none;
+      padding: 6px 0; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px;
+      transition: color .2s;
+    }
+    .topnav .nav-link:hover { color: #16bdcc; }
+    .topnav .util-link { font-size: .82rem; font-weight: 600; color: #5b6573; text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; }
+    .topnav .util-link:hover { color: #16bdcc; }
+    .topnav .ta-rating { white-space: nowrap; }
+    .topnav .flags { display: inline-flex; gap: 6px; }
+    .topnav .flags a { font-size: 1rem; }
+    .nav-drop { align-self: stretch; display: flex; align-items: center; }
+    /* full-width mega menu — links left, big preview image right */
+    .nav-menu {
+      position: absolute; left: 16px; right: 16px; top: 100%;
+      margin-top: 8px;
+      background: #fff; border: 1px solid #eef0f2; border-radius: 24px;
+      box-shadow: 0 24px 50px rgba(0,0,0,.16);
+      padding: 60px 32px;
+      display: grid; grid-template-columns: 1fr 1.5fr; gap: 16px 40px;
+      opacity: 0; visibility: hidden;            /* GSAP controls the pop-out */
+      z-index: 55;
+    }
+    .nav-menu::before {                          /* invisible hover bridge to the header */
+      content: ""; position: absolute; top: -14px; left: 0; right: 0; height: 14px;
+    }
+    .mm-head { grid-column: 1; grid-row: 1; align-self: start; font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(3rem, 5vw, 4.6rem); line-height: 1; color: #111827; }
+    .mm-head span { color: #16bdcc; }
+    .mm-links { grid-column: 1; grid-row: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 2px 24px; align-self: center; }
+    .mm-links a {
+      padding: 6px 10px; border-radius: 8px;
+      color: #2b3a44; text-decoration: none; font-size: .98rem; font-weight: 600; white-space: nowrap;
+      transition: color .2s ease, padding-left .2s ease;
+    }
+    .mm-links a:hover { color: #16bdcc; padding-left: 14px; }
+    .mm-preview { grid-column: 2; grid-row: 1 / 4; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 28px rgba(0,0,0,.14); }
+    .mm-foot { grid-column: 1; grid-row: 3; align-self: end; font-family: "Caveat", cursive; font-weight: 700; font-size: 2.5rem; line-height: 1; color: #111827; }
+    .mm-foot span { color: #16bdcc; }
+    .mm-preview-img {
+      width: 100%; height: 100%; min-height: 560px;
+      background-size: cover; background-position: center;
+    }
+    .topbar { background: transparent; font-size: .8rem; }
+    .topbar .inner {
+      width: 100%; margin: 0; padding: 10px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px 20px;
+    }
+    .topbar .lang a { opacity: .85; margin-right: 10px; }
+    .topbar .lang a:hover { opacity: 1; }
+    .topbar .social { display: flex; gap: 14px; }
+    .topbar .social a:hover { text-decoration: underline; }
+
+    /* tagline: fixed, rotated 90deg, stuck in the right corner */
+    .vertical-tag {
+      position: fixed;
+      bottom: 50vh;                 /* middle of the screen */
+      right: 12px;
+      transform-origin: bottom right;
+      transform: rotate(-90deg);
+      white-space: nowrap;
+      font-size: 0.78rem;           /* 2x smaller */
+      font-weight: 700;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: #ffffff; mix-blend-mode: difference;   /* adapts to whatever is behind */
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .site-header { background: transparent; }
+    .site-header .inner {
+      width: 100%; margin: 0; padding: 0 26px; height: 70px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .header-side { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+    /* TripAdvisor rating (small, to the side) */
+    .ta-rating {
+      display: inline-flex; align-items: center; gap: 6px;
+      text-decoration: none; font-size: .68rem; font-weight: 600;
+      color: #111827;
+    }
+    .ta-rating .ta-name { font-weight: 800; color: #00aa6c; letter-spacing: .2px; }
+    .ta-rating .ta-bubbles { color: #00aa6c; font-size: .58rem; letter-spacing: 1.5px; }
+    .ta-rating .ta-count { color: #5b6573; }
+    .ta-rating:hover .ta-count { color: #111827; }
+
+    /* header address (small, to the side) */
+    .header-addr {
+      display: inline-flex; align-items: center; gap: 5px;
+      text-decoration: none; font-size: .68rem; font-weight: 600; color: #5b6573;
+    }
+    .header-addr:hover { color: #111827; }
+
+    /* logo on the left */
+    .site-header .brand {
+      display: inline-flex; align-items: center; flex: none; position: relative;
+    }
+    .years-badge { position: absolute; left: -16px; bottom: -2px; z-index: 2; transform: rotate(-9deg); font-family: "Caveat", cursive; font-weight: 700; font-size: 1.5rem; color: #111827; line-height: 1; white-space: nowrap; text-decoration: none; }
+    .site-header .brand img { height: 44px; width: auto; display: block; }
+    .site-header .nav {
+      display: flex; flex: 1; flex-wrap: wrap; align-items: center;
+      gap: 18px; list-style: none; margin: 0; padding: 0;
+      font-size: 0.9rem; font-weight: 600;
+    }
+    .site-header .nav-left  { justify-content: flex-start; }
+    .site-header .nav-right { justify-content: flex-end; }
+    .site-header .nav a { color: inherit; }
+
+    /* ===== morphing menu: rounded button that expands into the panel ===== */
+    .menu {
+      position: fixed;
+      top: 76px; right: 6vw;        /* centered with the logo (40px ticker + header offset) */
+      width: 128px; height: 48px;   /* collapsed pill */
+      background: #111827; color: #fff;
+      border-radius: 999px;
+      overflow: hidden;
+      z-index: 30;
+      box-shadow: 0 12px 30px rgba(0,0,0,.28);
+      transition: width .55s cubic-bezier(.86,0,.07,1),
+                  height .55s cubic-bezier(.86,0,.07,1),
+                  top .55s cubic-bezier(.86,0,.07,1),
+                  right .55s cubic-bezier(.86,0,.07,1),
+                  border-radius .5s ease;
+    }
+    .menu.open {                     /* expanded panel, inset from edges, still rounded */
+      top: 16px; right: 16px;
+      width: 30vw; height: calc(100vh - 32px);
+      border-radius: 26px;
+    }
+    .menu-toggle {
+      position: absolute; top: 0; right: 0;
+      width: 128px; height: 48px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: none; border: 0; color: #fff; cursor: pointer;
+      font: inherit; font-weight: 700; font-size: .85rem;
+      text-transform: uppercase; letter-spacing: .16em; z-index: 2;
+    }
+    .menu-toggle .burger { display: inline-flex; flex-direction: column; gap: 4px; }
+    .menu-toggle .burger span { width: 20px; height: 2px; background: #fff; display: block; transition: transform .4s, opacity .3s; }
+    .menu.open .menu-toggle .burger span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .menu.open .menu-toggle .burger span:nth-child(2) { opacity: 0; }
+    .menu.open .menu-toggle .burger span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .menu.open .menu-toggle .label-open { display: none; }
+    /* open state: white circular X centered on the panel */
+    .menu.open .menu-toggle {
+      top: 22px; left: 50%; right: auto;
+      transform: translateX(-50%);
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(0,0,0,.28);
+    }
+    .menu.open .menu-toggle .burger span { background: #111827; }
+
+    .menu-links {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      padding: 13vh 4vw 6vh;
+      opacity: 0; pointer-events: none;
+      overflow-y: auto;
+      transition: opacity .25s ease;
+    }
+    .menu.open .menu-links { opacity: 1; pointer-events: auto; transition-delay: .28s; }
+    .menu-links .group-label {
+      font-size: .7rem; letter-spacing: .25em; text-transform: uppercase;
+      color: #8a8275; margin: 22px 0 8px;
+    }
+    .menu-links a {
+      display: block; color: #fff; text-decoration: none;
+      font-size: clamp(1.3rem, 2.1vw, 2rem); font-weight: 700;
+      padding: 8px 0; white-space: nowrap;
+      transition: color .2s, padding-left .2s;
+    }
+    .menu-links a:hover { color: #16bdcc; padding-left: 10px; }
+
+    /* Bike rent dropdown */
+    .menu-drop-toggle {
+      display: flex; align-items: center; gap: 10px;
+      width: 100%; background: none; border: 0; cursor: pointer;
+      color: #fff; font-family: inherit; font-weight: 700; text-align: left;
+      font-size: clamp(1.3rem, 2.1vw, 2rem);
+      padding: 8px 0;
+      transition: color .2s, padding-left .2s;
+    }
+    .menu-drop-toggle:hover { color: #16bdcc; padding-left: 10px; }
+    .menu-drop-toggle .caret { font-size: .6em; transition: transform .3s ease; }
+    .menu-dropdown.open .menu-drop-toggle .caret { transform: rotate(180deg); }
+    .menu-sub {
+      overflow: hidden; max-height: 0;
+      transition: max-height .45s ease;
+      border-left: 1px solid rgba(255,255,255,.15);
+      margin: 2px 0 2px 3px;
+    }
+    .menu-dropdown.open .menu-sub { max-height: 640px; }
+    .menu-sub a {
+      font-size: clamp(.95rem, 1.4vw, 1.15rem); font-weight: 600;
+      color: #cdd8de; padding: 6px 0 6px 18px;
+    }
+    .menu-sub a:hover { color: #16bdcc; padding-left: 26px; }
+    .menu-extra { margin-top: 26px; display: flex; gap: 16px; }
+    .menu-extra a {
+      font-size: 1.8rem; line-height: 1;
+      filter: grayscale(.3); opacity: .85;
+      transition: filter .2s, opacity .2s, transform .2s;
+    }
+    .menu-extra a:hover { filter: grayscale(0); opacity: 1; transform: translateY(-2px); }
+
+    .menu-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,.4);
+      opacity: 0; pointer-events: none; transition: opacity .4s ease; z-index: 28;
+    }
+    .menu-backdrop.open { opacity: 1; pointer-events: auto; }
+
+    /* hover preview image — fills the area left of the panel, rounded & inset */
+    .menu-preview {
+      position: fixed;
+      top: 16px; left: 16px;
+      right: calc(30vw + 24px);     /* stops just before the menu panel */
+      height: calc(100vh - 32px);
+      border-radius: 26px;
+      background-size: cover; background-position: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,.25);
+      opacity: 0; pointer-events: none;
+      transform-origin: center; will-change: transform, opacity;
+      z-index: 29;
+    }
+    @media (max-width: 820px) { .menu-preview { right: calc(82vw + 24px); } }
+
+    @media (max-width: 820px) { .menu.open { width: 82vw; } }
+
+    .img-layer {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      will-change: clip-path, opacity;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    .img-layer.top { opacity: 0; }
+    /* quote under the collage — changes per heading */
+    .side-quote {
+      margin: 0;
+      background: #f4f5f7;
+      border-radius: 18px;
+      padding: 20px 22px;
+      color: #2b3a44;
+    }
+    .side-quote .stars { color: #00aa6c; letter-spacing: 2px; font-size: .8rem; margin-bottom: 8px; }
+    .side-quote p { margin: 0; font-size: .95rem; line-height: 1.55; }
+    .side-quote cite { display: block; margin-top: 10px; font-style: normal; font-weight: 700; font-size: .8rem; color: #5b6573; }
+    .cover-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .cover-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,.1) 60%, rgba(0,0,0,.25));
+    }
+
+    /* ===== left column ===== */
+    .content { padding-right: 50vw; }   /* keep everything clear of the right card */
+
+    /* hero lead — full-screen, centered headline only */
+    /* two-card hero: Find Tours / Rent a Bike */
+    .hero-split {
+      display: flex; gap: 16px;
+      margin: 16px 6vw;
+    }
+    .hero-card {
+      position: relative; flex: 1;
+      min-height: 60vh;
+      border-radius: 26px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; color: #fff;
+    }
+    .hero-card .hc-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform .6s ease;
+    }
+    .hero-card:hover .hc-bg { transform: scale(1.06); }
+    .hero-card::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.3), rgba(0,0,0,.55));
+      transition: background .3s ease;
+    }
+    .hero-card:hover::after { background: linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.45)); }
+    .hc-inner { position: relative; z-index: 1; text-align: center; padding: 0 6vw; }
+    .hc-inner h2 {
+      font-size: clamp(2rem, 4.5vw, 4rem); font-weight: 800; letter-spacing: -1px; line-height: 1;
+    }
+    .hc-cta {
+      display: inline-block; margin-top: 18px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .85rem;
+      border-bottom: 2px solid #16bdcc; padding-bottom: 4px;
+    }
+    /* masked pop-up reveal (same as the tours headline) */
+    .hc-inner .reveal-line { overflow: hidden; padding-bottom: .12em; }
+    .hc-inner .reveal-line > span {
+      display: block; transform: translateY(110%);
+      transition: transform .8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hero-split.revealed .reveal-line > span { transform: translateY(0); }
+    .hero-split.revealed .hero-card:nth-child(1) h2.reveal-line > span     { transition-delay: .05s; }
+    .hero-split.revealed .hero-card:nth-child(1) .hc-cta.reveal-line > span { transition-delay: .18s; }
+    .hero-split.revealed .hero-card:nth-child(2) h2.reveal-line > span     { transition-delay: .17s; }
+    .hero-split.revealed .hero-card:nth-child(2) .hc-cta.reveal-line > span { transition-delay: .30s; }
+    @media (max-width: 820px) { .hero-split { flex-direction: column; } .hero-card { min-height: 44vh; } }
+
+    .hero-lead {
+      position: relative;
+      min-height: 56vh;
+      margin: 16px 6vw;             /* side margin matches the header (6vw) */
+      border-radius: 26px;          /* rounded corners */
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8vh 8vw;
+      background: #0e7c8f url("media/sec1.jpg") center / cover no-repeat;
+      color: #fff;
+    }
+    .hero-lead::before {            /* dark overlay so the white text reads */
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.5));
+    }
+    .cover-content { position: relative; z-index: 1; max-width: 1000px; }
+    .cover-content h1 {
+      font-size: clamp(2.6rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -1.5px;
+      color: #ffffff;               /* white, same size */
+    }
+    .cover-content .cover-sub {
+      margin-top: 22px;
+      font-size: clamp(.95rem, 1.3vw, 1.15rem);
+      line-height: 1.6;
+      max-width: 50ch;
+      color: #6b7280;
+    }
+    /* menu-style masked "pop up" reveal */
+    .cover-content .reveal-line { overflow: hidden; padding-bottom: .12em; }
+    .cover-content .reveal-line > span {
+      display: block;
+      transform: translateY(110%);
+      transition: transform .8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cover-content.revealed .reveal-line > span { transform: translateY(0); }
+    .cover-content.revealed h1.reveal-line > span        { transition-delay: .15s; }
+    .cover-content.revealed .cover-sub.reveal-line > span { transition-delay: .32s; }
+
+    /* scroll-down cue */
+    .scroll-cue {
+      position: fixed;
+      bottom: 28px; left: 6vw;      /* left side, matching the content padding */
+      z-index: 15;
+      color: #111827;
+      font-size: 5.7rem;            /* 3x bigger */
+      line-height: 1;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity .4s ease;
+      animation: bob 1.6s ease-in-out infinite;
+    }
+    .scroll-cue.hide { opacity: 0; }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(9px); }
+    }
+
+    /* tours list (left) */
+    .feature {
+      min-height: 66vh;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding-left: 6vw;
+    }
+    .feature h2 {
+      font-size: clamp(1.5rem, 3.4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: .5px;
+      color: #b6bdc7;
+      transition: color .4s ease;
+    }
+    .feature.active h2 { color: #111827; }
+    .feature .num {
+      display: block;
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #cbd2db;
+      margin-bottom: 14px;
+      transition: color .4s ease;
+    }
+    .feature.active .num { color: #111827; }
+    .feature .sub {
+      display: block;
+      margin-top: 12px;
+      font-size: clamp(1rem, 1.7vw, 1.5rem);
+      font-weight: 600;
+      font-style: italic;
+      color: #cbd2db;
+      transition: color .4s ease;
+    }
+    .feature.active .sub { color: #5b6573; }
+    .feat-desc { max-width: 46ch; margin-top: 18px; color: #6b7280; line-height: 1.6; font-size: 1.05rem; }
+    .feat-actions { display: flex; gap: 22px; align-items: center; margin-top: 26px; flex-wrap: wrap; }
+
+    /* buttons */
+    .btn-fill {
+      display: inline-block; background: #16bdcc; color: #06343a; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .05em; font-size: .82rem;
+      padding: 13px 26px; border-radius: 999px;
+    }
+    .btn-fill:hover { background: #11a3b1; }
+    .btn-ghost {
+      display: inline-block; border: 2px solid #fff; color: #fff; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .05em; font-size: .82rem;
+      padding: 11px 24px; border-radius: 999px;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,.16); }
+    .btn-line { color: #111827; font-weight: 700; border-bottom: 2px solid #16bdcc; padding-bottom: 2px; }
+    .btn-line:hover { color: #16bdcc; }
+
+    /* hero subtitle + actions */
+    .hero-lead .cover-sub { color: rgba(255,255,255,.92); max-width: 40ch; }
+    .hero-actions { display: flex; gap: 14px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+
+    .headings { padding: 4vh 0 16vh; }
+
+    /* ===== quotes / reviews section ===== */
+    .quotes {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 12vh 6vw;
+    }
+    .quotes h2 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -.5px;
+      margin-bottom: 6vh;
+    }
+    .quotes h2 .ta-name { color: #00aa6c; }
+    .quote-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .quote-list blockquote {
+      margin: 0;
+      background: #f4f5f7;
+      border-radius: 22px;
+      padding: 30px 28px;
+      font-size: 1.02rem;
+      line-height: 1.6;
+      color: #2b3a44;
+    }
+    .quote-list .stars { color: #00aa6c; letter-spacing: 2px; margin-bottom: 16px; font-size: .85rem; }
+    .quote-list cite { display: block; margin-top: 18px; font-style: normal; font-weight: 700; font-size: .85rem; color: #5b6573; }
+    @media (max-width: 900px) { .quote-list { grid-template-columns: 1fr; } }
+
+    /* ===== FAQ ===== */
+    .faq { max-width: 1280px; margin: 0 auto; padding: 12vh 6vw; }
+    .faq-rotator {
+      font-size: clamp(2rem, 6vw, 4.6rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      color: #b6bdc7;               /* gray */
+      margin-bottom: 7vh;
+    }
+    .faq-rotator .rot { display: inline-block; will-change: transform, opacity; }
+    .faq-list { border-top: 1px solid #e5e7eb; }
+    .faq-item { border-bottom: 1px solid #e5e7eb; }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: 0; cursor: pointer;
+      font-family: inherit; color: #111827; font-weight: 700;
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      padding: 26px 0;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .faq-q .ic { color: #16bdcc; font-weight: 400; transition: transform .3s ease; flex: none; }
+    .faq-item.open .faq-q .ic { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+    .faq-item.open .faq-a { max-height: 320px; }
+    .faq-a p { margin: 0; padding: 0 0 28px; max-width: 70ch; color: #5b6573; font-size: 1.05rem; line-height: 1.65; }
+
+    /* ===== city bikes page ===== */
+    .bikes { max-width: 1200px; margin: 0 auto; padding: 4vh 6vw 10vh; }
+    .bikes-head { margin: 2vh 0 5vh; }
+    .bikes-head .eyebrow { font-size: .8rem; letter-spacing: 3px; text-transform: uppercase; color: #16bdcc; font-weight: 700; }
+    .bikes-head h1 { font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: -1.5px; margin: 10px 0; }
+    .bikes-head p { color: #6b7280; font-size: 1.1rem; max-width: 60ch; line-height: 1.6; }
+    .bike {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+      padding: 6vh 0; border-top: 1px solid #e5e7eb;
+    }
+    .bike.reverse .bike-media { order: 2; }
+    .bike-media img { width: 100%; border-radius: 22px; box-shadow: 0 16px 34px rgba(0,0,0,.12); display: block; }
+    .bike-info h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; letter-spacing: -.5px; margin-bottom: 16px; }
+    .bike-info > p { color: #4b5563; line-height: 1.65; margin-bottom: 16px; }
+    .price-table { width: 100%; border-collapse: collapse; margin: 14px 0 18px; }
+    .price-table td { padding: 9px 0; border-bottom: 1px solid #eef0f2; font-size: 1rem; color: #4b5563; }
+    .price-table td:last-child { text-align: right; font-weight: 700; color: #111827; }
+    .note { color: #16bdcc; font-weight: 700; font-size: .95rem; margin: 8px 0 18px; }
+    .bike-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+    .btn-outline {
+      display: inline-block; border: 2px solid #16bdcc; color: #0e7c8f; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .05em; font-size: .82rem;
+      padding: 11px 24px; border-radius: 999px;
+    }
+    .btn-outline:hover { background: #16bdcc; color: #06343a; }
+    .fineprint { font-size: .85rem; color: #9aa3af; font-style: italic; }
+    .contact-note { margin-top: 6vh; color: #6b7280; font-size: 1.05rem; }
+    @media (max-width: 820px) { .bike { grid-template-columns: 1fr; gap: 24px; } .bike.reverse .bike-media { order: 0; } }
+
+    /* City Bikes: pinned eBay-style layout — scrolling crossfades between bikes */
+    .bikes-swap { position: relative; }
+    .swap-stage { position: relative; height: 100vh; overflow: hidden; }
+    /* "City bikes" headline stuck on top while the bikes crossfade underneath */
+    .h-headline {
+      position: absolute; top: 16vh; left: 11vw; z-index: 6; margin: 0;
+      font-size: clamp(2rem, 5.5vw, 4.6rem); font-weight: 800; letter-spacing: -2px;
+      line-height: 1; color: #111827; pointer-events: none;
+    }
+    .h-headline span { color: #16bdcc; }
+    .bike-slide {
+      position: absolute; inset: 0;
+      display: grid; grid-template-columns: 1fr .82fr; gap: 4vw;
+      align-items: center; padding: 24vh 11vw 9vh; box-sizing: border-box;
+      will-change: transform, opacity;
+    }
+    .swap-media {
+      height: 62vh; border-radius: 22px;
+      background-size: cover; background-position: center;
+      box-shadow: 0 18px 40px rgba(0,0,0,.18);
+      filter: brightness(.82);
+    }
+    .swap-info { max-width: 460px; }
+    .swap-info h2 { font-size: clamp(1.4rem, 2.4vw, 2rem); font-weight: 800; letter-spacing: -.5px; margin-bottom: 12px; }
+    .swap-info > p { color: #4b5563; line-height: 1.55; margin-bottom: 14px; }
+    .swap-info .rent-box { margin-top: 4px; }
+    .swap-info .fineprint { font-size: .72rem; color: #9aa3af; margin-top: 10px; }
+    .spec-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .chip { background: #f1f5f9; border: 1px solid #e5e7eb; border-radius: 999px; padding: 7px 13px; font-size: .8rem; font-weight: 600; color: #334155; }
+    .swap-dots { position: absolute; bottom: 4vh; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 6; }
+    .swap-dots .dot { width: 9px; height: 9px; border-radius: 50%; background: #cbd5e1; transition: background .35s ease, transform .35s ease; }
+    .swap-dots .dot.is-on { background: #16bdcc; transform: scale(1.3); }
+
+    /* eBay-style rent selector */
+    .rent-box { border: 1px solid #e5e7eb; border-radius: 16px; padding: 22px; margin: 18px 0 14px; max-width: 440px; box-shadow: 0 8px 22px rgba(0,0,0,.06); }
+    .rent-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .rent-label { font-weight: 600; color: #4b5563; white-space: nowrap; }
+    .rent-days { flex: 1; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 10px; font: inherit; font-weight: 600; color: #111827; background: #fff; cursor: pointer; }
+    .rent-days:focus { outline: 2px solid #16bdcc; outline-offset: 1px; }
+    .rent-price { font-size: 2.1rem; font-weight: 800; color: #111827; margin-bottom: 16px; line-height: 1; }
+    .rent-price .cur { font-size: 1.2rem; font-weight: 700; vertical-align: top; margin-right: 2px; }
+    .rent-box .bike-actions { margin-bottom: 12px; }
+    .rent-box .note { margin: 0; }
+    .panel-intro { grid-template-columns: 1fr; place-items: center; text-align: center; }
+    .crumbs { font-size: .85rem; color: #9aa3af; margin-bottom: 16px; }
+    .crumbs a { color: #9aa3af; text-decoration: none; }
+    .crumbs a:hover { color: #16bdcc; }
+    .crumbs span { color: #16bdcc; font-weight: 600; }
+    .scroll-hint { display: inline-block; margin-top: 22px; color: #16bdcc; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; }
+    @media (max-width: 820px) {
+      .bike-slide { grid-template-columns: 1fr; gap: 18px; padding: 17vh 6vw 9vh; align-content: center; }
+      .swap-media { height: 30vh; }
+      .swap-info { max-width: none; }
+      .h-headline { font-size: clamp(1.6rem, 8vw, 2.6rem); top: 8vh; }
+    }
+
+    /* ===== footer (full-width section, no transforms) ===== */
+    .site-footer {
+      position: relative;
+      z-index: 6;
+      background: #111827;
+      color: #ffffff;
+      padding: 11vh 6vw 6vh;
+      margin: 16px;                 /* off the edges */
+      border-radius: 26px;          /* rounded like the menu */
+      overflow: hidden;
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+    .footer-mega {
+      font-family: "Caveat", cursive;
+      font-weight: 700;
+      font-size: clamp(54px, 8vw, 120px);
+      line-height: .95;
+      letter-spacing: -.02em;
+      color: #ffffff;
+      margin-bottom: 0;
+    }
+    .footer-mega em { font-style: italic; color: #16bdcc; }
+    .footer-head { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 5vh; }
+    .footer-undertext { margin-top: 5vh; }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1.4fr;
+      gap: 72px;
+      align-items: stretch;
+    }
+    .footer-map { height: 100%; }
+    .footer-map iframe { width: 100%; height: 100%; min-height: 440px; border: 0; border-radius: 14px; display: block; filter: grayscale(.2); }
+    .footer-right { display: flex; flex-direction: column; gap: 20px; height: 100%; order: 2; }
+    .footer-form { margin-top: 0; }
+    .footer-grid > div:first-child, .footer-contact { display: flex; flex-direction: column; justify-content: space-between; }
+    .footer-grid > div:last-child { display: flex; flex-direction: column; justify-content: space-between; }
+    .fc-note { color: #ffffff; margin: 0; line-height: 1.75; font-size: 17px; }
+    .fc-note a { color: #16bdcc; }
+    .fc-block { margin: 0; }
+    .footer-contact .fc-block:first-of-type { margin-top: 0; }
+    .fc-block strong { display: block; color: #8a8275; text-transform: uppercase; font-size: 13px; letter-spacing: .2em; font-weight: 700; margin-bottom: 14px; }
+    .fc-row { display: flex; justify-content: space-between; gap: 16px; color: #ffffff; font-size: 17px; padding: 3px 0; }
+    .fc-block p { font-size: 17px; color: #ffffff; line-height: 1.75; }
+    .fc-baja { color: #ffffff; font-size: 17px; line-height: 1.75; margin: 0 0 18px; }
+    .fc-baja a { color: #16bdcc; }
+    .footer-form { background: none; border: 0; border-radius: 0; padding: 0; }
+    .footer-form h4 { color: #8a8275; margin-bottom: 14px; }
+    .footer-form input, .footer-form textarea { width: 100%; margin-bottom: 12px; padding: 11px 13px; border-radius: 9px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); color: #fff; font: inherit; }
+    .footer-form input::placeholder, .footer-form textarea::placeholder { color: #8a8275; }
+    .footer-form input:focus, .footer-form textarea:focus { outline: 2px solid #16bdcc; outline-offset: 1px; }
+    .footer-form button { background: none; color: #16bdcc; font-weight: 700; border: 0; padding: 6px 0; cursor: pointer; text-transform: uppercase; letter-spacing: .08em; font-size: 14px; transition: letter-spacing .2s ease; }
+    .footer-form button:hover { letter-spacing: .14em; }
+    .footer-grid h4 {
+      font-size: 13px; text-transform: uppercase; letter-spacing: .2em;
+      margin: 0 0 12px; color: #8a8275; font-weight: 700;
+    }
+    .footer-grid p { font-size: 17px; line-height: 1.75; color: #ffffff; }
+    .footer-logo { height: 88px; width: auto; display: block; flex: none; }
+    .footer-grid ul { list-style: none; margin: 0; padding: 0; }
+    .footer-grid li { margin-bottom: 0; font-size: 17px; line-height: 1.75; }
+    .footer-grid a { color: inherit; text-decoration: none; }
+    .footer-grid a:hover { color: #16bdcc; }
+    .book {
+      display: inline-block; margin-top: 16px;
+      background: #16bdcc; color: #06343a; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; font-size: 12px;
+      padding: 12px 24px; border-radius: 999px;
+    }
+    .footer-bottom {
+      margin-top: 5vh; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #ffffff;
+    }
+
+    @media (max-width: 820px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    }
+  </style>
+  <style>
+    .subhead {
+      position: fixed; top: 134px; right: 6vw;
+      z-index: 9; display: inline-flex; align-items: center; gap: 18px;
+      background: #ffffff; color: #2b3a44; padding: 9px 24px; border-radius: 999px; border: 1px solid #eef0f2;
+      font-size: .82rem; font-weight: 600; white-space: nowrap;
+      box-shadow: 0 12px 28px rgba(0,0,0,.12);
+      transition: transform .45s cubic-bezier(.16,1,.3,1), opacity .35s ease;
+    }
+    .subhead a { color: #111827; text-decoration: none; }
+    .subhead .sh-lang { display: inline-flex; gap: 8px; font-size: 1.05rem; }
+    .subhead.hide { transform: translateY(-220%); opacity: 0; pointer-events: none; }
+    @media (max-width: 760px) { .subhead { display: none; } }
+  </style>
+</head>
+<body>
+
+  <!-- page transition -->
+  <div class="page-transition" id="pageTransition">
+    <div class="t-block"></div>
+    <div class="t-block"></div>
+    <div class="t-block"></div>
+  </div>
+
+  <!-- tagline stuck in the right corner, rotated 90deg -->
+  <div class="vertical-tag">VILNIUS BIKE RENT AND TOURS</div>
+
+  <!-- news ticker -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-badges">
+      <a class="ticker-badge" href="#" title="Tripadvisor — 174 reviews"><span class="tb-name">Tripadvisor</span> <span class="tb-bubbles">●●●●●</span> <span class="tb-count">174 reviews</span></a>
+      <a class="ticker-badge" href="#" title="Google — 4.9 stars"><span class="g-name"><span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span></span> <span class="g-stars">★★★★★</span> <span class="tb-count">4.9 · 320 reviews</span></a>
+    </div>
+    <div class="ticker-track">
+      <span class="ticker-seg">★★★★★&nbsp; “A great bike tour around Vilnius”&nbsp;&nbsp;•&nbsp;&nbsp;“Very knowledgeable and friendly guides”&nbsp;&nbsp;•&nbsp;&nbsp;“Really suggested!!”&nbsp;&nbsp;•&nbsp;&nbsp;“Had a fantastic time”&nbsp;&nbsp;•&nbsp;&nbsp;“Super comfortable bikes, great variety”&nbsp;&nbsp;•&nbsp;&nbsp;“A great way to orientate yourself to the city”&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+      <span class="ticker-seg">★★★★★&nbsp; “A great bike tour around Vilnius”&nbsp;&nbsp;•&nbsp;&nbsp;“Very knowledgeable and friendly guides”&nbsp;&nbsp;•&nbsp;&nbsp;“Really suggested!!”&nbsp;&nbsp;•&nbsp;&nbsp;“Had a fantastic time”&nbsp;&nbsp;•&nbsp;&nbsp;“Super comfortable bikes, great variety”&nbsp;&nbsp;•&nbsp;&nbsp;“A great way to orientate yourself to the city”&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- sticky header (logo left, inline nav right) -->
+  <div class="site-top">
+    <header class="site-header">
+      <div class="inner">
+        <a class="brand" href="index.html"><span class="years-badge">15 years</span><img src="media/logo.png" alt="Velotakas.lt"></a>
+        <nav class="topnav">
+          <div class="nav-drop">
+            <a class="nav-link" href="bike-rent.html">Bike rent ▾</a>
+            <div class="nav-menu">
+              <div class="mm-head"><a href="bike-rent.html" style="color:inherit;text-decoration:none">Rent your perfect <span>bike</span></a></div>
+              <div class="mm-links">
+                <a href="bike-rent.html?cat=city" data-img="media/trak-allant.jpg" data-price="6">City Bikes</a>
+                <a href="bike-rent.html?cat=touring" data-img="media/cat-touring.jpg" data-price="12">Touring Bikes</a>
+                <a href="bike-rent.html?cat=hybrid" data-img="media/cat-hybrid.jpg" data-price="14">Hybrid Bikes</a>
+                <a href="bike-rent.html?cat=mountain" data-img="media/cat-mountain.jpg" data-price="20">Mountain Bikes</a>
+                <a href="bike-rent.html?cat=gravel" data-img="media/cat-gravel.jpg" data-price="30">Gravel Bikes</a>
+                <a href="bike-rent.html?cat=electric" data-img="media/cat-electric.jpg" data-price="18">Electric Bike</a>
+                <a href="bike-rent.html?cat=road" data-img="media/cat-road.jpg" data-price="25">Road Bikes</a>
+                <a href="bike-rent.html?cat=scooters" data-img="media/cat-scooters.jpg" data-price="8">Electric Scooters</a>
+                <a href="bike-rent.html?cat=accessories" data-img="media/cat-accessories.jpg" data-price="5">Bicycle Accessories</a>
+                <a href="bike-rent.html?cat=groups" data-img="media/cat-groups.jpg">Bike Rental For Groups</a>
+                <a href="bike-rent.html?cat=kids" data-img="media/cat-kids.jpg" data-price="8">Bikes For Kids</a>
+                <a href="bike-rent.html?cat=sale" data-img="media/cat-sale.jpg" data-price="180">Bikes For Sale</a>
+              </div>
+              <div class="mm-foot">Starting from <span>€5</span></div>
+              <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('media/trak-allant.jpg');"></div></div>
+            </div>
+          </div>
+          <div class="nav-drop">
+            <button class="nav-link" type="button">Tours ▾</button>
+            <div class="nav-menu">
+              <div class="mm-head">Explore Vilnius with <span>Velotakas</span></div>
+              <div class="mm-links">
+                <a href="city-bike-tours.html" data-img="media/sec1.jpg">City Bike Tours</a>
+                <a href="walking-tours.html" data-img="media/sec2.jpg">Walking Tours</a>
+                <a href="self-guided-tours.html" data-img="media/sec3.jpg">Self Guided Tours</a>
+                <a href="mountain-bike-tours.html" data-img="media/tour-group.jpg">Mountain Bike Tours</a>
+                <a href="nature-bike-tours.html" data-img="media/tour-square.jpg" data-price="34">Nature Bike Tours</a>
+                <a href="bike-tours-for-groups.html" data-img="media/tour-square.jpg">Bike Tours For Groups</a>
+              </div>
+              <div class="mm-foot">Starting from <span>€34</span></div>
+              <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('media/sec1.jpg');"></div></div>
+            </div>
+          </div>
+          <div class="nav-drop">
+            <button class="nav-link" type="button">Maps ▾</button>
+            <div class="nav-menu">
+              <div class="mm-head">Pick your <span>route</span></div>
+              <div class="mm-links">
+                <a href="mtb-routes.html" data-img="media/cat-mountain.jpg">MTB routes</a>
+                <a href="touring-city-maps.html" data-img="media/tour-square.jpg">City routes</a>
+                <a href="#" data-img="media/tour-square.jpg">Self-guided routes</a>
+              </div>
+              <div class="mm-foot">Free <span>GPX</span> downloads</div>
+              <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('media/cat-mountain.jpg');"></div></div>
+            </div>
+          </div>
+          <a class="nav-link nav-contact" href="#contact">Contacts</a>
+          <a class="nav-link" href="about.html">About Us</a>
+          <a class="nav-link" href="blog.html">Blog</a>
+          <a class="nav-link" href="faq.html">FAQs</a>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <div class="subhead hide" id="subhead">
+    <span>Stulginskio g. 5, Vilnius</span>
+    <span><a href="tel:+37061845727">+370 618 45727</a></span>
+    <span>Open daily 10–19</span>
+    <span class="sh-lang"><a href="#" title="English">🇬🇧</a><a href="#" title="Lietuviškai">🇱🇹</a></span>
+  </div>
+
+
+  <!-- custom cursor -->
+  <div class="cursor" id="cursor">
+    <span class="cursor-dot"></span>
+    <svg class="cursor-wheel" viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="21" stroke="#16bdcc" stroke-width="3"/>
+      <circle cx="24" cy="24" r="3.5" fill="#16bdcc"/>
+      <g stroke="#16bdcc" stroke-width="1.6">
+        <line x1="24" y1="4" x2="24" y2="44"/>
+        <line x1="4" y1="24" x2="44" y2="24"/>
+        <line x1="9.9" y1="9.9" x2="38.1" y2="38.1"/>
+        <line x1="38.1" y1="9.9" x2="9.9" y2="38.1"/>
+      </g>
+    </svg>
+  </div>
+
+
+  <!-- City Bikes: pinned eBay-style layout — scrolling crossfades between bikes -->
+  <section class="bikes-swap" id="bikesSwap">
+    <div class="swap-stage">
+      <h1 class="h-headline">Bikes for <span>sale</span></h1>
+
+      <article class="bike-slide">
+        <div class="swap-media" style="background-image:url('media/velotakas/Kross-Trans-male-edition-2-470x353.jpg');"></div>
+        <div class="swap-info">
+          <h2>Kross Trans 3.0 (used)</h2>
+          <p>A higher-spec Trans model in men's/women's frames — comfortable on city asphalt and forest paths.</p>
+          <div class="spec-chips">
+            <span class="chip">🚲 Touring · 28"</span>
+            <span class="chip">⚙️ 24 speeds</span>
+            <span class="chip">🛒 For sale</span>
+          </div>
+          <div class="rent-box">
+            <div class="rent-row">
+              <span class="rent-label">Price</span>
+              <select class="rent-days">
+                <option data-price="270.00">Outright purchase</option>
+              </select>
+            </div>
+            <div class="rent-price"><span class="cur">€</span><span class="amt">270.00</span></div>
+            <div class="bike-actions">
+              <a class="btn-fill" href="bike-rental-form.html">Buy now</a>
+              <a class="btn-outline" href="bike-rental-form.html">Request form</a>
+            </div>
+            <p class="note">For sale — purchase documents included</p>
+          </div>
+          <p class="fineprint">**** Prices valid for advance online bookings ****</p>
+        </div>
+      </article>
+
+      <article class="bike-slide">
+        <div class="swap-media" style="background-image:url('media/velotakas/IMG_4463-min-1-650x490.jpg');"></div>
+        <div class="swap-info">
+          <h2>Baltic Vairas City Bike</h2>
+          <p>A comfortable 3-speed city bike with a basket, suited to short rides around Vilnius.</p>
+          <div class="spec-chips">
+            <span class="chip">🚲 City · 28"</span>
+            <span class="chip">⚙️ 3-speed</span>
+            <span class="chip">🛒 For sale</span>
+          </div>
+          <div class="rent-box">
+            <div class="rent-row">
+              <span class="rent-label">Price</span>
+              <select class="rent-days">
+                <option data-price="180.00">Outright purchase</option>
+              </select>
+            </div>
+            <div class="rent-price"><span class="cur">€</span><span class="amt">180.00</span></div>
+            <div class="bike-actions">
+              <a class="btn-fill" href="bike-rental-form.html">Buy now</a>
+              <a class="btn-outline" href="bike-rental-form.html">Request form</a>
+            </div>
+            <p class="note">For sale — purchase documents included</p>
+          </div>
+          <p class="fineprint">**** Prices valid for advance online bookings ****</p>
+        </div>
+      </article>
+
+      <article class="bike-slide">
+        <div class="swap-media" style="background-image:url('media/velotakas/scott-aspect-950-dydis-l-m-ratai-29-650x490.jpg');"></div>
+        <div class="swap-info">
+          <h2>Scott Aspect 950</h2>
+          <p>A Scott Aspect 950 mountain bike (size L/M, 29") sold with purchase documents.</p>
+          <div class="spec-chips">
+            <span class="chip">⛰️ MTB · 29"</span>
+            <span class="chip">⚙️ 3×8</span>
+            <span class="chip">🛒 With documents</span>
+          </div>
+          <div class="rent-box">
+            <div class="rent-row">
+              <span class="rent-label">Price</span>
+              <select class="rent-days">
+                <option data-price="350.00">Outright purchase</option>
+              </select>
+            </div>
+            <div class="rent-price"><span class="cur">€</span><span class="amt">350.00</span></div>
+            <div class="bike-actions">
+              <a class="btn-fill" href="bike-rental-form.html">Buy now</a>
+              <a class="btn-outline" href="bike-rental-form.html">Request form</a>
+            </div>
+            <p class="note">For sale — purchase documents included</p>
+          </div>
+          <p class="fineprint">**** Prices valid for advance online bookings ****</p>
+        </div>
+      </article>
+
+      <article class="bike-slide">
+        <div class="swap-media" style="background-image:url('media/velotakas/IMG_4867-min-470x353.jpg');"></div>
+        <div class="swap-info">
+          <h2>Univega Hybrid</h2>
+          <p>A Univega men's/women's hybrid with an aluminium frame, 24 gears and a suspension fork.</p>
+          <div class="spec-chips">
+            <span class="chip">🚲 Hybrid · 28"</span>
+            <span class="chip">⚙️ 24 speeds</span>
+            <span class="chip">🛒 For sale</span>
+          </div>
+          <div class="rent-box">
+            <div class="rent-row">
+              <span class="rent-label">Price</span>
+              <select class="rent-days">
+                <option data-price="190.00">Outright purchase</option>
+              </select>
+            </div>
+            <div class="rent-price"><span class="cur">€</span><span class="amt">190.00</span></div>
+            <div class="bike-actions">
+              <a class="btn-fill" href="bike-rental-form.html">Buy now</a>
+              <a class="btn-outline" href="bike-rental-form.html">Request form</a>
+            </div>
+            <p class="note">For sale — purchase documents included</p>
+          </div>
+          <p class="fineprint">**** Prices valid for advance online bookings ****</p>
+        </div>
+      </article>
+
+      <div class="swap-dots"><span class="dot is-on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    </div>
+  </section>
+
+  <p class="contact-note" style="text-align:center; max-width:60ch; margin:0 auto; padding:8vh 6vw;">If there is no option you are looking for, please do not hesitate to contact us.</p>
+
+  <!-- footer -->
+  <footer class="site-footer" id="contact">
+    <div class="footer-head">
+      <p class="footer-mega">Let’s <em>ride</em>.</p>
+      <img class="footer-logo" src="media/logo.png" alt="Velotakas.lt">
+    </div>
+    <div class="footer-grid">
+      <div class="footer-right">
+        <div class="footer-map">
+          <iframe src="https://maps.google.com/maps?q=A.%20Stulginskio%205%2C%20Vilnius&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" loading="lazy" title="Velotakas location"></iframe>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <div class="fc-head">
+          <h4>Bike Vilnius Velotakas</h4>
+          <ul>
+            <li><a href="tel:+37061845727">+370 618 45727</a></li>
+            <li><a href="mailto:info@velotakas.lt">info@velotakas.lt</a></li>
+            <li>Stulginskio g. 5, Vilnius (“Westexpress” premises)</li>
+          </ul>
+        </div>
+        <div class="fc-block">
+          <strong>Details</strong>
+          <p>Company code: 302643966<br>SEB Bankas, account No. LT48 7044 0600 0771 2383<br>SWIFT code: CBVILT2X</p>
+        </div>
+        <div class="fc-block">
+          <strong>Open hours · April 1 – October 31</strong>
+          <div class="fc-row"><span>Monday – Friday</span><span>10:00 – 19:00</span></div>
+          <div class="fc-row"><span>Saturday – Sunday</span><span>10:00 – 20:00</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-undertext">
+      <p class="fc-note">Please book your bike or bike tour by phone <a href="tel:+37061845727">+370 618 45727</a> or online.</p>
+      <p class="fc-baja">Baja Bikes Vilnius — <a href="tel:+37061845727">+370 618 45 727</a></p>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 — All rights reserved by Velotakas.lt</span>
+      <span>174 reviews · Tripadvisor</span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+    // lightweight smooth scroll (Lenis), wired to ScrollTrigger + GSAP ticker
+    (function () {
+      if (typeof Lenis === "undefined") return;   // graceful fallback to native scroll
+      var lenis = new Lenis({ duration: 1.1, smoothWheel: true }); window.lenis = lenis;
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+      gsap.ticker.lagSmoothing(0);
+      window.lenis = lenis;
+    })();
+
+    // eBay-style rent selector: price updates with the chosen duration
+    gsap.utils.toArray(".rent-box").forEach(function (box) {
+      var sel = box.querySelector(".rent-days");
+      var amt = box.querySelector(".rent-price .amt");
+      if (!sel || !amt) return;
+      function update() { amt.textContent = sel.options[sel.selectedIndex].getAttribute("data-price"); }
+      sel.addEventListener("change", update);
+      update();
+    });
+
+    // City Bikes: pin the layout, scroll crossfades between bikes (content stays put)
+    (function () {
+      var stage = document.querySelector(".swap-stage");
+      if (!stage) return;
+      var slides = gsap.utils.toArray(".bike-slide");
+      var dots = gsap.utils.toArray(".swap-dots .dot");
+      if (slides.length < 2) return;
+      // only the image flips like a card; the text just fades
+      var media = slides.map(function (s) { return s.querySelector(".swap-media"); });
+      gsap.set(slides, { autoAlpha: 0 });
+      gsap.set(slides[0], { autoAlpha: 1 });
+      gsap.set(media, { xPercent: 45, rotation: 6, scale: 0.9, transformOrigin: "center center" });
+      gsap.set(media[0], { xPercent: 0, rotation: 0, scale: 1 });
+
+      function setDot(idx) { dots.forEach(function (d, k) { d.classList.toggle("is-on", k === idx); }); }
+
+      var tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".bikes-swap",
+          pin: stage,
+          start: "top top",
+          end: "+=" + (slides.length * 80) + "%",
+          scrub: true,
+          invalidateOnRefresh: true,
+          onUpdate: function (self) { setDot(Math.round(self.progress * (slides.length - 1))); },
+        },
+      });
+      tl.to({}, { duration: 0.4 });                                                                   // hold first card
+      for (var i = 0; i < slides.length - 1; i++) {
+        tl.to(slides[i], { autoAlpha: 0, duration: 0.4, ease: "power1.in" })                          // text fades out
+          .to(media[i], { xPercent: 48, rotation: 7, scale: 0.88, duration: 0.4, ease: "power2.in" }, "<")   // image swipes off to the side
+          .to(slides[i + 1], { autoAlpha: 1, duration: 0.5, ease: "power1.out" }, "-=0.12")           // next text fades in
+          .to(media[i + 1], { xPercent: 0, rotation: 0, scale: 1, duration: 0.5, ease: "power3.out" }, "<")  // next image swipes in
+          .to({}, { duration: 0.4 });                                                                 // hold
+      }
+    })();
+
+    // footer reveal — same masked pop-up as the hero
+    (function () {
+      var footer = document.querySelector(".site-footer");
+      if (!footer) return;
+      gsap.from(footer, {
+        scale: 0.92, duration: .9, ease: "power3.out",
+        scrollTrigger: { trigger: footer, start: "top 85%" },
+      });
+      var mega = footer.querySelector(".footer-mega");
+      if (mega) {
+        var span = document.createElement("span");
+        span.style.display = "inline-block";
+        span.innerHTML = mega.innerHTML;
+        mega.innerHTML = "";
+        mega.style.overflow = "hidden";
+        mega.style.paddingBottom = ".08em";
+        mega.appendChild(span);
+        gsap.from(span, {
+          yPercent: 115, duration: .9, ease: "power3.out",
+          scrollTrigger: { trigger: footer, start: "top 82%" },
+        });
+      }
+      gsap.from(footer.querySelectorAll(".footer-grid > div"), {
+        y: 28, opacity: 0, duration: .6, ease: "power3.out", stagger: .1,
+        scrollTrigger: { trigger: footer, start: "top 82%" },
+      });
+    })();
+
+    // page transition: 3 rounded cyan blocks open on load, close on navigation
+    (function () {
+      var pt = document.getElementById("pageTransition");
+      var blocks = gsap.utils.toArray(".t-block");
+      var cur = document.getElementById("cursor");
+      if (cur) cur.style.opacity = "0";
+      // OPEN (reveal) on load — slide out to the right, staggered
+      gsap.to(blocks, {
+        xPercent: 101, duration: 0.6, ease: "power3.inOut", stagger: 0.12, delay: 0.05,
+        onComplete: function () { pt.style.display = "none"; if (cur) cur.style.opacity = ""; },
+      });
+      // CLOSE (cover) before navigating
+      function closeTo(href) {
+        pt.style.display = "flex";
+        if (cur) cur.style.opacity = "0";
+        gsap.set(blocks, { xPercent: -101 });
+        gsap.to(blocks, {
+          xPercent: 0, duration: 0.5, ease: "power3.inOut", stagger: 0.12,
+          onComplete: function () { window.location.href = href; },
+        });
+      }
+      document.querySelectorAll('a[href$=".html"]').forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          var href = a.getAttribute("href");
+          if (!href) return;
+          e.preventDefault();
+          closeTo(href);
+        });
+      });
+    })();
+
+
+    /* ===== custom cursor: spinning bike wheel on hover ===== */
+    (function () {
+      var cursor = document.getElementById("cursor");
+      if (!cursor) return;
+      var mx = window.innerWidth / 2, my = window.innerHeight / 2, cx = mx, cy = my;
+      window.addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; });
+      (function raf() {
+        cx += (mx - cx) * 0.25; cy += (my - cy) * 0.25;
+        cursor.style.transform = "translate3d(" + cx + "px," + cy + "px,0)";
+        requestAnimationFrame(raf);
+      })();
+      var sel = "a, button, .menu-toggle, .feature, .img-layer, .side-quote";
+      document.addEventListener("mouseover", function (e) {
+        if (e.target.closest(sel)) cursor.classList.add("spin");
+      });
+      document.addEventListener("mouseout", function (e) {
+        if (e.target.closest(sel)) cursor.classList.remove("spin");
+      });
+    })();
+
+
+    // dropdowns: GSAP pop-out on hover (rounded panel)
+    gsap.utils.toArray(".nav-drop").forEach(function (drop) {
+      var menu = drop.querySelector(".nav-menu");
+      if (!menu) return;
+      gsap.set(menu, { autoAlpha: 0, y: -10, scale: .98, transformOrigin: "top center" });
+      var tl = gsap.timeline({ paused: true })
+        .to(menu, { autoAlpha: 1, y: 0, scale: 1, duration: .42, ease: "back.out(1.4)" });
+      drop.addEventListener("mouseenter", function () { tl.play(); });
+      drop.addEventListener("mouseleave", function () { tl.reverse(); });
+    });
+
+    // mega-menu: hovering a link swaps the big preview image
+    gsap.utils.toArray(".nav-menu").forEach(function (menu) {
+      var preview = menu.querySelector(".mm-preview-img");
+      var foot = menu.querySelector(".mm-foot span");
+      var footDefault = foot ? foot.textContent : null;
+      if (!preview) return;
+      menu.querySelectorAll(".mm-links a").forEach(function (a) {
+        a.addEventListener("mouseenter", function () {
+          var img = a.getAttribute("data-img");
+          var price = a.getAttribute("data-price");
+          if (foot) foot.textContent = price ? ("€" + price) : footDefault;
+          if (img) {
+            gsap.fromTo(preview, { opacity: .35 }, { opacity: 1, duration: .35, ease: "power2.out" });
+            preview.style.backgroundImage = "url('" + img + "')";
+          }
+        });
+      });
+    });
+
+
+    // masked pop-up reveal of the hero card text (after the cyan blocks open)
+    setTimeout(function () {
+      var hs = document.getElementById("heroSplit");
+      if (hs) hs.classList.add("revealed");
+    }, 1300);
+
+    // fullpage-style: one scroll gesture advances section by section (hero → tours → footer)
+    (function () {
+      var heroEl = document.querySelector(".hero-split");
+      var footerEl = document.querySelector(".site-footer");
+      var feats = gsap.utils.toArray(".feature");
+      if (!feats.length) return;
+      var menu = document.getElementById("menu");
+      var lock = false;
+
+      function maxScroll() { return document.documentElement.scrollHeight - window.innerHeight; }
+      function clamp(v) { return Math.max(0, Math.min(maxScroll(), v)); }
+      function topOf(el) { return el.getBoundingClientRect().top + window.scrollY; }
+      function centerOf(el) {
+        var r = el.getBoundingClientRect();
+        return window.scrollY + r.top + r.height / 2 - window.innerHeight / 2;
+      }
+      function targets() {
+        var t = [0];                                   // hero → page top
+        feats.forEach(function (f) { t.push(centerOf(f)); });
+        t.push(topOf(footerEl) - 90);                  // footer → near the top
+        return t.map(clamp);
+      }
+      function nearestIndex(t) {
+        var y = window.scrollY, best = 0, bd = Infinity;
+        for (var i = 0; i < t.length; i++) { var d = Math.abs(t[i] - y); if (d < bd) { bd = d; best = i; } }
+        return best;
+      }
+      function go(t, i) {
+        i = Math.max(0, Math.min(t.length - 1, i));
+        lock = true;
+        gsap.to(window, {
+          scrollTo: t[i], duration: 0.35, ease: "power2.inOut",
+          onComplete: function () { setTimeout(function () { lock = false; }, 70); },
+        });
+      }
+      window.addEventListener("wheel", function (e) {
+        if (menu && menu.classList.contains("open")) return;
+        var t = targets();
+        var idx = nearestIndex(t);
+        var dir = e.deltaY > 0 ? 1 : -1;
+        var aligned = Math.abs(t[idx] - window.scrollY) < 14;
+        // let the very ends behave natively (top of page / scrolling within a tall footer)
+        if (aligned && ((idx === 0 && dir < 0) || (idx === t.length - 1 && dir > 0))) return;
+        e.preventDefault();
+        if (lock) return;
+        go(t, aligned ? idx + dir : idx);   // align first, then advance one
+      }, { passive: false });
+    })();
+
+
+  </script>
+  <script>
+    (function () {
+      document.querySelectorAll(".nav-contact").forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          var f = document.getElementById("contact");
+          if (!f) return;
+          e.preventDefault();
+          if (window.lenis) window.lenis.scrollTo(f, { offset: 0, duration: 1.2 });
+          else f.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+    })(); /* nav-contact-handler */
+  </script>
+  <script>
+    (function () {
+      var sh = document.getElementById("subhead");
+      if (!sh) return;
+      function upd() { sh.classList.toggle("hide", (window.scrollY || window.pageYOffset || 0) > 70); }
+      window.addEventListener("scroll", upd, { passive: true });
+      setTimeout(upd, 700);
+    })();
+  </script>
+</body>
+</html>
