@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Self-guided city bike routes in Vilnius — Velotakas</title>
+  <link rel="icon" type="image/png" href="../../media/logo.png"><link rel="apple-touch-icon" href="../../media/logo.png">
+  <title>Savarankiški miesto dviračių maršrutai Vilniuje — Velotakas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@400;500;600;700;800&family=DM+Sans:wght@500;700;800&display=swap" rel="stylesheet">
@@ -647,7 +648,7 @@
     .contact-note { margin-top: 6vh; color: #6b7280; font-size: 1.05rem; }
     @media (max-width: 820px) { .bike { grid-template-columns: 1fr; gap: 24px; } .bike.reverse .bike-media { order: 0; } }
 
-    /* City Bikes: pinned eBay-style layout — scrolling crossfades between bikes */
+    /* Miesto dviračiai: pinned eBay-style layout — scrolling crossfades between bikes */
     .bikes-swap { position: relative; }
     .swap-stage { position: relative; height: 100vh; overflow: hidden; }
     /* "City bikes" headline stuck on top while the bikes crossfade underneath */
@@ -865,6 +866,56 @@
     .sg-finish { margin-top:20px; font-weight:700; color:#16bdcc; font-size:1.05rem; }
     @media (max-width:760px){ .sg-route .sg-head { grid-template-columns:1fr; } }
   </style>
+  <style id="mmx-css">
+    .mmx-btn{ display:none; }
+    .mmx-lang{ display:none; }
+    @media (max-width:860px){
+      .site-header .topnav{ display:none !important; }
+      .site-top{ margin-top:8px; }
+      .site-header .inner{ min-height:60px; position:relative; }
+      .mmx-btn{ display:inline-flex; align-items:center; gap:9px; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); margin:0; height:46px; padding:0 20px;
+        border:0; border-radius:999px; cursor:pointer; background:#06343a; color:#fff; box-shadow:0 8px 22px rgba(6,52,58,.4);
+        font-family:"Caveat",cursive; font-weight:700; font-size:1.55rem; line-height:1; }
+      .mmx-btn .bars{ display:inline-flex; flex-direction:column; gap:5px; }
+      .mmx-btn .bars i{ width:20px; height:2px; background:#16bdcc; border-radius:2px; display:block; }
+      .subhead{ display:inline-flex !important; position:fixed; top:128px; left:50%; right:auto; transform:translateX(-50%);
+        gap:24px; padding:12px 24px; font-size:1.02rem; max-width:96vw; white-space:nowrap; z-index:10; }
+      .subhead.hide{ transform:translateX(-50%) translateY(-280%); }
+      .subhead > *:nth-child(1), .subhead > *:nth-child(3), .subhead > *:nth-child(4), .subhead > *:nth-child(5){ display:none; }
+      .mmx-lang{ display:inline-flex; align-items:center; gap:16px; margin-left:auto; font-size:1.55rem; }
+      .mmx-lang a{ text-decoration:none; color:inherit; }
+      .mmx-lang a.lang-on{ border-radius:6px; padding:1px 6px; background:rgba(22,189,204,.20); box-shadow:inset 0 0 0 1.6px #16bdcc; }
+      .subhead .sh-lang{ font-size:1.55rem; gap:14px; align-items:center; }
+      .subhead .sh-lang a.lang-on{ padding:1px 6px; }
+    }
+    .mmx-panel{ position:fixed; z-index:135; background:linear-gradient(165deg,#084149,#052a30 55%,#0a1119);
+      color:#fff; display:flex; flex-direction:column; padding:84px 28px 36px; overflow-y:auto; overflow-x:hidden;
+      opacity:0; visibility:hidden; pointer-events:none; will-change:top,left,width,height,border-radius; }
+    .mmx-panel.open{ pointer-events:auto; }
+    .mmx-close{ position:absolute; top:18px; right:18px; width:48px; height:48px; border:0; border-radius:50%;
+      background:#16bdcc; color:#04282d; font-size:1.8rem; line-height:1; cursor:pointer; display:grid; place-items:center; z-index:2; }
+    .mmx-social{ display:flex; gap:18px; margin-bottom:14px; }
+    .mmx-social a{ color:#bfe9ee; display:inline-flex; transition:color .2s; } .mmx-social a:hover{ color:#16bdcc; }
+    .mmx-social svg{ width:23px; height:23px; fill:currentColor; }
+    .mmx-item{ border-bottom:1px solid rgba(255,255,255,.12); }
+    .mmx-link,.mmx-acc{ display:flex; align-items:center; justify-content:space-between; width:100%; background:none; border:0;
+      cursor:pointer; color:#fff; text-decoration:none; font-family:"Caveat",cursive; font-weight:700; font-size:2.5rem;
+      line-height:1.08; padding:8px 4px; text-align:left; }
+    .mmx-link:hover,.mmx-acc:hover{ color:#16bdcc; }
+    .mmx-acc .chev{ flex:none; width:12px; height:12px; border-right:2px solid #16bdcc; border-bottom:2px solid #16bdcc;
+      transform:rotate(45deg); transition:transform .3s; margin-left:14px; }
+    .mmx-item.open .mmx-acc .chev{ transform:rotate(-135deg); }
+    .mmx-sub{ max-height:0; overflow:hidden; transition:max-height .45s ease; }
+    .mmx-item.open .mmx-sub{ max-height:920px; }
+    .mmx-sub a{ display:block; font-family:"Poppins",sans-serif; font-size:1.05rem; color:#bfe9ee; padding:8px 4px 8px 18px; text-decoration:none; }
+    .mmx-sub a:hover{ color:#16bdcc; }
+    .mmx-foot{ margin-top:auto; padding-top:18px; font-family:"Caveat",cursive; font-size:1.5rem; color:#8fc0c6; }
+    .mmx-foot a{ color:#16bdcc; text-decoration:none; }
+    body.mmx-lock{ overflow:hidden; }
+  </style>
+  <style id="lang-active-css">
+    .sh-lang a.lang-on{ border-radius:6px; padding:0 4px; background:rgba(22,189,204,.20); box-shadow:inset 0 0 0 1.6px #16bdcc; }
+  </style>
 </head>
 <body>
 
@@ -894,63 +945,53 @@
   <div class="site-top">
     <header class="site-header">
       <div class="inner">
-        <a class="brand" href="../index.html"><span class="years-badge">15 years</span><img src="../../media/logo.png" alt="Velotakas.lt"></a>
+        <a class="brand" href="../index.html"><span class="years-badge">15 metų</span><img src="../../media/logo.png" alt="Velotakas.lt"></a>
         <nav class="topnav">
           <div class="nav-drop">
             <a class="nav-link" href="../bikes/bike-rent.html">Nuoma ▾</a>
             <div class="nav-menu">
-              <div class="mm-head"><a href="../bikes/bike-rent.html" style="color:inherit;text-decoration:none">Išsirinkite tobulą <span>dviratį</span></a></div>
+              <div class="mm-head"><a href="../bikes/bike-rent.html" style="color:inherit;text-decoration:none">Išsirinkite <span>dviratį</span></a></div>
               <div class="mm-links">
-                <a href="../bikes/bike-rent.html?cat=city" data-img="../../media/trak-allant.jpg" data-price="6">Miesto dviračiai</a>
-                <a href="../bikes/bike-rent.html?cat=touring" data-img="../../media/cat-touring.jpg" data-price="12">Kelioniniai dviračiai</a>
-                <a href="../bikes/bike-rent.html?cat=hybrid" data-img="../../media/cat-hybrid.jpg" data-price="14">Hibridiniai dviračiai</a>
-                <a href="../bikes/bike-rent.html?cat=mountain" data-img="../../media/cat-mountain.jpg" data-price="20">Kalnų dviračiai</a>
-                <a href="../bikes/bike-rent.html?cat=gravel" data-img="../../media/cat-gravel.jpg" data-price="30">Gravel dviračiai</a>
-                <a href="../bikes/bike-rent.html?cat=electric" data-img="../../media/cat-electric.jpg" data-price="18">Elektriniai dviračiai</a>
-                <a href="../bikes/bike-rent.html?cat=road" data-img="../../media/cat-road.jpg" data-price="25">Plentiniai dviračiai</a>
-                <a href="../bikes/bike-rent.html?cat=scooters" data-img="../../media/cat-scooters.jpg" data-price="8">Elektriniai paspirtukai</a>
-                <a href="../bikes/bike-rent.html?cat=accessories" data-img="../../media/cat-accessories.jpg" data-price="5">Dviračių priedai</a>
-                <a href="../bikes/bike-rent.html?cat=groups" data-img="../../media/cat-groups.jpg">Nuoma grupėms</a>
-                <a href="../bikes/bike-rent.html?cat=kids" data-img="../../media/cat-kids.jpg" data-price="8">Vaikiški dviračiai</a>
-                <a href="../bikes/bike-rent.html?cat=sale" data-img="../../media/cat-sale.jpg" data-price="180">Dviračių pardavimas</a>
+                <a href="../bikes/bike-rent.html?cat=city" data-img="../../media/trak-allant.jpg">Miesto dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=touring" data-img="../../media/cat-touring.jpg">Kelioniniai dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=hybrid" data-img="../../media/cat-hybrid.jpg">Hibridiniai dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=mountain" data-img="../../media/cat-mountain.jpg">Kalnų dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=gravel" data-img="../../media/cat-gravel.jpg">Gravel dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=electric" data-img="../../media/cat-electric.jpg">Elektriniai dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=road" data-img="../../media/cat-road.jpg">Plentiniai dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=scooters" data-img="../../media/velotakas/as_optimizuota_nuotrauka_ikelk_mane_1-1024x768.jpg">Elektriniai paspirtukai</a>
+                <a href="../bikes/bike-rent.html?cat=accessories" data-img="../../media/cat-accessories.jpg">Dviračių priedai ir aksesuarai</a>
+                <a href="../bikes/bike-rent.html?cat=groups" data-img="../../media/cat-groups.jpg">Dviračių nuoma grupėms</a>
+                <a href="../bikes/bike-rent.html?cat=kids" data-img="../../media/cat-kids.jpg">Vaikiški dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=sale" data-img="../../media/cat-sale.jpg">Naudotų ir naujų dviračių pardavimas</a>
               </div>
-              <div class="mm-foot">Kaina nuo <span>€5</span></div>
+              <div class="mm-foot">Nuo <span>6 €</span></div>
               <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('../../media/trak-allant.jpg');"></div></div>
             </div>
           </div>
           <div class="nav-drop">
             <button class="nav-link" type="button">Ekskursijos ▾</button>
             <div class="nav-menu">
-              <div class="mm-head">Pažinkite Vilnių su <span>Velotakas</span></div>
+              <div class="mm-head">Išsirinkite <span>ekskursiją</span></div>
               <div class="mm-links">
                 <a href="../tours/city-bike-tours.html" data-img="../../media/sec1.jpg">Dviračių ekskursijos</a>
                 <a href="../tours/walking-tours.html" data-img="../../media/sec2.jpg">Žygiai pėsčiomis</a>
-                <a href="../tours/self-guided-tours.html" data-img="../../media/sec3.jpg">Savarankiškos ekskursijos</a>
+                <a href="../tours/self-guided-tours.html" data-img="../../media/sec3.jpg">Maršrutai savarankiškai</a>
                 <a href="../tours/mountain-bike-tours.html" data-img="../../media/tour-group.jpg">Kalnų dviračių turai</a>
-                <a href="../tours/nature-bike-tours.html" data-img="../../media/tour-square.jpg" data-price="34">Gamtos turai</a>
+                <a href="../tours/nature-bike-tours.html" data-img="../../media/tour-square.jpg">Gamtos turai</a>
                 <a href="../tours/bike-tours-for-groups.html" data-img="../../media/tour-square.jpg">Turai grupėms</a>
               </div>
-              <div class="mm-foot">Kaina nuo <span>€34</span></div>
+              <div class="mm-foot">Nuo <span>29 €</span></div>
               <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('../../media/sec1.jpg');"></div></div>
-            </div>
-          </div>
-          <div class="nav-drop">
-            <button class="nav-link" type="button">Maršrutai ▾</button>
-            <div class="nav-menu">
-              <div class="mm-head">Pasirinkite <span>maršrutą</span></div>
-              <div class="mm-links">
-                <a href="mtb-routes.html" data-img="../../media/cat-mountain.jpg">MTB maršrutai</a>
-                <a href="touring-city-maps.html" data-img="../../media/tour-square.jpg">Miesto maršrutai</a>
-                <a href="self-guided-routes.html" data-img="../../media/tour-square.jpg">Savarankiški maršrutai</a>
-              </div>
-              <div class="mm-foot">Nemokami <span>GPX</span> atsisiuntimai</div>
-              <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('../../media/cat-mountain.jpg');"></div></div>
             </div>
           </div>
           <a class="nav-link nav-contact" href="#contact">Kontaktai</a>
           <a class="nav-link" href="../about.html">Apie mus</a>
           <a class="nav-link" href="../blog/blog.html">Naujienos</a>
-          <a class="nav-link" href="../faq.html">DUK</a>
+          <a class="nav-link" href="index.html">Maršrutai</a>
+          <a class="nav-link" href="../projektai.html">Projektai</a>
+          <a class="nav-link" href="../ziemos-saugykla.html">Žiemos Saugykla</a>
+          <a class="nav-link" href="../karjera.html">Karjera</a>
         </nav>
       </div>
     </header>
@@ -961,7 +1002,7 @@
     <span>Stulginskio g. 5, Vilnius</span>
     <span><a href="tel:+37061845727">+370 618 45727</a></span>
     <span>Kasdien 10–19</span>
-    <span class="sh-lang"><a href="../../maps/self-guided-routes.html" title="English">🇬🇧</a><a href="self-guided-routes.html" title="Lietuviškai">🇱🇹</a></span>
+    <span class="sh-lang"><a href="../../maps/self-guided-routes.html" title="English">🇬🇧</a><a href="self-guided-routes.html" class="lang-on" title="Lietuviškai">🇱🇹</a></span>
   </div>
 
 
@@ -981,12 +1022,12 @@
   </div>
 
 
-  <!-- City Bikes: pinned eBay-style layout — scrolling crossfades between bikes -->
+  <!-- Miesto dviračiai: pinned eBay-style layout — scrolling crossfades between bikes -->
   <section class="routes-wrap">
     <h1 class="routes-title">Savarankiški <span>maršrutai</span></h1>
-    <p class="routes-sub">Three family-friendly, almost-entirely-bike-lane city routes you can ride at your own pace — each with turn-by-turn directions and a few “Did you know?” stories along the way. Grab a rental and go.</p>
+    <p class="routes-sub">Three family-friendly, almost-entirely-bike-lane city routes you can ride at your own pace — each with nuoseklūs nurodymai and a few “Ar žinojai?” stories along the way. Grab a rental and go.</p>
 
-    <h2 class="routes-section-title">Self-guided city routes in Vilnius</h2>
+    <h2 class="routes-section-title">Savarankiški miesto maršrutai Vilniuje</h2>
     <div class="routes-grid">
       <a class="tour-card" href="#route-1">
         <div class="tc-media">
@@ -1034,7 +1075,7 @@
         </div>
       </div>
       <div class="sg-steps">
-        <div class="sg-step"><span class="sg-n">1</span><div><p>We will start our route from the Gedimino ave. After crossing the bridge, turn right and go down towards the path next to the river. Go straight till the end of the path.</p><p class="sg-dyk"><strong>Did you know?</strong> The first bridge, built in 1892, that connected Zverynas and Gediminas ave. was wooden. Next to the bridge, there is the Church of Our Lady of the Sign.</p></div></div><div class="sg-step"><span class="sg-n">2</span><div><p>Go up and turn right towards Vytautas str.</p><p class="sg-dyk"><strong>Did you know?</strong> Next to the river Neris, there is a stone, called Gediminaiciu stone. According to experts, a mysterious stone used to mark the boundaries of the land of the Grand Duke in the city in the 15th century.</p></div></div><div class="sg-step"><span class="sg-n">3</span><div><p>At the crossroad of Liubartas and Vytautas str. turn left.</p><p class="sg-dyk"><strong>Did you know?</strong> Kenesa on Liubarto str. is one out of 2 left in Lithuania. Kenesa is a house of prayer of Karaite. Karaite people have been living in Lithuania since the 14th century. Their religion – Karaism is a branch of Judaism.</p></div></div><div class="sg-step"><span class="sg-n">4</span><div><p>Turn left and go to Kestucio str. Turn to the bicycle road by the river Neris.</p></div></div><div class="sg-step"><span class="sg-n">5</span><div><p>At the end of the bicycle road, turn to Birute str.</p><p class="sg-dyk"><strong>Did you know?</strong> Wooden houses in the middle of the park next to Birutes str. used to be a hospital of infectious diseases. Some of the hospital buildings are still in operation till now.</p></div></div><div class="sg-step"><span class="sg-n">6</span><div><p>Go back to the bicycle road and go towards Vingis park.</p><p class="sg-dyk"><strong>Did you know?</strong> Church in Birutes str. is an Orthodox Church and Chapel of Saint Catherine. It is the oldest religious building in Zverynas. Until 2013, the church was closed and was used as premises to store equipment of a Lithuanian film studio and a sculptor’s workshop. Few years ago the church has reopened. ​​</p></div></div><div class="sg-step"><span class="sg-n">7</span><div><p>Go straight and turn right towards Poskos str.</p><p class="sg-dyk"><strong>Did you know?</strong> The building standing on the corner of the Poskos str. looks like from a fairy tale. The house was built in 1901 and it has a unique name “The house of the pope”. The house was called this way as an orthodox priest used to live there. A decade ago, the house has burned down, however the new homeowner have reconstructed the building according to its original design. In 2008 the building was recognised as the best reconstruction in the historical environment after the restoration of Lithuania’s independence.</p></div></div><div class="sg-step"><span class="sg-n">8</span><div><p>Go straight towards Kestutis str. Turn right at the crossroad.</p></div></div><div class="sg-step"><span class="sg-n">9</span><div><p>Turn to Treniota str.</p><p class="sg-dyk"><strong>Did you know?</strong> The green building on this street is unique because its columns by the entrance. The columns used to be gas lights. Gas lights in Vilnius were used untill 1903.</p></div></div><div class="sg-step"><span class="sg-n">10</span><div><p>Go straight towards Vytautas str.</p><p class="sg-dyk"><strong>Did you know?</strong> Architecture of wooden houses in Zverynas is definitely one of the main highlights of the district. 108 wooden houses are included in the Cultural Heritage and are protected by the Vilnius City Register.</p></div></div><div class="sg-step"><span class="sg-n">11</span><div><p>Turn right at the crossroad. Then, use the first left and go towards Malonioji str.</p><p class="sg-dyk"><strong>Did you know?</strong> Take a look at the contrasts of the unique architecture of this street. On the one side, closer to the river, there are old villas. On the other – the old wooden houses of Zverynas.</p></div></div><div class="sg-step"><span class="sg-n">12</span><div><p>Turn right towards Upe str. and go back to bicycle road by the river Neris.</p></div></div>
+        <div class="sg-step"><span class="sg-n">1</span><div><p>We will start our route from the Gedimino ave. After crossing the bridge, turn right and go down towards the path next to the river. Go straight till the end of the path.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> The first bridge, built in 1892, that connected Zverynas and Gediminas ave. was wooden. Next to the bridge, there is the Church of Our Lady of the Sign.</p></div></div><div class="sg-step"><span class="sg-n">2</span><div><p>Go up and turn right towards Vytautas str.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> Next to the river Neris, there is a stone, called Gediminaiciu stone. According to experts, a mysterious stone used to mark the boundaries of the land of the Grand Duke in the city in the 15th century.</p></div></div><div class="sg-step"><span class="sg-n">3</span><div><p>At the crossroad of Liubartas and Vytautas str. turn left.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> Kenesa on Liubarto str. is one out of 2 left in Lithuania. Kenesa is a house of prayer of Karaite. Karaite people have been living in Lithuania since the 14th century. Their religion – Karaism is a branch of Judaism.</p></div></div><div class="sg-step"><span class="sg-n">4</span><div><p>Turn left and go to Kestucio str. Turn to the bicycle road by the river Neris.</p></div></div><div class="sg-step"><span class="sg-n">5</span><div><p>At the end of the bicycle road, turn to Birute str.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> Wooden houses in the middle of the park next to Birutes str. used to be a hospital of infectious diseases. Some of the hospital buildings are still in operation till now.</p></div></div><div class="sg-step"><span class="sg-n">6</span><div><p>Go back to the bicycle road and go towards Vingis park.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> Church in Birutes str. is an Orthodox Church and Chapel of Saint Catherine. It is the oldest religious building in Zverynas. Until 2013, the church was closed and was used as premises to store equipment of a Lithuanian film studio and a sculptor’s workshop. Few years ago the church has reopened. ​​</p></div></div><div class="sg-step"><span class="sg-n">7</span><div><p>Go straight and turn right towards Poskos str.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> The building standing on the corner of the Poskos str. looks like from a fairy tale. The house was built in 1901 and it has a unique name “The house of the pope”. The house was called this way as an orthodox priest used to live there. A decade ago, the house has burned down, however the new homeowner have reconstructed the building according to its original design. In 2008 the building was recognised as the best reconstruction in the historical environment after the restoration of Lithuania’s independence.</p></div></div><div class="sg-step"><span class="sg-n">8</span><div><p>Go straight towards Kestutis str. Turn right at the crossroad.</p></div></div><div class="sg-step"><span class="sg-n">9</span><div><p>Turn to Treniota str.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> The green building on this street is unique because its columns by the entrance. The columns used to be gas lights. Gas lights in Vilnius were used untill 1903.</p></div></div><div class="sg-step"><span class="sg-n">10</span><div><p>Go straight towards Vytautas str.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> Architecture of wooden houses in Zverynas is definitely one of the main highlights of the district. 108 wooden houses are included in the Cultural Heritage and are protected by the Vilnius City Register.</p></div></div><div class="sg-step"><span class="sg-n">11</span><div><p>Turn right at the crossroad. Then, use the first left and go towards Malonioji str.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> Take a look at the contrasts of the unique architecture of this street. On the one side, closer to the river, there are old villas. On the other – the old wooden houses of Zverynas.</p></div></div><div class="sg-step"><span class="sg-n">12</span><div><p>Turn right towards Upe str. and go back to bicycle road by the river Neris.</p></div></div>
       </div>
       <p class="sg-finish">Finish line! We will end our route by the Seimas. 🙂</p>
     </article>
@@ -1048,7 +1089,7 @@
         </div>
       </div>
       <div class="sg-steps">
-        <div class="sg-step"><span class="sg-n">1</span><div><p>We will start our route by the Cathedral square and will go towards the Mindaugas bridge.</p></div></div><div class="sg-step"><span class="sg-n">2</span><div><p>After the bridge, turn right and go on a bicycle road. Take a look at the small bridge on the other side of the river Neris. Here 2 rivers – Neris and Vilnele connect.</p><p class="sg-dyk"><strong>Did you know?</strong> The Sports Palace is unique for its unusual wave or ship-shaped roof. This building is one of the few examples of the “brutalist” architectural style. The roof of the palace remains the only example of a cable construction in Lithuania.</p></div></div><div class="sg-step"><span class="sg-n">3</span><div><p>Carry on straight on a bicycle road. After going down the hill, you will see a small dam on the right-hand side. Almost all of the ships, sailing across the river Neris winter here.</p><p class="sg-dyk"><strong>Did you know?</strong> The white building with an impressive architecture on the right hand-side in called Tuskulenai Manor. In 19th century a doctor from Vilnius Julijanas Titijus has turned the manor into a gathering place for the Vilnius bohemians. Well-known people like composer Stanislovas Moniuska, writer Juzef Krasevski and others used to visit the manor.</p></div></div><div class="sg-step"><span class="sg-n">4</span><div><p>Let’s continue with our route, carry on straight.</p><p class="sg-dyk"><strong>Did you know?</strong> River Neris has only 3 official beaches. Zirmunai beach is one of them.</p></div></div><div class="sg-step"><span class="sg-n">5</span><div><p>After Zirmunai beach, turn left towards the bridge. After the bridge, turn right and go trough “Uno” adventure park.</p><p class="sg-dyk"><strong>Did you know?</strong> Whilst going trough the bridge, take a look on the right-hand side. You can cross the river Neris by cable from the “UNO” Adventure Park.</p></div></div><div class="sg-step"><span class="sg-n">6</span><div><p>After passing the park, we turn right towards the garages.</p><p class="sg-dyk"><strong>Did you know?</strong> Whilst going trough the park, take a look at the sign on the left. Here you can see the colourful springs. The water from these springs is very cold even on the hottest day of summer. This is because the sources are fed by pressurised water.</p></div></div><div class="sg-step"><span class="sg-n">7</span><div><p>Carry on straight on a bicycle road.</p><p class="sg-dyk"><strong>Did you know?</strong> Whilst going down the bicycle road, have a look at the rocks on the left. This is a labyrinth called “Vijune”. Symbols of labyrinths have been found in almost every religion since the ancient times. ​ Vijune labyrinth is a strategic place for those who celebrate the equinox. At that time, day and night last equally.​​</p></div></div><div class="sg-step"><span class="sg-n">8</span><div><p>Carry on straight. Whilst going down the bicycle road, you will see the new fire station on the left. At the end of the bicycle road you will see a sign, indicating that the road ahead is bicycle-friendly.</p></div></div><div class="sg-step"><span class="sg-n">9</span><div><p>Carry on straight. When going on a bicycle route, take a look at the colourful wall on the other side of the river. This used to be a rowing base.</p><p class="sg-dyk"><strong>Did you know?</strong> The monument on the right is dedicated to the brothers Vileisiai. The brothers played an important role in the political, cultural and social life of Lithuania. Jonas Vileisis was a signatory of the Act of Independence, he also took care of the establishment of schools and the publication of textbooks. Antanas Vileisis was a humanist doctor who was one of the most important organisers and leaders of the national activities in Lithuania. Petras Vileisis was a famous railway and bridge engineer, who was also one of the heralds of the National Revival, striving for the freedom of the Lithuanian press.</p></div></div><div class="sg-step"><span class="sg-n">10</span><div><p>Cross the street. After the bridge turn left to a small path.</p></div></div><div class="sg-step"><span class="sg-n">11</span><div><p>Go straight. Once you reach Rotunda (formerly famous ice-cream cafe) keep right towards the Cathedral square.</p><p class="sg-dyk"><strong>Did you know?</strong> In May, 2015 a new monument next to the hill of the Gediminas Castle was opened honoring the only Lithuanian dog breed – the Lithuanian Hound.​</p></div></div><div class="sg-step"><span class="sg-n">12</span><div><p>We will reach the Cathedral square from the side of the Gediminas monument.</p><p class="sg-dyk"><strong>Did you know?</strong> The Palace of the Grand Dukes of Lithuania, located next to the monument of Gediminas, used to be a brick castle in 13th century. Later, Later, it became the most important building in the large territory of  the Vilnius Lower Castle. Since the first days of the Gediminaiciai, almost all Lithuanian rulers have resided there.​</p></div></div>
+        <div class="sg-step"><span class="sg-n">1</span><div><p>We will start our route by the Cathedral square and will go towards the Mindaugas bridge.</p></div></div><div class="sg-step"><span class="sg-n">2</span><div><p>After the bridge, turn right and go on a bicycle road. Take a look at the small bridge on the other side of the river Neris. Here 2 rivers – Neris and Vilnele connect.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> The Sports Palace is unique for its unusual wave or ship-shaped roof. This building is one of the few examples of the “brutalist” architectural style. The roof of the palace remains the only example of a cable construction in Lithuania.</p></div></div><div class="sg-step"><span class="sg-n">3</span><div><p>Carry on straight on a bicycle road. After going down the hill, you will see a small dam on the right-hand side. Almost all of the ships, sailing across the river Neris winter here.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> The white building with an impressive architecture on the right hand-side in called Tuskulenai Manor. In 19th century a doctor from Vilnius Julijanas Titijus has turned the manor into a gathering place for the Vilnius bohemians. Well-known people like composer Stanislovas Moniuska, writer Juzef Krasevski and others used to visit the manor.</p></div></div><div class="sg-step"><span class="sg-n">4</span><div><p>Let’s continue with our route, carry on straight.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> River Neris has only 3 official beaches. Zirmunai beach is one of them.</p></div></div><div class="sg-step"><span class="sg-n">5</span><div><p>After Zirmunai beach, turn left towards the bridge. After the bridge, turn right and go trough “Uno” adventure park.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> Whilst going trough the bridge, take a look on the right-hand side. You can cross the river Neris by cable from the “UNO” Adventure Park.</p></div></div><div class="sg-step"><span class="sg-n">6</span><div><p>After passing the park, we turn right towards the garages.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> Whilst going trough the park, take a look at the sign on the left. Here you can see the colourful springs. The water from these springs is very cold even on the hottest day of summer. This is because the sources are fed by pressurised water.</p></div></div><div class="sg-step"><span class="sg-n">7</span><div><p>Carry on straight on a bicycle road.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> Whilst going down the bicycle road, have a look at the rocks on the left. This is a labyrinth called “Vijune”. Symbols of labyrinths have been found in almost every religion since the ancient times. ​ Vijune labyrinth is a strategic place for those who celebrate the equinox. At that time, day and night last equally.​​</p></div></div><div class="sg-step"><span class="sg-n">8</span><div><p>Carry on straight. Whilst going down the bicycle road, you will see the new fire station on the left. At the end of the bicycle road you will see a sign, indicating that the road ahead is bicycle-friendly.</p></div></div><div class="sg-step"><span class="sg-n">9</span><div><p>Carry on straight. When going on a bicycle route, take a look at the colourful wall on the other side of the river. This used to be a rowing base.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> The monument on the right is dedicated to the brothers Vileisiai. The brothers played an important role in the political, cultural and social life of Lithuania. Jonas Vileisis was a signatory of the Act of Independence, he also took care of the establishment of schools and the publication of textbooks. Antanas Vileisis was a humanist doctor who was one of the most important organisers and leaders of the national activities in Lithuania. Petras Vileisis was a famous railway and bridge engineer, who was also one of the heralds of the National Revival, striving for the freedom of the Lithuanian press.</p></div></div><div class="sg-step"><span class="sg-n">10</span><div><p>Cross the street. After the bridge turn left to a small path.</p></div></div><div class="sg-step"><span class="sg-n">11</span><div><p>Go straight. Once you reach Rotunda (formerly famous ice-cream cafe) keep right towards the Cathedral square.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> In May, 2015 a new monument next to the hill of the Gediminas Castle was opened honoring the only Lithuanian dog breed – the Lithuanian Hound.​</p></div></div><div class="sg-step"><span class="sg-n">12</span><div><p>We will reach the Cathedral square from the side of the Gediminas monument.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> The Palace of the Grand Dukes of Lithuania, located next to the monument of Gediminas, used to be a brick castle in 13th century. Later, Later, it became the most important building in the large territory of  the Vilnius Lower Castle. Since the first days of the Gediminaiciai, almost all Lithuanian rulers have resided there.​</p></div></div>
       </div>
       <p class="sg-finish">Well done! You have cycled more than 11 kilometers! 🙂</p>
     </article>
@@ -1062,7 +1103,7 @@
         </div>
       </div>
       <div class="sg-steps">
-        <div class="sg-step"><span class="sg-n">1</span><div><p>We will start our route from the Lukiskes square and will go towards the Seimas.</p><p class="sg-dyk"><strong>Did you know?</strong> In 1860, there was a market in the Lukiskes square. It was the largest trading place in Vilnius until 1920. The market has helped the Lukiskes area to integrate faster into Vilnius.</p></div></div><div class="sg-step"><span class="sg-n">2</span><div><p>After passing the Zverynas bridge, turn left, from this point, the bike path towards Vingis Park starts.</p><p class="sg-dyk"><strong>Did you know?</strong> Zverynas Bridge is the oldest existing bridge crossing the Neris in Vilnius.</p></div></div><div class="sg-step"><span class="sg-n">3</span><div><p>We will now drive to the Vingis Park. Turn towards the bridge.</p><p class="sg-dyk"><strong>Did you know?</strong> In 1920, there was a large plant park formed in the territory of Vingis Park. Later, some of the plants were transferred to the Botanical Garden of Vilnius University, established in Kairenai.</p></div></div><div class="sg-step"><span class="sg-n">4</span><div><p>After passing the bridge, turn right, after a short drive, turn right again.</p><p class="sg-dyk"><strong>Did you know?</strong> In 1997, in the concert Estrada of the Vingis Park during the band “Foje” farewell concert, a record number of people was gathered – over 60 thousand.</p></div></div><div class="sg-step"><span class="sg-n">5</span><div><p>After a couple of hundred meters turn left and drive to the park Estrada, where you can relax and refresh.</p><p class="sg-dyk"><strong>Did you know?</strong> In 1960, the park stage Estrada was urgently built for the twentieth-year song festival of the LSSR according to the project of an Estonian architect. An analogue stage was built in Tallinn as well. Later, Estonian architects were outraged that Lithuanians used their stage project.</p></div></div><div class="sg-step"><span class="sg-n">6</span><div><p>There is a narrow road hidden in the forest along which we will continue our route. We will now turn right towards the Estrada stage.</p><p class="sg-dyk"><strong>Did you know?</strong> Some of the most valuable and oldest forests are growing in Vingis Park. The pines growing here are almost 300 years old!</p></div></div><div class="sg-step"><span class="sg-n">7</span><div><p>We will now be leaving the park. After crossing the bridge, turn right and after a few hundred meters, turn to the left.</p></div></div><div class="sg-step"><span class="sg-n">8</span><div><p>We will now drive straight towards the Zverynas bridge. Cross the street and continue the route on the bicycle road along the Neris towards the Mindaugas bridge.</p><p class="sg-dyk"><strong>Did you know?</strong> At the beginning of the 20th century, Zverynas district was a famous resort town which was a favourite place to rest for the people of Vilnius.</p></div></div><div class="sg-step"><span class="sg-n">9</span><div><p>Cross the Mindaugas Bridge, cross the street and turn right.</p><p class="sg-dyk"><strong>Did you know?</strong> King Mindaugas Bridge was built on the occasion of the 750th anniversary of the coronation of the King Mindaugas. The “pipe” near the Mindaugas bridge is called the “Quay Arch”. A unique sculpture reproduces the shape of the Neris quay, and the price of it was 25 thousand euros.</p></div></div><div class="sg-step"><span class="sg-n">10</span><div><p>Turn right towards Berdarninai Park.</p><p class="sg-dyk"><strong>Did you know?</strong> According to mythologists, during the pagan times, there was a saint land in the garden area. The only item survived from there is an oak which is the oldest oak in the Old Town (1.5 m in diameter and 474 cm in volume). The oak can be found in the corner of the park, by the bridge to the new building of the Academy of Arts.</p></div></div><div class="sg-step"><span class="sg-n">11</span><div><p>We will now be leaving the park. Have a look at the churches of the St. Anne and the Bernadine.</p><p class="sg-dyk"><strong>Did you know?</strong> St. Anne’s Church is mentioned among the most beautiful brick buildings in the world. Thirty-three types of bricks of different shapes were used to build the impressive-looking flaming Gothic style church.</p></div></div><div class="sg-step"><span class="sg-n">12</span><div><p>Go towards the Cathedral square.</p><p class="sg-dyk"><strong>Did you know?</strong> The bell tower of the Cathedral consists of two forms – a round base and an octagonal upper part. This is because the bell tower was built on one of the defensive towers of the Lower Castle.</p></div></div><div class="sg-step"><span class="sg-n">13</span><div><p>Almost there! The only section remaining is a straight road on Gediminas Avenue towards Lukiskes Square. 🙂</p><p class="sg-dyk"><strong>Did you know?</strong> While cycling on Gediminas Avenue, pay attention to the wall of the store “Danija”. On the wall, there are teddy bears eating chocolate. This is because in the past there was an entrance to the very popular chocolate shop “Victoria”.</p></div></div>
+        <div class="sg-step"><span class="sg-n">1</span><div><p>We will start our route from the Lukiskes square and will go towards the Seimas.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> In 1860, there was a market in the Lukiskes square. It was the largest trading place in Vilnius until 1920. The market has helped the Lukiskes area to integrate faster into Vilnius.</p></div></div><div class="sg-step"><span class="sg-n">2</span><div><p>After passing the Zverynas bridge, turn left, from this point, the bike path towards Vingis Park starts.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> Zverynas Bridge is the oldest existing bridge crossing the Neris in Vilnius.</p></div></div><div class="sg-step"><span class="sg-n">3</span><div><p>We will now drive to the Vingis Park. Turn towards the bridge.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> In 1920, there was a large plant park formed in the territory of Vingis Park. Later, some of the plants were transferred to the Botanical Garden of Vilnius University, established in Kairenai.</p></div></div><div class="sg-step"><span class="sg-n">4</span><div><p>After passing the bridge, turn right, after a short drive, turn right again.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> In 1997, in the concert Estrada of the Vingis Park during the band “Foje” farewell concert, a record number of people was gathered – over 60 thousand.</p></div></div><div class="sg-step"><span class="sg-n">5</span><div><p>After a couple of hundred meters turn left and drive to the park Estrada, where you can relax and refresh.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> In 1960, the park stage Estrada was urgently built for the twentieth-year song festival of the LSSR according to the project of an Estonian architect. An analogue stage was built in Tallinn as well. Later, Estonian architects were outraged that Lithuanians used their stage project.</p></div></div><div class="sg-step"><span class="sg-n">6</span><div><p>There is a narrow road hidden in the forest along which we will continue our route. We will now turn right towards the Estrada stage.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> Some of the most valuable and oldest forests are growing in Vingis Park. The pines growing here are almost 300 years old!</p></div></div><div class="sg-step"><span class="sg-n">7</span><div><p>We will now be leaving the park. After crossing the bridge, turn right and after a few hundred meters, turn to the left.</p></div></div><div class="sg-step"><span class="sg-n">8</span><div><p>We will now drive straight towards the Zverynas bridge. Cross the street and continue the route on the bicycle road along the Neris towards the Mindaugas bridge.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> At the beginning of the 20th century, Zverynas district was a famous resort town which was a favourite place to rest for the people of Vilnius.</p></div></div><div class="sg-step"><span class="sg-n">9</span><div><p>Cross the Mindaugas Bridge, cross the street and turn right.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> King Mindaugas Bridge was built on the occasion of the 750th anniversary of the coronation of the King Mindaugas. The “pipe” near the Mindaugas bridge is called the “Quay Arch”. A unique sculpture reproduces the shape of the Neris quay, and the price of it was 25 thousand euros.</p></div></div><div class="sg-step"><span class="sg-n">10</span><div><p>Turn right towards Berdarninai Park.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> According to mythologists, during the pagan times, there was a saint land in the garden area. The only item survived from there is an oak which is the oldest oak in the Old Town (1.5 m in diameter and 474 cm in volume). The oak can be found in the corner of the park, by the bridge to the new building of the Academy of Arts.</p></div></div><div class="sg-step"><span class="sg-n">11</span><div><p>We will now be leaving the park. Have a look at the churches of the St. Anne and the Bernadine.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> St. Anne’s Church is mentioned among the most beautiful brick buildings in the world. Thirty-three types of bricks of different shapes were used to build the impressive-looking flaming Gothic style church.</p></div></div><div class="sg-step"><span class="sg-n">12</span><div><p>Go towards the Cathedral square.</p><p class="sg-dyk"><strong>Ar žinojai?</strong> The bell tower of the Cathedral consists of two forms – a round base and an octagonal upper part. This is because the bell tower was built on one of the defensive towers of the Lower Castle.</p></div></div><div class="sg-step"><span class="sg-n">13</span><div><p>Almost there! The only section remaining is a straight road on Gediminas Avenue towards Lukiskes Square. 🙂</p><p class="sg-dyk"><strong>Ar žinojai?</strong> While cycling on Gediminas Avenue, pay attention to the wall of the store “Danija”. On the wall, there are teddy bears eating chocolate. This is because in the past there was an entrance to the very popular chocolate shop “Victoria”.</p></div></div>
       </div>
       
     </article>
@@ -1087,7 +1128,7 @@
       </div>
       <div class="footer-contact">
         <div class="fc-head">
-          <h4>Bike Vilnius Velotakas</h4>
+          <h4>Velotakas — dviračių nuoma</h4>
           <ul>
             <li><a href="tel:+37061845727">+370 618 45727</a></li>
             <li><a href="mailto:info@velotakas.lt">info@velotakas.lt</a></li>
@@ -1096,7 +1137,7 @@
         </div>
         <div class="fc-block">
           <strong>Rekvizitai</strong>
-          <p>Įmonės kodas: 302643966<br>SEB Bankas, account No. LT48 7044 0600 0771 2383<br>SWIFT code: CBVILT2X</p>
+          <p>Įmonės kodas: 302643966<br>SEB Bankas, sąskaitos Nr. LT48 7044 0600 0771 2383<br>SWIFT kodas: CBVILT2X</p>
         </div>
         <div class="fc-block">
           <strong>Darbo laikas · Balandžio 1 – Spalio 31</strong>
@@ -1124,7 +1165,7 @@
 
     // lightweight smooth scroll (Lenis), wired to ScrollTrigger + GSAP ticker
     (function () {
-      if (typeof Lenis === "undefined") return;   // graceful fallback to native scroll
+      if (typeof Lenis === "undefined" || window.matchMedia("(max-width: 860px)").matches) return;   // no smooth scroll on mobile
       var lenis = new Lenis({ duration: 1.1, smoothWheel: true }); window.lenis = lenis;
       lenis.on("scroll", ScrollTrigger.update);
       gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
@@ -1142,7 +1183,7 @@
       update();
     });
 
-    // City Bikes: pin the layout, scroll crossfades between bikes (content stays put)
+    // Miesto dviračiai: pin the layout, scroll crossfades between bikes (content stays put)
     (function () {
       var stage = document.querySelector(".swap-stage");
       if (!stage) return;
@@ -1395,6 +1436,64 @@
         });
       });
     })();
+  </script>
+  <script id="mmx-js">
+  (function(){
+    var inner=document.querySelector('.site-header .inner'); if(!inner) return;
+    var topnav=inner.querySelector('.topnav'); if(!topnav) return;
+    var btn=document.createElement('button'); btn.type='button'; btn.className='mmx-btn';
+    btn.innerHTML='<span class="bars"><i></i><i></i></span>Meniu'; inner.appendChild(btn); var _sl=document.querySelector('.subhead .sh-lang'); if(_sl){ var _lg=document.createElement('span'); _lg.className='mmx-lang'; _lg.innerHTML=_sl.innerHTML; inner.appendChild(_lg); }
+    var panel=document.createElement('div'); panel.className='mmx-panel';
+    var close=document.createElement('button'); close.type='button'; close.className='mmx-close'; close.setAttribute('aria-label','Uždaryti'); close.innerHTML='\u00D7'; panel.appendChild(close);
+    var sh=document.querySelector('.subhead .sh-social');
+    if(sh){ var soc=document.createElement('div'); soc.className='mmx-social'; soc.innerHTML=sh.innerHTML; panel.appendChild(soc); }
+    var wrap=document.createElement('div'); panel.appendChild(wrap);
+    Array.prototype.forEach.call(topnav.children,function(node){
+      if(node.classList && node.classList.contains('nav-drop')){
+        var link=node.querySelector('.nav-link'); var subs=node.querySelectorAll('.mm-links a'); if(!link) return;
+        var item=document.createElement('div'); item.className='mmx-item';
+        var acc=document.createElement('button'); acc.type='button'; acc.className='mmx-acc';
+        acc.innerHTML='<span>'+link.textContent.replace('\u25BE','').trim()+'</span><span class="chev"></span>';
+        var sub=document.createElement('div'); sub.className='mmx-sub';
+        Array.prototype.forEach.call(subs,function(a){ var x=document.createElement('a'); x.href=a.getAttribute('href'); x.textContent=a.textContent; sub.appendChild(x); });
+        acc.addEventListener('click',function(){ item.classList.toggle('open'); });
+        item.appendChild(acc); item.appendChild(sub); wrap.appendChild(item);
+      } else if(node.tagName==='A' && node.classList.contains('nav-link')){
+        var it=document.createElement('div'); it.className='mmx-item';
+        var a=document.createElement('a'); a.className='mmx-link'; a.href=node.getAttribute('href'); a.textContent=node.textContent.replace('\u25BE','').trim();
+        it.appendChild(a); wrap.appendChild(it);
+      }
+    });
+    var foot=document.createElement('div'); foot.className='mmx-foot'; foot.innerHTML='Stulginskio g. 5 \u00B7 <a href="tel:+37061845727">+370 618 45727</a>';
+    panel.appendChild(foot); document.body.appendChild(panel);
+    var items=panel.querySelectorAll('.mmx-social, .mmx-item, .mmx-foot');
+    var isOpen=false, busy=false, G=(typeof gsap!=='undefined');
+    function rect(){ return btn.getBoundingClientRect(); }
+    function full(){ return {w:window.innerWidth, h:window.innerHeight}; }
+    function open(){
+      if(busy) return; busy=true; isOpen=true; var r=rect(), f=full();
+      panel.style.visibility='visible'; panel.classList.add('open'); document.body.classList.add('mmx-lock'); btn.style.opacity='0';
+      if(G){
+        gsap.killTweensOf([panel,items]);
+        gsap.set(panel,{top:r.top,left:r.left,width:r.width,height:r.height,borderRadius:24,opacity:1});
+        gsap.to(panel,{top:10,left:10,width:f.w-20,height:f.h-20,borderRadius:26,duration:.55,ease:'power3.inOut',onComplete:function(){busy=false;}});
+        gsap.from(items,{y:24,opacity:0,duration:.4,stagger:.05,delay:.2,ease:'power3.out'});
+      } else { panel.style.cssText+=';top:10px;left:10px;width:calc(100% - 20px);height:calc(100% - 20px);opacity:1;border-radius:26px'; busy=false; }
+    }
+    function shut(){
+      if(busy) return; busy=true; isOpen=false; var r=rect();
+      document.body.classList.remove('mmx-lock');
+      if(G){
+        gsap.killTweensOf([panel,items]);
+        gsap.to(items,{opacity:0,y:-12,duration:.2,ease:'power1.in'});
+        gsap.to(panel,{opacity:0,duration:.32,ease:'power2.in',
+          onComplete:function(){ panel.classList.remove('open'); panel.style.visibility='hidden'; btn.style.opacity='1'; busy=false; }});
+      } else { panel.style.opacity='0'; panel.style.visibility='hidden'; btn.style.opacity='1'; busy=false; }
+    }
+    btn.addEventListener('click',function(){ isOpen?shut():open(); });
+    close.addEventListener('click',shut);
+    panel.addEventListener('click',function(e){ if(e.target.tagName==='A') shut(); });
+  })();
   </script>
 </body>
 </html>

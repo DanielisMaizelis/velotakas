@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bike Rental in Vilnius — Velotakas</title>
+  <link rel="icon" type="image/png" href="../../media/logo.png"><link rel="apple-touch-icon" href="../../media/logo.png">
+  <title>Dviračių nuoma Vilniuje — Velotakas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@400;500;600;700;800&family=DM+Sans:wght@500;700;800&display=swap" rel="stylesheet">
@@ -724,7 +725,7 @@
     .filter-reset:hover { border-color: #16bdcc; color: #16bdcc; }
     .tc-cat { display: inline-block; align-self: flex-start; background: #eef6f7; color: #0e7c8f; font-size: .66rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; padding: 4px 9px; border-radius: 999px; margin-bottom: 9px; }
     .tc-body h3 { font-size: 1.05rem; }
-    @media (max-width: 860px) { .shop { flex-direction: column; } .shop-sidebar { position: static; width: 100%; flex: none; } }
+    @media (max-width: 860px) { .shop { flex-direction: column; align-items: stretch; } .shop-sidebar { position: static; width: 100%; flex: none; } #bikeGrid { width: 100%; grid-template-columns: 1fr 1fr !important; gap: 26px 14px !important; } #bikeGrid .tc-name { font-size: clamp(1.3rem, 5vw, 1.7rem); } }
 
     /* ===== shop v2: full-width image-tile cards, protruding info, hover blur ===== */
     .ta-tours { max-width: none; margin: 0 12vw; padding: 4vh 0 12vh; }
@@ -733,7 +734,7 @@
     .tour-card { position: relative; display: block; height: auto; background: transparent; border: 0; box-shadow: none; overflow: visible; border-radius: 18px; transition: transform .25s ease; }
     .tour-card:hover { transform: translateY(-4px); box-shadow: none; }
     .tc-media { position: relative; aspect-ratio: 4 / 3; }
-    /* layered hover: three colour boxes fan out from behind each tile photo at different speeds */
+    /* layered hover: three colour boxes fan out from behind each tile photo at different pavarų */
     .tc-layer { position: absolute; inset: 0; border-radius: 18px; opacity: 0; pointer-events: none; will-change: transform; transition: transform .55s cubic-bezier(.2,.85,.25,1), opacity .35s ease; }
     .tc-layer.l-cyan  { background: #16bdcc; }
     .tc-layer.l-white { background: #ffffff; box-shadow: 0 18px 40px rgba(0,0,0,.18); }
@@ -753,7 +754,7 @@
     .tc-price { font-weight: 800; font-size: 1.35rem; color: #111827; }
     .tc-price small { font-weight: 600; font-size: .78rem; color: #6b7280; }
     .tc-cta { display: none; }
-    @media (max-width: 860px) { .shop { flex-direction: column; } .shop-sidebar { position: static; width: 100%; flex: none; } }
+    @media (max-width: 860px) { .shop { flex-direction: column; align-items: stretch; } .shop-sidebar { position: static; width: 100%; flex: none; } #bikeGrid { width: 100%; grid-template-columns: 1fr 1fr !important; gap: 26px 14px !important; } #bikeGrid .tc-name { font-size: clamp(1.3rem, 5vw, 1.7rem); } }
 
   </style>
   <style>
@@ -775,6 +776,56 @@
     .subhead .sh-social a { display:inline-flex; color:#2b3a44; transition:color .2s, transform .2s; }
     .subhead .sh-social a:hover { color:#16bdcc; transform:translateY(-1px); }
     .subhead .sh-social svg { width:20px; height:20px; display:block; fill:currentColor; }
+  </style>
+  <style id="mmx-css">
+    .mmx-btn{ display:none; }
+    .mmx-lang{ display:none; }
+    @media (max-width:860px){
+      .site-header .topnav{ display:none !important; }
+      .site-top{ margin-top:8px; }
+      .site-header .inner{ min-height:60px; position:relative; }
+      .mmx-btn{ display:inline-flex; align-items:center; gap:9px; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); margin:0; height:46px; padding:0 20px;
+        border:0; border-radius:999px; cursor:pointer; background:#06343a; color:#fff; box-shadow:0 8px 22px rgba(6,52,58,.4);
+        font-family:"Caveat",cursive; font-weight:700; font-size:1.55rem; line-height:1; }
+      .mmx-btn .bars{ display:inline-flex; flex-direction:column; gap:5px; }
+      .mmx-btn .bars i{ width:20px; height:2px; background:#16bdcc; border-radius:2px; display:block; }
+      .subhead{ display:inline-flex !important; position:fixed; top:128px; left:50%; right:auto; transform:translateX(-50%);
+        gap:24px; padding:12px 24px; font-size:1.02rem; max-width:96vw; white-space:nowrap; z-index:10; }
+      .subhead.hide{ transform:translateX(-50%) translateY(-280%); }
+      .subhead > *:nth-child(1), .subhead > *:nth-child(3), .subhead > *:nth-child(4), .subhead > *:nth-child(5){ display:none; }
+      .mmx-lang{ display:inline-flex; align-items:center; gap:16px; margin-left:auto; font-size:1.55rem; }
+      .mmx-lang a{ text-decoration:none; color:inherit; }
+      .mmx-lang a.lang-on{ border-radius:6px; padding:1px 6px; background:rgba(22,189,204,.20); box-shadow:inset 0 0 0 1.6px #16bdcc; }
+      .subhead .sh-lang{ font-size:1.55rem; gap:14px; align-items:center; }
+      .subhead .sh-lang a.lang-on{ padding:1px 6px; }
+    }
+    .mmx-panel{ position:fixed; z-index:135; background:linear-gradient(165deg,#084149,#052a30 55%,#0a1119);
+      color:#fff; display:flex; flex-direction:column; padding:84px 28px 36px; overflow-y:auto; overflow-x:hidden;
+      opacity:0; visibility:hidden; pointer-events:none; will-change:top,left,width,height,border-radius; }
+    .mmx-panel.open{ pointer-events:auto; }
+    .mmx-close{ position:absolute; top:18px; right:18px; width:48px; height:48px; border:0; border-radius:50%;
+      background:#16bdcc; color:#04282d; font-size:1.8rem; line-height:1; cursor:pointer; display:grid; place-items:center; z-index:2; }
+    .mmx-social{ display:flex; gap:18px; margin-bottom:14px; }
+    .mmx-social a{ color:#bfe9ee; display:inline-flex; transition:color .2s; } .mmx-social a:hover{ color:#16bdcc; }
+    .mmx-social svg{ width:23px; height:23px; fill:currentColor; }
+    .mmx-item{ border-bottom:1px solid rgba(255,255,255,.12); }
+    .mmx-link,.mmx-acc{ display:flex; align-items:center; justify-content:space-between; width:100%; background:none; border:0;
+      cursor:pointer; color:#fff; text-decoration:none; font-family:"Caveat",cursive; font-weight:700; font-size:2.5rem;
+      line-height:1.08; padding:8px 4px; text-align:left; }
+    .mmx-link:hover,.mmx-acc:hover{ color:#16bdcc; }
+    .mmx-acc .chev{ flex:none; width:12px; height:12px; border-right:2px solid #16bdcc; border-bottom:2px solid #16bdcc;
+      transform:rotate(45deg); transition:transform .3s; margin-left:14px; }
+    .mmx-item.open .mmx-acc .chev{ transform:rotate(-135deg); }
+    .mmx-sub{ max-height:0; overflow:hidden; transition:max-height .45s ease; }
+    .mmx-item.open .mmx-sub{ max-height:920px; }
+    .mmx-sub a{ display:block; font-family:"Poppins",sans-serif; font-size:1.05rem; color:#bfe9ee; padding:8px 4px 8px 18px; text-decoration:none; }
+    .mmx-sub a:hover{ color:#16bdcc; }
+    .mmx-foot{ margin-top:auto; padding-top:18px; font-family:"Caveat",cursive; font-size:1.5rem; color:#8fc0c6; }
+    .mmx-foot a{ color:#16bdcc; text-decoration:none; }
+    body.mmx-lock{ overflow:hidden; }
+  </style>
+  <style id="lang-active-css">
+    .sh-lang a.lang-on{ border-radius:6px; padding:0 4px; background:rgba(22,189,204,.20); box-shadow:inset 0 0 0 1.6px #16bdcc; }
   </style>
 </head>
 <body>
@@ -805,63 +856,53 @@
   <div class="site-top">
     <header class="site-header">
       <div class="inner">
-        <a class="brand" href="../index.html"><span class="years-badge">15 years</span><img src="../../media/logo.png" alt="Velotakas.lt"></a>
+        <a class="brand" href="../index.html"><span class="years-badge">15 metų</span><img src="../../media/logo.png" alt="Velotakas.lt"></a>
         <nav class="topnav">
           <div class="nav-drop">
             <a class="nav-link" href="bike-rent.html">Nuoma ▾</a>
             <div class="nav-menu">
-              <div class="mm-head"><a href="bike-rent.html" style="color:inherit;text-decoration:none">Išsirinkite tobulą <span>dviratį</span></a></div>
+              <div class="mm-head"><a href="bike-rent.html" style="color:inherit;text-decoration:none">Išsirinkite <span>dviratį</span></a></div>
               <div class="mm-links">
-                <a href="bike-rent.html?cat=city" data-img="../../media/trak-allant.jpg" data-price="6">Miesto dviračiai</a>
-                <a href="bike-rent.html?cat=touring" data-img="../../media/cat-touring.jpg" data-price="12">Kelioniniai dviračiai</a>
-                <a href="bike-rent.html?cat=hybrid" data-img="../../media/cat-hybrid.jpg" data-price="14">Hibridiniai dviračiai</a>
-                <a href="bike-rent.html?cat=mountain" data-img="../../media/cat-mountain.jpg" data-price="20">Kalnų dviračiai</a>
-                <a href="bike-rent.html?cat=gravel" data-img="../../media/cat-gravel.jpg" data-price="30">Gravel dviračiai</a>
-                <a href="bike-rent.html?cat=electric" data-img="../../media/cat-electric.jpg" data-price="18">Elektriniai dviračiai</a>
-                <a href="bike-rent.html?cat=road" data-img="../../media/cat-road.jpg" data-price="25">Plentiniai dviračiai</a>
-                <a href="bike-rent.html?cat=scooters" data-img="../../media/cat-scooters.jpg" data-price="8">Elektriniai paspirtukai</a>
-                <a href="bike-rent.html?cat=accessories" data-img="../../media/cat-accessories.jpg" data-price="5">Dviračių priedai</a>
-                <a href="bike-rent.html?cat=groups" data-img="../../media/cat-groups.jpg">Nuoma grupėms</a>
-                <a href="bike-rent.html?cat=kids" data-img="../../media/cat-kids.jpg" data-price="8">Vaikiški dviračiai</a>
-                <a href="bike-rent.html?cat=sale" data-img="../../media/cat-sale.jpg" data-price="180">Dviračių pardavimas</a>
+                <a href="bike-rent.html?cat=city" data-img="../../media/trak-allant.jpg">Miesto dviračiai</a>
+                <a href="bike-rent.html?cat=touring" data-img="../../media/cat-touring.jpg">Kelioniniai dviračiai</a>
+                <a href="bike-rent.html?cat=hybrid" data-img="../../media/cat-hybrid.jpg">Hibridiniai dviračiai</a>
+                <a href="bike-rent.html?cat=mountain" data-img="../../media/cat-mountain.jpg">Kalnų dviračiai</a>
+                <a href="bike-rent.html?cat=gravel" data-img="../../media/cat-gravel.jpg">Gravel dviračiai</a>
+                <a href="bike-rent.html?cat=electric" data-img="../../media/cat-electric.jpg">Elektriniai dviračiai</a>
+                <a href="bike-rent.html?cat=road" data-img="../../media/cat-road.jpg">Plentiniai dviračiai</a>
+                <a href="bike-rent.html?cat=scooters" data-img="../../media/velotakas/as_optimizuota_nuotrauka_ikelk_mane_1-1024x768.jpg">Elektriniai paspirtukai</a>
+                <a href="bike-rent.html?cat=accessories" data-img="../../media/cat-accessories.jpg">Dviračių priedai ir aksesuarai</a>
+                <a href="bike-rent.html?cat=groups" data-img="../../media/cat-groups.jpg">Dviračių nuoma grupėms</a>
+                <a href="bike-rent.html?cat=kids" data-img="../../media/cat-kids.jpg">Vaikiški dviračiai</a>
+                <a href="bike-rent.html?cat=sale" data-img="../../media/cat-sale.jpg">Naudotų ir naujų dviračių pardavimas</a>
               </div>
-              <div class="mm-foot">Kaina nuo <span>€5</span></div>
+              <div class="mm-foot">Nuo <span>6 €</span></div>
               <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('../../media/trak-allant.jpg');"></div></div>
             </div>
           </div>
           <div class="nav-drop">
             <button class="nav-link" type="button">Ekskursijos ▾</button>
             <div class="nav-menu">
-              <div class="mm-head">Pažinkite Vilnių su <span>Velotakas</span></div>
+              <div class="mm-head">Išsirinkite <span>ekskursiją</span></div>
               <div class="mm-links">
                 <a href="../tours/city-bike-tours.html" data-img="../../media/sec1.jpg">Dviračių ekskursijos</a>
                 <a href="../tours/walking-tours.html" data-img="../../media/sec2.jpg">Žygiai pėsčiomis</a>
-                <a href="../tours/self-guided-tours.html" data-img="../../media/sec3.jpg">Savarankiškos ekskursijos</a>
+                <a href="../tours/self-guided-tours.html" data-img="../../media/sec3.jpg">Maršrutai savarankiškai</a>
                 <a href="../tours/mountain-bike-tours.html" data-img="../../media/tour-group.jpg">Kalnų dviračių turai</a>
-                <a href="../tours/nature-bike-tours.html" data-img="../../media/tour-square.jpg" data-price="34">Gamtos turai</a>
+                <a href="../tours/nature-bike-tours.html" data-img="../../media/tour-square.jpg">Gamtos turai</a>
                 <a href="../tours/bike-tours-for-groups.html" data-img="../../media/tour-square.jpg">Turai grupėms</a>
               </div>
-              <div class="mm-foot">Kaina nuo <span>€34</span></div>
+              <div class="mm-foot">Nuo <span>29 €</span></div>
               <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('../../media/sec1.jpg');"></div></div>
-            </div>
-          </div>
-          <div class="nav-drop">
-            <button class="nav-link" type="button">Maršrutai ▾</button>
-            <div class="nav-menu">
-              <div class="mm-head">Pasirinkite <span>maršrutą</span></div>
-              <div class="mm-links">
-                <a href="../maps/mtb-routes.html" data-img="../../media/cat-mountain.jpg">MTB maršrutai</a>
-                <a href="../maps/touring-city-maps.html" data-img="../../media/tour-square.jpg">Miesto maršrutai</a>
-                <a href="../maps/self-guided-routes.html" data-img="../../media/tour-square.jpg">Savarankiški maršrutai</a>
-              </div>
-              <div class="mm-foot">Nemokami <span>GPX</span> atsisiuntimai</div>
-              <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('../../media/cat-mountain.jpg');"></div></div>
             </div>
           </div>
           <a class="nav-link nav-contact" href="#contact">Kontaktai</a>
           <a class="nav-link" href="../about.html">Apie mus</a>
           <a class="nav-link" href="../blog/blog.html">Naujienos</a>
-          <a class="nav-link" href="../faq.html">DUK</a>
+          <a class="nav-link" href="../maps/index.html">Maršrutai</a>
+          <a class="nav-link" href="../projektai.html">Projektai</a>
+          <a class="nav-link" href="../ziemos-saugykla.html">Žiemos Saugykla</a>
+          <a class="nav-link" href="../karjera.html">Karjera</a>
         </nav>
       </div>
     </header>
@@ -872,7 +913,7 @@
     <span>Stulginskio g. 5, Vilnius</span>
     <span><a href="tel:+37061845727">+370 618 45727</a></span>
     <span>Kasdien 10–19</span>
-    <span class="sh-lang"><a href="../../bikes/bike-rent.html" title="English">🇬🇧</a><a href="bike-rent.html" title="Lietuviškai">🇱🇹</a></span>
+    <span class="sh-lang"><a href="../../bikes/bike-rent.html" title="English">🇬🇧</a><a href="bike-rent.html" class="lang-on" title="Lietuviškai">🇱🇹</a></span>
   </div>
 
 
@@ -895,358 +936,358 @@
   <!-- hero: centered headline -->
   <section class="hero-lead">
     <div class="cover-content" id="cover">
-      <h1 class="reveal-line"><span>Rent a bike in Vilnius</span></h1>
+      <h1 class="reveal-line"><span>Nuomokitės dviratį Vilniuje</span></h1>
     </div>
   </section>
 
   <!-- TripAdvisor-style tour cards -->
   <section class="ta-tours">
-    <h2 class="tours-title">Choose your <span>bike</span></h2>
+    <h2 class="tours-title">Išsirinkite <span>dviratį</span></h2>
     <div class="shop">
       <aside class="shop-sidebar">
-        <h3 class="filter-h">Filter</h3>
+        <h3 class="filter-h">Filtras</h3>
         <div class="filter-group">
-          <p class="filter-label">Category</p>
-          <label class="f-check"><input type="checkbox" class="f-cat" value="mountain"> Mountain</label>
-          <label class="f-check"><input type="checkbox" class="f-cat" value="touring"> Touring</label>
-          <label class="f-check"><input type="checkbox" class="f-cat" value="hybrid"> Hybrid</label>
+          <p class="filter-label">Kategorija</p>
+          <label class="f-check"><input type="checkbox" class="f-cat" value="mountain"> Kalnų</label>
+          <label class="f-check"><input type="checkbox" class="f-cat" value="touring"> Kelioniniai</label>
+          <label class="f-check"><input type="checkbox" class="f-cat" value="hybrid"> Hibridiniai</label>
           <label class="f-check"><input type="checkbox" class="f-cat" value="gravel"> Gravel</label>
-          <label class="f-check"><input type="checkbox" class="f-cat" value="electric"> Electric</label>
-          <label class="f-check"><input type="checkbox" class="f-cat" value="road"> Road</label>
-          <label class="f-check"><input type="checkbox" class="f-cat" value="scooters"> Scooters</label>
-          <label class="f-check"><input type="checkbox" class="f-cat" value="kids"> Kids</label>
-          <label class="f-check"><input type="checkbox" class="f-cat" value="accessories"> Accessories</label>
-          <label class="f-check"><input type="checkbox" class="f-cat" value="sale"> For sale</label>
+          <label class="f-check"><input type="checkbox" class="f-cat" value="electric"> Elektriniai</label>
+          <label class="f-check"><input type="checkbox" class="f-cat" value="road"> Plentiniai</label>
+          <label class="f-check"><input type="checkbox" class="f-cat" value="scooters"> Paspirtukai</label>
+          <label class="f-check"><input type="checkbox" class="f-cat" value="kids"> Vaikiški</label>
+          <label class="f-check"><input type="checkbox" class="f-cat" value="accessories"> Priedai</label>
+          <label class="f-check"><input type="checkbox" class="f-cat" value="sale"> Parduodama</label>
         </div>
         <div class="filter-group">
-          <p class="filter-label">Max price / day</p>
+          <p class="filter-label">Maks. kaina / d.</p>
           <input type="range" id="priceRange" min="5" max="40" value="40" step="1">
           <div class="price-out">≤ €<span id="priceVal">40</span> <small>(rentals)</small></div>
         </div>
-        <button class="filter-reset" id="filterReset" type="button">Reset filters</button>
+        <button class="filter-reset" id="filterReset" type="button">Atstatyti filtrus</button>
       </aside>
       <div class="tour-grid" id="bikeGrid">
       <a class="tour-card" href="scott-aspect-930.html" data-cat="mountain" data-price="20" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Scott-Aspect-940-n1-1024x768.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Mountain</span>
+          <span class="tc-cat">Kalnų</span>
           <h3 class="tc-name">Scott Aspect 930</h3>
-          <span class="tc-price">€20<small> /day</small></span>
+          <span class="tc-price">€20<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="cube-aim.html" data-cat="mountain" data-price="20" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Cube-AIM-1024x768.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Mountain</span>
+          <span class="tc-cat">Kalnų</span>
           <h3 class="tc-name">Cube Aim</h3>
-          <span class="tc-price">€20<small> /day</small></span>
+          <span class="tc-price">€20<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="kross-level-2-0.html" data-cat="mountain" data-price="20" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Kross-Level-MTB4-650x490.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Mountain</span>
+          <span class="tc-cat">Kalnų</span>
           <h3 class="tc-name">Kross Level 2.0</h3>
-          <span class="tc-price">€20<small> /day</small></span>
+          <span class="tc-price">€20<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="scott-contessa-active.html" data-cat="mountain" data-price="20" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/20240708_123348-1024x768.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Mountain</span>
+          <span class="tc-cat">Kalnų</span>
           <h3 class="tc-name">Scott Contessa Active</h3>
-          <span class="tc-price">€20<small> /day</small></span>
+          <span class="tc-price">€20<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="scott-aspect-950.html" data-cat="mountain" data-price="20" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/IMG_4913-min-650x490.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Mountain</span>
+          <span class="tc-cat">Kalnų</span>
           <h3 class="tc-name">Scott Aspect 950</h3>
-          <span class="tc-price">€20<small> /day</small></span>
+          <span class="tc-price">€20<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="minerva-trekking-bike-2025.html" data-cat="touring" data-price="15" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Minerva-Hybrid-Touring-bike-men-edition1-1024x768.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Touring</span>
-          <h3 class="tc-name">Minerva Trekking Bike</h3>
-          <span class="tc-price">€15<small> /day</small></span>
+          <span class="tc-cat">Kelioniniai</span>
+          <h3 class="tc-name">Minerva kelioninis dviratis</h3>
+          <span class="tc-price">€15<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="kross-trans-3-0.html" data-cat="touring" data-price="14" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Kross-Trans-male-edition-2-1024x768.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Touring</span>
+          <span class="tc-cat">Kelioniniai</span>
           <h3 class="tc-name">Kross Trans 3.0</h3>
-          <span class="tc-price">€14<small> /day</small></span>
+          <span class="tc-price">€14<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="pegasus-touring-women.html" data-cat="touring" data-price="12" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Pegasus-Touring-female-edition2-1024x740.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Touring</span>
+          <span class="tc-cat">Kelioniniai</span>
           <h3 class="tc-name">Pegasus Touring</h3>
-          <span class="tc-price">€12<small> /day</small></span>
+          <span class="tc-price">€12<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="kross-evado-3-0.html" data-cat="hybrid" data-price="14" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Kross-Evado-female-edition-3-470x362.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Hybrid</span>
+          <span class="tc-cat">Hibridiniai</span>
           <h3 class="tc-name">Kross Evado 3.0</h3>
-          <span class="tc-price">€14<small> /day</small></span>
+          <span class="tc-price">€14<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="kross-esker.html" data-cat="gravel" data-price="30" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Kross-Esker-new-3-650x490.jpeg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
           <span class="tc-cat">Gravel</span>
           <h3 class="tc-name">Kross Esker</h3>
-          <span class="tc-price">€30<small> /day</small></span>
+          <span class="tc-price">€30<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="prophete-e-bike-women-s.html" data-cat="electric" data-price="18" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Prophete-women-edition-1-1024x689.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Electric</span>
-          <h3 class="tc-name">Prophete E-Bike — Women's</h3>
-          <span class="tc-price">€18<small> /day</small></span>
+          <span class="tc-cat">Elektriniai</span>
+          <h3 class="tc-name">Prophete elektrinis dviratis — moteriškas</h3>
+          <span class="tc-price">€18<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="prophete-e-bike-men-s.html" data-cat="electric" data-price="18" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Prophete-touring-electric-bike-men-edition-1-1024x768.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Electric</span>
-          <h3 class="tc-name">Prophete E-Bike — Men's</h3>
-          <span class="tc-price">€18<small> /day</small></span>
+          <span class="tc-cat">Elektriniai</span>
+          <h3 class="tc-name">Prophete elektrinis dviratis — vyriškas</h3>
+          <span class="tc-price">€18<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="pegasus-bosch-e-bike.html" data-cat="electric" data-price="18" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Pegasus-touring-electric-bike-women-edition-1-1024x768.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Electric</span>
-          <h3 class="tc-name">Pegasus Bosch E-Bike</h3>
-          <span class="tc-price">€18<small> /day</small></span>
+          <span class="tc-cat">Elektriniai</span>
+          <h3 class="tc-name">Pegasus Bosch elektrinis dviratis</h3>
+          <span class="tc-price">€18<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="specialized-sirrus-pro.html" data-cat="road" data-price="30" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/Specialized-road-bike-1-650x490.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Road</span>
+          <span class="tc-cat">Plentiniai</span>
           <h3 class="tc-name">Specialized Sirrus Pro</h3>
-          <span class="tc-price">€30<small> /day</small></span>
+          <span class="tc-price">€30<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="giant-tcr-advanced-sl-0.html" data-cat="road" data-price="30" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/20240410_141438-650x490.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Road</span>
+          <span class="tc-cat">Plentiniai</span>
           <h3 class="tc-name">Giant TCR Advanced SL 0</h3>
-          <span class="tc-price">€30<small> /day</small></span>
+          <span class="tc-price">€30<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="specialized-allez-elite-xl.html" data-cat="road" data-price="30" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/road-bike-specialized-2-650x490.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Road</span>
+          <span class="tc-cat">Plentiniai</span>
           <h3 class="tc-name">Specialized Allez Elite</h3>
-          <span class="tc-price">€30<small> /day</small></span>
+          <span class="tc-price">€30<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="boardman-slr-8-6.html" data-cat="road" data-price="25" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/IMG_20230729_212427-650x490.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Road</span>
+          <span class="tc-cat">Plentiniai</span>
           <h3 class="tc-name">Boardman SLR 8.6</h3>
-          <span class="tc-price">€25<small> /day</small></span>
+          <span class="tc-price">€25<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="xiaomi-m365-electric-scooter.html" data-cat="scooters" data-price="8" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/as_optimizuota_nuotrauka_ikelk_mane_1-1024x768.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Scooters</span>
-          <h3 class="tc-name">Xiaomi M365 Scooter</h3>
-          <span class="tc-price">€8<small> /day</small></span>
+          <span class="tc-cat">Paspirtukai</span>
+          <h3 class="tc-name">Xiaomi M365 paspirtukas</h3>
+          <span class="tc-price">€8<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="author-ultima.html" data-cat="kids" data-price="8" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/20210509_113209-650x490.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Kids</span>
+          <span class="tc-cat">Vaikiški</span>
           <h3 class="tc-name">Author Ultima</h3>
-          <span class="tc-price">€8<small> /day</small></span>
+          <span class="tc-price">€8<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="trek-navigator.html" data-cat="kids" data-price="8" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/20210509_113107-650x490.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Kids</span>
+          <span class="tc-cat">Vaikiški</span>
           <h3 class="tc-name">Trek Navigator</h3>
-          <span class="tc-price">€8<small> /day</small></span>
+          <span class="tc-price">€8<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="kross-hexagon.html" data-cat="kids" data-price="8" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/20210509_145822-650x490.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Kids</span>
+          <span class="tc-cat">Vaikiški</span>
           <h3 class="tc-name">Kross Hexagon</h3>
-          <span class="tc-price">€8<small> /day</small></span>
+          <span class="tc-price">€8<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="waterproof-pannier-bags-ortlieb.html" data-cat="accessories" data-price="9" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/2022-03-20-Dviraciai-modeliai-28828-1024x683.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Accessories</span>
-          <h3 class="tc-name">Waterproof Pannier Bags</h3>
-          <span class="tc-price">€9<small> /day</small></span>
+          <span class="tc-cat">Priedai</span>
+          <h3 class="tc-name">Neperšlampami krepšiai</h3>
+          <span class="tc-price">€9<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="touring-pannier-set.html" data-cat="accessories" data-price="5" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/20210509_155632-650x490.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Accessories</span>
-          <h3 class="tc-name">Touring Pannier Set</h3>
-          <span class="tc-price">€5<small> /day</small></span>
+          <span class="tc-cat">Priedai</span>
+          <h3 class="tc-name">Kelioninių krepšių komplektas</h3>
+          <span class="tc-price">€5<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="helmets.html" data-cat="accessories" data-price="5" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/dviracio-salmo-nuoma-1024x558.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Accessories</span>
-          <h3 class="tc-name">Helmet</h3>
-          <span class="tc-price">€5<small> /day</small></span>
+          <span class="tc-cat">Priedai</span>
+          <h3 class="tc-name">Šalmai</h3>
+          <span class="tc-price">€5<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="child-bike-seat.html" data-cat="accessories" data-price="5" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/IMG_13922-1024x768.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Accessories</span>
-          <h3 class="tc-name">Child Bike Seat</h3>
-          <span class="tc-price">€5<small> /day</small></span>
+          <span class="tc-cat">Priedai</span>
+          <h3 class="tc-name">Vaikiška dviračio kėdutė</h3>
+          <span class="tc-price">€5<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="child-bike-trailer.html" data-cat="accessories" data-price="15" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/IMG_1407-002-1024x715.jpg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Accessories</span>
-          <h3 class="tc-name">Child Bike Trailer</h3>
-          <span class="tc-price">€15<small> /day</small></span>
+          <span class="tc-cat">Priedai</span>
+          <h3 class="tc-name">Vaikų priekaba</h3>
+          <span class="tc-price">€15<small>/d.</small></span>
         </div>
       </a>
 
       <a class="tour-card" href="bike-trailer-for-dogs.html" data-cat="accessories" data-price="15" data-sale="0">
         <div class="tc-media">
           <div class="tc-img" style="background-image:url('../../media/velotakas/IMG_1143-1024x768.jpeg');"></div>
-          <div class="tc-rent"><span>Rent</span></div>
+          <div class="tc-rent"><span>Nuomotis</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">Accessories</span>
-          <h3 class="tc-name">Bike Trailer for Dogs</h3>
-          <span class="tc-price">€15<small> /day</small></span>
+          <span class="tc-cat">Priedai</span>
+          <h3 class="tc-name">Priekaba šunims</h3>
+          <span class="tc-price">€15<small>/d.</small></span>
         </div>
       </a>
 
@@ -1256,8 +1297,8 @@
           <div class="tc-rent"><span>Buy</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">For sale</span>
-          <h3 class="tc-name">Kross Trans 3.0 (used)</h3>
+          <span class="tc-cat">Parduodama</span>
+          <h3 class="tc-name">Kross Trans 3.0 (naudotas)</h3>
           <span class="tc-price">€270</span>
         </div>
       </a>
@@ -1268,8 +1309,8 @@
           <div class="tc-rent"><span>Buy</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">For sale</span>
-          <h3 class="tc-name">Baltic Vairas City Bike</h3>
+          <span class="tc-cat">Parduodama</span>
+          <h3 class="tc-name">Baltic Vairas miesto dviratis</h3>
           <span class="tc-price">€180</span>
         </div>
       </a>
@@ -1280,8 +1321,8 @@
           <div class="tc-rent"><span>Buy</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">For sale</span>
-          <h3 class="tc-name">Scott Aspect 950 (used)</h3>
+          <span class="tc-cat">Parduodama</span>
+          <h3 class="tc-name">Scott Aspect 950 (naudotas)</h3>
           <span class="tc-price">€350</span>
         </div>
       </a>
@@ -1292,8 +1333,8 @@
           <div class="tc-rent"><span>Buy</span></div>
         </div>
         <div class="tc-cap">
-          <span class="tc-cat">For sale</span>
-          <h3 class="tc-name">Univega Hybrid (used)</h3>
+          <span class="tc-cat">Parduodama</span>
+          <h3 class="tc-name">Univega Hybrid (naudotas)</h3>
           <span class="tc-price">€190</span>
         </div>
       </a>
@@ -1315,16 +1356,16 @@
       </div>
       <div class="footer-contact">
         <div class="fc-head">
-          <h4>Bike Vilnius Velotakas</h4>
+          <h4>Velotakas — dviračių nuoma</h4>
           <ul>
             <li><a href="tel:+37061845727">+370 618 45727</a></li>
             <li><a href="mailto:info@velotakas.lt">info@velotakas.lt</a></li>
-            <li>Stulginskio g. 5, Vilnius (“Westexpress” premises)</li>
+            <li>Stulginskio g. 5, Vilnius (“Westexpress” patalpose)</li>
           </ul>
         </div>
         <div class="fc-block">
           <strong>Rekvizitai</strong>
-          <p>Įmonės kodas: 302643966<br>SEB Bankas, account No. LT48 7044 0600 0771 2383<br>SWIFT code: CBVILT2X</p>
+          <p>Įmonės kodas: 302643966<br>SEB Bankas, sąskaitos Nr. LT48 7044 0600 0771 2383<br>SWIFT kodas: CBVILT2X</p>
         </div>
         <div class="fc-block">
           <strong>Darbo laikas · Balandžio 1 – Spalio 31</strong>
@@ -1352,7 +1393,7 @@
 
     // lightweight smooth scroll (Lenis), wired to ScrollTrigger + GSAP ticker
     (function () {
-      if (typeof Lenis === "undefined") return;   // graceful fallback to native scroll
+      if (typeof Lenis === "undefined" || window.matchMedia("(max-width: 860px)").matches) return;   // no smooth scroll on mobile
       var lenis = new Lenis({ duration: 1.1, smoothWheel: true }); window.lenis = lenis;
       lenis.on("scroll", ScrollTrigger.update);
       gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
@@ -1518,6 +1559,7 @@
       var pval    = document.getElementById('priceVal');
       var reset   = document.getElementById('filterReset');
       function apply() {
+        var _y = window.pageYOffset || document.documentElement.scrollTop;
         var checked = boxes.filter(function (b) { return b.checked; }).map(function (b) { return b.value; });
         var maxp = parseInt(range.value, 10);
         if (pval) pval.textContent = maxp;
@@ -1527,6 +1569,8 @@
           var priceOk = isSale || parseInt(c.getAttribute('data-price'), 10) <= maxp;
           c.style.display = (catOk && priceOk) ? '' : 'none';
         });
+        var _restore=function(){ if(window.lenis&&window.lenis.scrollTo){ window.lenis.resize&&window.lenis.resize(); window.lenis.scrollTo(_y,{immediate:true,force:true}); } else { window.scrollTo(0,_y); } };
+        _restore(); requestAnimationFrame(_restore); setTimeout(_restore,60);
       }
       boxes.forEach(function (b) { b.addEventListener('change', apply); });
       if (range) range.addEventListener('input', apply);
@@ -1564,6 +1608,64 @@
       var box = document.querySelector('.f-cat[value="' + cat + '"]');
       if (box) { box.checked = true; box.dispatchEvent(new Event('change', { bubbles: true })); }
     })();
+  </script>
+  <script id="mmx-js">
+  (function(){
+    var inner=document.querySelector('.site-header .inner'); if(!inner) return;
+    var topnav=inner.querySelector('.topnav'); if(!topnav) return;
+    var btn=document.createElement('button'); btn.type='button'; btn.className='mmx-btn';
+    btn.innerHTML='<span class="bars"><i></i><i></i></span>Meniu'; inner.appendChild(btn); var _sl=document.querySelector('.subhead .sh-lang'); if(_sl){ var _lg=document.createElement('span'); _lg.className='mmx-lang'; _lg.innerHTML=_sl.innerHTML; inner.appendChild(_lg); }
+    var panel=document.createElement('div'); panel.className='mmx-panel';
+    var close=document.createElement('button'); close.type='button'; close.className='mmx-close'; close.setAttribute('aria-label','Uždaryti'); close.innerHTML='\u00D7'; panel.appendChild(close);
+    var sh=document.querySelector('.subhead .sh-social');
+    if(sh){ var soc=document.createElement('div'); soc.className='mmx-social'; soc.innerHTML=sh.innerHTML; panel.appendChild(soc); }
+    var wrap=document.createElement('div'); panel.appendChild(wrap);
+    Array.prototype.forEach.call(topnav.children,function(node){
+      if(node.classList && node.classList.contains('nav-drop')){
+        var link=node.querySelector('.nav-link'); var subs=node.querySelectorAll('.mm-links a'); if(!link) return;
+        var item=document.createElement('div'); item.className='mmx-item';
+        var acc=document.createElement('button'); acc.type='button'; acc.className='mmx-acc';
+        acc.innerHTML='<span>'+link.textContent.replace('\u25BE','').trim()+'</span><span class="chev"></span>';
+        var sub=document.createElement('div'); sub.className='mmx-sub';
+        Array.prototype.forEach.call(subs,function(a){ var x=document.createElement('a'); x.href=a.getAttribute('href'); x.textContent=a.textContent; sub.appendChild(x); });
+        acc.addEventListener('click',function(){ item.classList.toggle('open'); });
+        item.appendChild(acc); item.appendChild(sub); wrap.appendChild(item);
+      } else if(node.tagName==='A' && node.classList.contains('nav-link')){
+        var it=document.createElement('div'); it.className='mmx-item';
+        var a=document.createElement('a'); a.className='mmx-link'; a.href=node.getAttribute('href'); a.textContent=node.textContent.replace('\u25BE','').trim();
+        it.appendChild(a); wrap.appendChild(it);
+      }
+    });
+    var foot=document.createElement('div'); foot.className='mmx-foot'; foot.innerHTML='Stulginskio g. 5 \u00B7 <a href="tel:+37061845727">+370 618 45727</a>';
+    panel.appendChild(foot); document.body.appendChild(panel);
+    var items=panel.querySelectorAll('.mmx-social, .mmx-item, .mmx-foot');
+    var isOpen=false, busy=false, G=(typeof gsap!=='undefined');
+    function rect(){ return btn.getBoundingClientRect(); }
+    function full(){ return {w:window.innerWidth, h:window.innerHeight}; }
+    function open(){
+      if(busy) return; busy=true; isOpen=true; var r=rect(), f=full();
+      panel.style.visibility='visible'; panel.classList.add('open'); document.body.classList.add('mmx-lock'); btn.style.opacity='0';
+      if(G){
+        gsap.killTweensOf([panel,items]);
+        gsap.set(panel,{top:r.top,left:r.left,width:r.width,height:r.height,borderRadius:24,opacity:1});
+        gsap.to(panel,{top:10,left:10,width:f.w-20,height:f.h-20,borderRadius:26,duration:.55,ease:'power3.inOut',onComplete:function(){busy=false;}});
+        gsap.from(items,{y:24,opacity:0,duration:.4,stagger:.05,delay:.2,ease:'power3.out'});
+      } else { panel.style.cssText+=';top:10px;left:10px;width:calc(100% - 20px);height:calc(100% - 20px);opacity:1;border-radius:26px'; busy=false; }
+    }
+    function shut(){
+      if(busy) return; busy=true; isOpen=false; var r=rect();
+      document.body.classList.remove('mmx-lock');
+      if(G){
+        gsap.killTweensOf([panel,items]);
+        gsap.to(items,{opacity:0,y:-12,duration:.2,ease:'power1.in'});
+        gsap.to(panel,{opacity:0,duration:.32,ease:'power2.in',
+          onComplete:function(){ panel.classList.remove('open'); panel.style.visibility='hidden'; btn.style.opacity='1'; busy=false; }});
+      } else { panel.style.opacity='0'; panel.style.visibility='hidden'; btn.style.opacity='1'; busy=false; }
+    }
+    btn.addEventListener('click',function(){ isOpen?shut():open(); });
+    close.addEventListener('click',shut);
+    panel.addEventListener('click',function(e){ if(e.target.tagName==='A') shut(); });
+  })();
   </script>
 </body>
 </html>
