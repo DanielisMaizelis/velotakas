@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Velotakas — Bike Rent &amp; Tours in Vilnius</title>
+  <title>Self-Guided Bike Tours in Vilnius — Velotakas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@400;500;600;700;800&family=DM+Sans:wght@500;700;800&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
     .lenis.lenis-stopped { overflow: hidden; }
 
     body {
-      background: #ffffff;
+      background: #f4fcfd;
       color: #111827;
       font-family: "Google Sans", "Product Sans", "Poppins", system-ui, sans-serif;
       overflow-x: hidden;
@@ -105,8 +105,6 @@
       box-shadow: 0 12px 34px rgba(0,0,0,.12);
       color: #111827;
     }
-    /* while the page-transition runs, the header rides with the content instead of staying pinned */
-    html.pt-anim .site-top { position: relative !important; top: 0 !important; }
     .util-bar {
       display: flex; align-items: center; justify-content: space-between; gap: 18px;
       padding: 7px 26px; font-size: .72rem; font-weight: 600; color: #5b6573;
@@ -413,55 +411,6 @@
     .content { padding-right: 50vw; }   /* keep everything clear of the right card */
 
     /* hero lead — full-screen, centered headline only */
-    /* two-card hero: Find Tours / Rent a Bike */
-    .hero-split {
-      display: flex; gap: 16px;
-      margin: 110px 6vw 16px;
-      position: relative;
-    }
-    .hero-card {
-      position: relative; flex: 1; z-index: 1;
-      min-height: 60vh;
-      border-radius: 26px; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none; color: #fff;
-    }
-    .hero-card .hc-bg {
-      position: absolute; inset: 0;
-      background-size: cover; background-position: center;
-      transition: transform .6s ease;
-    }
-    .hero-card:hover .hc-bg { transform: scale(1.06); }
-    video.hc-bg { width: 100%; height: 100%; object-fit: cover; }
-    .hero-card::after {
-      content: ""; position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,.22), rgba(0,0,0,.45));
-      transition: background .3s ease;
-    }
-    .hero-card:hover::after { background: linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.35)); }
-    /* subtle cyan colour-grade on the two hero cards (Find Tours / Rent a Bike) — matches the rest */
-    .hc-inner { position: relative; z-index: 1; text-align: center; padding: 0 6vw; }
-    .hc-inner h2 {
-      font-size: clamp(2rem, 4.5vw, 4rem); font-weight: 800; letter-spacing: -1px; line-height: 1;
-    }
-    .hc-cta {
-      display: inline-block; margin-top: 18px;
-      font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .85rem;
-      border-bottom: 2px solid #16bdcc; padding-bottom: 4px;
-    }
-    /* masked pop-up reveal (same as the tours headline) */
-    .hc-inner .reveal-line { overflow: hidden; padding-bottom: .12em; }
-    .hc-inner .reveal-line > span {
-      display: block; transform: translateY(110%);
-      transition: transform .8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .hero-split.revealed .reveal-line > span { transform: translateY(0); }
-    .hero-split.revealed .hero-card:nth-child(1) h2.reveal-line > span     { transition-delay: .05s; }
-    .hero-split.revealed .hero-card:nth-child(1) .hc-cta.reveal-line > span { transition-delay: .18s; }
-    .hero-split.revealed .hero-card:nth-child(2) h2.reveal-line > span     { transition-delay: .17s; }
-    .hero-split.revealed .hero-card:nth-child(2) .hc-cta.reveal-line > span { transition-delay: .30s; }
-    @media (max-width: 820px) { .hero-split { flex-direction: column; } .hero-card { min-height: 44vh; } }
-
     .hero-lead {
       position: relative;
       min-height: 56vh;
@@ -473,7 +422,7 @@
       justify-content: center;
       text-align: center;
       padding: 8vh 8vw;
-      background: #0e7c8f url("media/sec1.jpg") center / cover no-repeat;
+      background: #0e7c8f url("../../media/velotakas/Kauno-pilis-650x490.jpg") center / cover no-repeat;
       color: #fff;
     }
     .hero-lead::before {            /* dark overlay so the white text reads */
@@ -528,7 +477,7 @@
 
     /* tours list (left) */
     .feature {
-      min-height: 66vh;
+      min-height: 30vh;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -564,28 +513,21 @@
       transition: color .4s ease;
     }
     .feature.active .sub { color: #5b6573; }
-    .feat-desc { max-width: 46ch; margin-top: 18px; color: #6b7280; line-height: 1.6; font-size: 1.05rem; }
-    .feat-actions { display: flex; gap: 22px; align-items: center; margin-top: 26px; flex-wrap: wrap; }
-
-    /* buttons */
-    .btn-fill {
+    /* extra details that appear when a tour is active */
+    .feature .extra {
+      margin-top: 18px;
+      opacity: 0; transform: translateY(14px);
+      transition: opacity .45s ease, transform .45s ease;
+      pointer-events: none;
+    }
+    .feature.active .extra { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .feature .extra .meta { font-size: .95rem; color: #5b6573; margin-bottom: 14px; letter-spacing: .3px; }
+    .feature .book-tour {
       display: inline-block; background: #16bdcc; color: #06343a; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .05em; font-size: .82rem;
-      padding: 13px 26px; border-radius: 999px;
+      text-transform: uppercase; letter-spacing: .05em; font-size: .8rem;
+      padding: 12px 24px; border-radius: 999px;
     }
-    .btn-fill:hover { background: #11a3b1; }
-    .btn-ghost {
-      display: inline-block; border: 2px solid #fff; color: #fff; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .05em; font-size: .82rem;
-      padding: 11px 24px; border-radius: 999px;
-    }
-    .btn-ghost:hover { background: rgba(255,255,255,.16); }
-    .btn-line { color: #111827; font-weight: 700; border-bottom: 2px solid #16bdcc; padding-bottom: 2px; }
-    .btn-line:hover { color: #16bdcc; }
-
-    /* hero subtitle + actions */
-    .hero-lead .cover-sub { color: rgba(255,255,255,.92); max-width: 40ch; }
-    .hero-actions { display: flex; gap: 14px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+    .feature .book-tour:hover { background: #11a3b1; }
 
     .headings { padding: 4vh 0 16vh; }
 
@@ -620,73 +562,36 @@
     .quote-list cite { display: block; margin-top: 18px; font-style: normal; font-weight: 700; font-size: .85rem; color: #5b6573; }
     @media (max-width: 900px) { .quote-list { grid-template-columns: 1fr; } }
 
-    .faq-stage { position: relative; }
-    .faq-wrap { max-width: 860px; margin: 0 auto; padding: 8vh 6vw 9vh; position: relative; }
-    .faq-crumbs { font-size: .85rem; color: #9aa3af; margin-bottom: 18px; }
-    .faq-crumbs a { color: #9aa3af; text-decoration: none; }
-    .faq-crumbs a:hover { color: #16bdcc; }
-    .faq-crumbs span { color: #16bdcc; font-weight: 600; }
-    .faq-title { font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(3rem, 6.5vw, 5rem); line-height: 1; margin-bottom: 2vh; }
-    .faq-title span { color: #16bdcc; }
-    .faq-list { margin-top: 3vh; }
+    /* ===== FAQ ===== */
+    .faq { max-width: 1280px; margin: 0 auto; padding: 12vh 6vw; }
+    .faq-rotator {
+      font-size: clamp(2rem, 6vw, 4.6rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      color: #b6bdc7;               /* gray */
+      margin-bottom: 7vh;
+    }
+    .faq-rotator .rot { display: inline-block; will-change: transform, opacity; }
+    .faq-list { border-top: 1px solid #e5e7eb; }
     .faq-item { border-bottom: 1px solid #e5e7eb; }
-    .faq-q { width: 100%; background: none; border: 0; cursor: pointer; font: inherit; text-align: left; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 24px 4px; font-size: clamp(1.05rem, 2vw, 1.35rem); font-weight: 700; color: #111827; transition: color .2s ease; }
-    .faq-q:hover { color: #16bdcc; }
-    .faq-icon { flex: none; width: 30px; height: 30px; display: grid; place-items: center; font-size: 1.7rem; line-height: 1; color: #16bdcc; transition: transform .3s ease; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
-    .faq-item.open .faq-a { grid-template-rows: 1fr; }
-    .faq-a-inner { overflow: hidden; }
-    .faq-a p { color: #4b5563; line-height: 1.7; font-size: 1.05rem; padding: 0 4px 24px; max-width: 72ch; }
-    .scatter { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-    .scatter-pic { position: absolute; width: clamp(190px, 18vw, 300px); aspect-ratio: 4/3; object-fit: cover; border-radius: 16px; will-change: transform; }
-    .faq-wrap { z-index: 1; }
-    .sp1 { top: 4%;  right: calc(50% + 445px); }
-    .sp2 { top: 12%; left: calc(50% + 560px); }
-    .sp3 { top: 38%; right: calc(50% + 620px); }
-    .sp4 { top: 52%; left: calc(50% + 450px); }
-    .sp5 { top: 70%; right: calc(50% + 520px); }
-    .sp6 { top: 86%; left: calc(50% + 640px); }
-    @media (max-width: 1200px) { .scatter { display: none; } }
-
-    /* ===== scroll-driven spinning gallery ===== */
-    .explore-band { text-align: left; padding: 9vh 6vw 1vh; background: #ffffff; }
-    .explore-band .eyebrow { display: inline-block; font-size: .8rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: #16bdcc; margin-bottom: 14px; }
-    .explore-band h2 { font-family: "Caveat", cursive; font-size: clamp(2.8rem, 7vw, 5.6rem); font-weight: 700; letter-spacing: 0; line-height: 1.02; }
-    .explore-band p { color: #6b7280; margin-top: 14px; font-size: 1.05rem; }
-    .spin-gallery { position: relative; overflow: hidden; padding: 8vh 0; background: #ffffff; }
-    .partners { max-width: none; margin: 0; padding: 7vh 0 12vh; text-align: center; background: #ffffff; }
-    .partners-title { font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(3.4rem, 7vw, 5.6rem); line-height: 1; margin-bottom: 5vh; }
-    .partners-title span { color: #16bdcc; }
-    .partners-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px 46px; }
-    .partner { font-size: clamp(1.2rem, 2.4vw, 1.9rem); font-weight: 800; letter-spacing: .5px; color: #9aa3af; text-decoration: none; transition: color .2s ease; }
-    .partner-logo { height: clamp(26px, 3vw, 42px); width: auto; display: block; }
-    .partner img.partner-logo { transition: filter .2s ease; }
-    .partner:hover img.partner-logo { filter: brightness(.45); }
-    .partners-marquee { width: 100%; overflow: hidden; }
-    .partners-track { display: flex; align-items: center; gap: 110px; width: max-content; animation: partnerscroll 30s linear infinite; }
-    .partners-marquee:hover .partners-track { animation-play-state: paused; }
-    .partners-track .partner { flex: none; }
-    @keyframes partnerscroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .partner:hover { color: #111827; }
-    .spin-track {
-      display: flex; gap: 22px; width: max-content; padding: 0 8vw;
-      will-change: transform; transform-origin: center center;
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: 0; cursor: pointer;
+      font-family: inherit; color: #111827; font-weight: 700;
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      padding: 26px 0;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
     }
-    .spin-item {
-      position: relative;
-      flex: none; width: 260px; height: 340px; border-radius: 18px;
-      background-size: cover; background-position: center;
-      box-shadow: 0 16px 34px rgba(0,0,0,.14);
-    }
-    /* cyan colour-grade wash to match the brand palette (#16bdcc) */
-    @media (max-width: 700px) { .spin-item { width: 200px; height: 260px; } }
+    .faq-q .ic { color: #16bdcc; font-weight: 400; transition: transform .3s ease; flex: none; }
+    .faq-item.open .faq-q .ic { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+    .faq-item.open .faq-a { max-height: 320px; }
+    .faq-a p { margin: 0; padding: 0 0 28px; max-width: 70ch; color: #5b6573; font-size: 1.05rem; line-height: 1.65; }
 
-    /* ===== Trending Experiences (TripAdvisor cards) ===== */
-    .ta-tours { max-width: 1340px; margin: 0 auto; padding: 4vh 0 10vh; }
-    .tours-title { font-family: "Caveat", cursive; font-size: clamp(4rem, 8vw, 6.5rem); font-weight: 700; letter-spacing: 0; margin: 2vh 0 8px; }
+    /* ===== TripAdvisor-style tour cards ===== */
+    .ta-tours { max-width: 1280px; margin: 0 auto; padding: 4vh 6vw 10vh; }
+    .tours-title { font-family: "Caveat", cursive; font-size: clamp(2.6rem, 5.5vw, 4.2rem); font-weight: 700; letter-spacing: 0; margin: 2vh 0 4vh; }
     .tours-title span { color: #16bdcc; }
-    .tours-sub { color: #6b7280; margin-bottom: 4vh; font-size: 1.05rem; }
     .tour-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
     .tour-card {
       display: flex; flex-direction: column;
@@ -798,29 +703,6 @@
       .feature { padding: 0 6vw; min-height: 40vh; }
       .footer-grid { grid-template-columns: 1fr; gap: 28px; }
     }
-    /* ===== trending cards: same size as the rent-a-bike tile ===== */
-    .tour-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px 26px; }
-    .tour-card { position: relative; display: block; height: auto; background: transparent; border: 0; box-shadow: none; overflow: visible; border-radius: 18px; transition: transform .25s ease; }
-    .tour-card:hover { transform: translateY(-4px); box-shadow: none; }
-    .tc-media { position: relative; aspect-ratio: 4 / 3; }
-    .tc-img { position: absolute; inset: 0; height: auto; border-radius: 18px; background-size: cover; background-position: center; }
-    /* subtle cyan colour-grade to nudge photos toward the brand palette (#16bdcc) */
-    .tc-img::before, .tc-img::after { display: none; }
-    .tc-rent { position: absolute; inset: 0; z-index: 4; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.5)); border-radius: 18px; }
-    .tc-rent span { color: #fff; font-family: "Caveat", cursive; font-weight: 700; font-size: 3rem; line-height: 1; text-shadow: 0 2px 22px rgba(0,0,0,.5); animation: rent-color 0.7s ease-in-out infinite; }
-    @keyframes rent-color { 0% { color: #fff; } 35% { color: #0a0e16; } 70% { color: #16bdcc; } 100% { color: #fff; } }
-    .tc-cap { padding: 14px 4px 0; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; text-align: left; }
-    .tc-name { margin: 0; font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(1.7rem, 3.2vw, 2.4rem); line-height: 1.05; letter-spacing: 0; color: #111827; }
-    .tc-body { position: absolute; bottom: 11px; left: 11px; width: auto; z-index: 5; background: #fff; border-radius: 13px; padding: 10px 11px; box-shadow: 0 12px 28px rgba(0,0,0,.15); display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
-    .tc-cat { display: inline-block; background: #eef6f7; color: #0e7c8f; font-size: .58rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; padding: 3px 8px; border-radius: 999px; margin-bottom: 7px; }
-    .tc-price { font-weight: 800; font-size: 1.35rem; color: #111827; }
-    .tc-cta { display: none; }
-
-    /* tiny TripAdvisor rating box (top-right of trending tiles) */
-    .tc-ta { position: absolute; top: 10px; right: 10px; z-index: 6; display: flex; align-items: center; gap: 5px; background: #fff; border-radius: 999px; padding: 4px 9px; box-shadow: 0 6px 16px rgba(0,0,0,.16); }
-    .tc-bubbles { color: #00aa6c; font-size: .7rem; letter-spacing: -2px; }
-    .tc-revs { color: #6b7280; font-weight: 700; font-size: .64rem; }
-
   </style>
   <style>
     .subhead {
@@ -836,11 +718,46 @@
     .subhead.hide { transform: translateY(-220%); opacity: 0; pointer-events: none; }
     @media (max-width: 760px) { .subhead { display: none; } }
   </style>
+  <style>
+    .tour-detail { max-width: 1180px; margin: 0 auto; padding: 13vh 6vw 11vh; }
+    .tour-detail .bsc-back { display: inline-flex; align-items: center; gap: 12px; font-family: "Poppins", sans-serif; font-weight: 800; font-size: 1.4rem; color: #16bdcc; text-decoration: none; margin: 0 0 3vh; transition: gap .2s ease; }
+    .tour-detail .bsc-back:hover { gap: 18px; }
+    .tour-detail .bsc-back .arrow { font-size: 2.4rem; line-height: .8; }
+    .td-hero { position: relative; height: 60vh; min-height: 380px; border-radius: 26px; background-size: cover; background-position: center; box-shadow: 0 24px 60px rgba(0,0,0,.22); overflow: hidden; }
+    .td-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0) 55%); }
+    .td-hero-cap { position: absolute; left: 6%; bottom: 8%; z-index: 2; color: #fff; }
+    .td-kicker { display: inline-block; font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; background: rgba(255,255,255,.16); padding: 6px 12px; border-radius: 999px; }
+    .td-hero-cap h1 { font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(3rem, 7vw, 5.4rem); line-height: 1; margin: 12px 0 0; }
+    .td-body { display: grid; grid-template-columns: 1.7fr 1fr; gap: 48px; margin: 6vh 0 2vh; align-items: start; }
+    .td-copy p { color: #374151; line-height: 1.7; font-size: 1.05rem; margin: 0 0 16px; }
+    .td-copy .btn-fill { margin-top: 14px; }
+    .td-facts { background: #f6f8f9; border-radius: 18px; padding: 24px 26px; }
+    .td-facts h3 { font-family: "Caveat", cursive; font-weight: 700; font-size: 2rem; margin: 0 0 12px; color: #111827; }
+    .td-facts ul { list-style: none; margin: 0; padding: 0; }
+    .td-facts li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid #e5e9ec; font-size: .95rem; color: #374151; }
+    .td-facts li:last-child { border-bottom: 0; }
+    .td-facts li b { color: #111827; }
+    .td-gallery-title { font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(2.4rem, 5vw, 3.4rem); margin: 4vh 0 3vh; color: #111827; }
+    .td-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+    .td-gallery img { width: 100%; height: 180px; object-fit: cover; border-radius: 14px; box-shadow: 0 10px 24px rgba(0,0,0,.12); }
+    @media (max-width: 820px) { .td-body { grid-template-columns: 1fr; gap: 26px; } }
+  </style>
   <style id="subhead-social-css">
     .subhead .sh-social { display:inline-flex; align-items:center; gap:14px; }
     .subhead .sh-social a { display:inline-flex; color:#2b3a44; transition:color .2s, transform .2s; }
     .subhead .sh-social a:hover { color:#16bdcc; transform:translateY(-1px); }
     .subhead .sh-social svg { width:20px; height:20px; display:block; fill:currentColor; }
+  </style>
+  <style id="td-slider-css">
+    .td-slider { position: relative; border-radius: 22px; overflow: hidden; min-height: 58vh; box-shadow: 0 18px 40px rgba(0,0,0,.16); margin-bottom: 4vh; }
+    .td-slider .bsc-slide { position: absolute; inset: 0; background-size: cover; background-position: center; }
+    .td-slider .bsc-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; border: 0; background: rgba(255,255,255,.88); color: #111827; font-size: 1.7rem; line-height: 1; cursor: pointer; display: grid; place-items: center; z-index: 4; box-shadow: 0 8px 20px rgba(0,0,0,.2); transition: background .2s, color .2s, transform .2s; }
+    .td-slider .bsc-arrow:hover { background: #16bdcc; color: #fff; transform: translateY(-50%) scale(1.08); }
+    .td-slider .bsc-prev { left: 16px; } .td-slider .bsc-next { right: 16px; }
+    .td-slider .bsc-dots { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 4; }
+    .td-slider .bsc-dots button { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%; background: rgba(255,255,255,.65); cursor: pointer; transition: background .25s, transform .25s; }
+    .td-slider .bsc-dots button.is-on { background: #16bdcc; transform: scale(1.35); }
+    .td-slider.single .bsc-arrow, .td-slider.single .bsc-dots { display: none; }
   </style>
 </head>
 <body>
@@ -871,63 +788,63 @@
   <div class="site-top">
     <header class="site-header">
       <div class="inner">
-        <a class="brand" href="index.html"><span class="years-badge">15 years</span><img src="media/logo.png" alt="Velotakas.lt"></a>
+        <a class="brand" href="../index.html"><span class="years-badge">15 years</span><img src="../../media/logo.png" alt="Velotakas.lt"></a>
         <nav class="topnav">
           <div class="nav-drop">
-            <a class="nav-link" href="bikes/bike-rent.html">Bike rent ▾</a>
+            <a class="nav-link" href="../bikes/bike-rent.html">Nuoma ▾</a>
             <div class="nav-menu">
-              <div class="mm-head"><a href="bikes/bike-rent.html" style="color:inherit;text-decoration:none">Rent your perfect <span>bike</span></a></div>
+              <div class="mm-head"><a href="../bikes/bike-rent.html" style="color:inherit;text-decoration:none">Išsirinkite tobulą <span>dviratį</span></a></div>
               <div class="mm-links">
-                <a href="bikes/bike-rent.html?cat=city" data-img="media/trak-allant.jpg" data-price="6">City Bikes</a>
-                <a href="bikes/bike-rent.html?cat=touring" data-img="media/cat-touring.jpg" data-price="12">Touring Bikes</a>
-                <a href="bikes/bike-rent.html?cat=hybrid" data-img="media/cat-hybrid.jpg" data-price="14">Hybrid Bikes</a>
-                <a href="bikes/bike-rent.html?cat=mountain" data-img="media/cat-mountain.jpg" data-price="20">Mountain Bikes</a>
-                <a href="bikes/bike-rent.html?cat=gravel" data-img="media/cat-gravel.jpg" data-price="30">Gravel Bikes</a>
-                <a href="bikes/bike-rent.html?cat=electric" data-img="media/cat-electric.jpg" data-price="18">Electric Bike</a>
-                <a href="bikes/bike-rent.html?cat=road" data-img="media/cat-road.jpg" data-price="25">Road Bikes</a>
-                <a href="bikes/bike-rent.html?cat=scooters" data-img="media/cat-scooters.jpg" data-price="8">Electric Scooters</a>
-                <a href="bikes/bike-rent.html?cat=accessories" data-img="media/cat-accessories.jpg" data-price="5">Bicycle Accessories</a>
-                <a href="bikes/bike-rent.html?cat=groups" data-img="media/cat-groups.jpg">Bike Rental For Groups</a>
-                <a href="bikes/bike-rent.html?cat=kids" data-img="media/cat-kids.jpg" data-price="8">Bikes For Kids</a>
-                <a href="bikes/bike-rent.html?cat=sale" data-img="media/cat-sale.jpg" data-price="180">Bikes For Sale</a>
+                <a href="../bikes/bike-rent.html?cat=city" data-img="../../media/trak-allant.jpg" data-price="6">Miesto dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=touring" data-img="../../media/cat-touring.jpg" data-price="12">Kelioniniai dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=hybrid" data-img="../../media/cat-hybrid.jpg" data-price="14">Hibridiniai dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=mountain" data-img="../../media/cat-mountain.jpg" data-price="20">Kalnų dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=gravel" data-img="../../media/cat-gravel.jpg" data-price="30">Gravel dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=electric" data-img="../../media/cat-electric.jpg" data-price="18">Elektriniai dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=road" data-img="../../media/cat-road.jpg" data-price="25">Plentiniai dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=scooters" data-img="../../media/cat-scooters.jpg" data-price="8">Elektriniai paspirtukai</a>
+                <a href="../bikes/bike-rent.html?cat=accessories" data-img="../../media/cat-accessories.jpg" data-price="5">Dviračių priedai</a>
+                <a href="../bikes/bike-rent.html?cat=groups" data-img="../../media/cat-groups.jpg">Nuoma grupėms</a>
+                <a href="../bikes/bike-rent.html?cat=kids" data-img="../../media/cat-kids.jpg" data-price="8">Vaikiški dviračiai</a>
+                <a href="../bikes/bike-rent.html?cat=sale" data-img="../../media/cat-sale.jpg" data-price="180">Dviračių pardavimas</a>
               </div>
-              <div class="mm-foot">Starting from <span>€5</span></div>
-              <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('media/trak-allant.jpg');"></div></div>
+              <div class="mm-foot">Kaina nuo <span>€5</span></div>
+              <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('../../media/trak-allant.jpg');"></div></div>
             </div>
           </div>
           <div class="nav-drop">
-            <button class="nav-link" type="button">Tours ▾</button>
+            <button class="nav-link" type="button">Ekskursijos ▾</button>
             <div class="nav-menu">
-              <div class="mm-head">Explore Vilnius with <span>Velotakas</span></div>
+              <div class="mm-head">Pažinkite Vilnių su <span>Velotakas</span></div>
               <div class="mm-links">
-                <a href="tours/city-bike-tours.html" data-img="media/sec1.jpg">City Bike Tours</a>
-                <a href="tours/walking-tours.html" data-img="media/sec2.jpg">Walking Tours</a>
-                <a href="tours/self-guided-tours.html" data-img="media/sec3.jpg">Self Guided Tours</a>
-                <a href="tours/mountain-bike-tours.html" data-img="media/tour-group.jpg">Mountain Bike Tours</a>
-                <a href="tours/nature-bike-tours.html" data-img="media/tour-square.jpg" data-price="34">Nature Bike Tours</a>
-                <a href="tours/bike-tours-for-groups.html" data-img="media/tour-square.jpg">Bike Tours For Groups</a>
+                <a href="city-bike-tours.html" data-img="../../media/sec1.jpg">Dviračių ekskursijos</a>
+                <a href="walking-tours.html" data-img="../../media/sec2.jpg">Žygiai pėsčiomis</a>
+                <a href="self-guided-tours.html" data-img="../../media/sec3.jpg">Savarankiškos ekskursijos</a>
+                <a href="mountain-bike-tours.html" data-img="../../media/tour-group.jpg">Kalnų dviračių turai</a>
+                <a href="nature-bike-tours.html" data-img="../../media/tour-square.jpg" data-price="34">Gamtos turai</a>
+                <a href="bike-tours-for-groups.html" data-img="../../media/tour-square.jpg">Turai grupėms</a>
               </div>
-              <div class="mm-foot">Starting from <span>€34</span></div>
-              <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('media/sec1.jpg');"></div></div>
+              <div class="mm-foot">Kaina nuo <span>€34</span></div>
+              <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('../../media/sec1.jpg');"></div></div>
             </div>
           </div>
           <div class="nav-drop">
-            <button class="nav-link" type="button">Maps ▾</button>
+            <button class="nav-link" type="button">Maršrutai ▾</button>
             <div class="nav-menu">
-              <div class="mm-head">Pick your <span>route</span></div>
+              <div class="mm-head">Pasirinkite <span>maršrutą</span></div>
               <div class="mm-links">
-                <a href="maps/mtb-routes.html" data-img="media/cat-mountain.jpg">MTB routes</a>
-                <a href="maps/touring-city-maps.html" data-img="media/tour-square.jpg">City routes</a>
-                <a href="maps/self-guided-routes.html" data-img="media/tour-square.jpg">Self-guided routes</a>
+                <a href="../maps/mtb-routes.html" data-img="../../media/cat-mountain.jpg">MTB maršrutai</a>
+                <a href="../maps/touring-city-maps.html" data-img="../../media/tour-square.jpg">Miesto maršrutai</a>
+                <a href="../maps/self-guided-routes.html" data-img="../../media/tour-square.jpg">Savarankiški maršrutai</a>
               </div>
-              <div class="mm-foot">Free <span>GPX</span> downloads</div>
-              <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('media/cat-mountain.jpg');"></div></div>
+              <div class="mm-foot">Nemokami <span>GPX</span> atsisiuntimai</div>
+              <div class="mm-preview"><div class="mm-preview-img" style="background-image:url('../../media/cat-mountain.jpg');"></div></div>
             </div>
           </div>
-          <a class="nav-link nav-contact" href="#contact">Contacts</a>
-          <a class="nav-link" href="about.html">About Us</a>
-          <a class="nav-link" href="blog/blog.html">Blog</a>
-          <a class="nav-link" href="faq.html">FAQs</a>
+          <a class="nav-link nav-contact" href="#contact">Kontaktai</a>
+          <a class="nav-link" href="../about.html">Apie mus</a>
+          <a class="nav-link" href="../blog/blog.html">Naujienos</a>
+          <a class="nav-link" href="../faq.html">DUK</a>
         </nav>
       </div>
     </header>
@@ -937,8 +854,8 @@
     <span class="sh-social"><a href="https://www.tripadvisor.com/Attraction_Review-g274951-d4325216-Reviews-Bike_Vilnius_Velotakas-Vilnius_Vilnius_County.html" target="_blank" rel="noopener" aria-label="Tripadvisor"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.353H0l1.963 2.135a5.997 5.997 0 0 0 4.04 10.43 5.976 5.976 0 0 0 4.075-1.6L12 19.705l1.922-2.09a5.972 5.972 0 0 0 4.072 1.598 6 6 0 0 0 6-5.998 5.99 5.99 0 0 0-1.957-4.432L24 6.648h-4.35a13.573 13.573 0 0 0-7.644-2.353zM12 6.255c1.531 0 3.063.303 4.504.903C13.943 8.138 12 10.43 12 13.107c0-2.678-1.942-4.969-4.504-5.949A11.756 11.756 0 0 1 12 6.255zM6.002 9.157a3.939 3.939 0 0 1 3.94 3.94 3.939 3.939 0 0 1-3.94 3.939A3.939 3.939 0 0 1 2.063 13.1a3.939 3.939 0 0 1 3.939-3.943zm11.996 0a3.939 3.939 0 0 1 3.94 3.94 3.939 3.939 0 0 1-3.94 3.939 3.939 3.939 0 0 1-3.939-3.939 3.939 3.939 0 0 1 3.94-3.94zm-11.996 1.9a2.039 2.039 0 0 0-2.039 2.04 2.039 2.039 0 0 0 2.04 2.038 2.039 2.039 0 0 0 2.038-2.039 2.039 2.039 0 0 0-2.039-2.039zm11.996 0a2.039 2.039 0 0 0-2.039 2.04 2.039 2.039 0 0 0 2.04 2.038 2.039 2.039 0 0 0 2.038-2.039 2.039 2.039 0 0 0-2.039-2.039z"/></svg></a><a href="https://www.facebook.com/velotakas/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.628-5.373-12-12-12s-12 5.372-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg></a><a href="https://www.youtube.com/channel/UCgH3mx1x6zeQ70UIts3rTWQ" target="_blank" rel="noopener" aria-label="Youtube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814ZM9.545 15.568V8.432L15.818 12l-6.273 3.568Z"/></svg></a><a href="https://www.instagram.com/velotakas/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0Zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227a3.81 3.81 0 0 1-.899 1.382 3.744 3.744 0 0 1-1.38.896c-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421a3.716 3.716 0 0 1-1.379-.899 3.644 3.644 0 0 1-.9-1.38c-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03Zm0 3.678a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 1 0 0-12.324ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm7.846-10.405a1.441 1.441 0 0 1-2.88 0 1.44 1.44 0 0 1 2.88 0Z"/></svg></a></span>
     <span>Stulginskio g. 5, Vilnius</span>
     <span><a href="tel:+37061845727">+370 618 45727</a></span>
-    <span>Open daily 10–19</span>
-    <span class="sh-lang"><a href="#" title="English">🇬🇧</a><a href="lt/index.html" title="Lietuviškai">🇱🇹</a></span>
+    <span>Kasdien 10–19</span>
+    <span class="sh-lang"><a href="../../tours/self-guided-tours.html" title="English">🇬🇧</a><a href="self-guided-tours.html" title="Lietuviškai">🇱🇹</a></span>
   </div>
 
 
@@ -958,134 +875,47 @@
   </div>
 
 
-  <!-- hero: two cards -->
-  <section class="hero-split" id="heroSplit">
-    <a class="hero-card" href="tours/city-bike-tours.html">
-      <video class="hc-bg" src="media/ieva.mp4" autoplay muted loop playsinline></video>
-      <div class="hc-inner">
-        <h2 class="reveal-line"><span>Find Tours</span></h2>
-        <span class="hc-cta reveal-line"><span>Explore bike tours →</span></span>
+  <!-- hero: centered headline -->
+  <section class="tour-detail">
+    <a class="bsc-back" href="city-bike-tours.html"><span class="arrow">&larr;</span> All tours</a>
+    <div class="td-hero" style="background-image:url('../../media/tours/self-guided-tours-hero.jpg')">
+      <div class="td-hero-cap"><span class="td-kicker">Ride at your own pace</span><h1>Self-Guided Tours</h1></div>
+    </div>
+    <div class="td-body">
+      <div class="td-copy">
+      <p>Prefer to explore on your own? Rent a bike, take a tried-and-tested route and ride solo — we hand you the GPX track and a map, you set the rhythm.</p>
+      <p>Family-friendly loops along the river Neris, through Žvėrynas and across Vingis Park and the Old Town, all on dedicated bicycle paths.</p>
+        <a class="btn-fill" href="../bike-rental-form.html">Rezervuoti ekskursiją</a>
       </div>
-    </a>
-    <a class="hero-card" href="bikes/bike-rent.html">
-      <div class="hc-bg" style="background-image:url('media/scott-aspect.jpg');"></div>
-      <div class="hc-inner">
-        <h2 class="reveal-line"><span>Rent a Bike</span></h2>
-        <span class="hc-cta reveal-line"><span>Browse our fleet →</span></span>
-      </div>
-    </a>
-  </section>
-
-  <!-- Explore Vilnius heading -->
-  <section class="explore-band">
-    <h2>Explore Vilnius with <span style="color:#16bdcc">Velotakas</span></h2>
-  </section>
-
-  <!-- scroll-driven spinning gallery -->
-  <section class="spin-gallery">
-    <div class="spin-track" id="spinTrack">
-      <div class="spin-item" style="background-image:url('media/tour-group.jpg');"></div>
-      <div class="spin-item" style="background-image:url('media/tour-square.jpg');"></div>
-      <div class="spin-item" style="background-image:url('media/sec1.jpg');"></div>
-      <div class="spin-item" style="background-image:url('media/sec2.jpg');"></div>
-      <div class="spin-item" style="background-image:url('media/sec3.jpg');"></div>
-      <div class="spin-item" style="background-image:url('media/trak-allant.jpg');"></div>
-      <div class="spin-item" style="background-image:url('media/sec1.jpg');"></div>
-      <div class="spin-item" style="background-image:url('media/sec3.jpg');"></div>
+      <aside class="td-facts">
+        <h3>Ekskursijos faktai</h3>
+        <ul>
+        <li><span>Žvėrynas loop</span> <b>6 km · 1 h</b></li>
+        <li><span>Along the Neris</span> <b>11 km · 1.5 h</b></li>
+        <li><span>Vingis & Old Town</span> <b>15 km · 2 h</b></li>
+        <li><span>Surface</span> <b>Bicycle paths</b></li>
+        <li><span>Dviračiai ir šalmai</span> <b>Įskaičiuota</b></li>
+        </ul>
+      </aside>
+    </div>
+    <h2 class="td-gallery-title">Iš kelionės</h2>
+    <div class="bsc-slider td-slider">
+      <div class="bsc-slide" style="background-image:url('../../media/tours/self-guided-tours-g1.jpg')"></div>
+      <div class="bsc-slide" style="background-image:url('../../media/tours/self-guided-tours-g2.jpg')"></div>
+      <div class="bsc-slide" style="background-image:url('../../media/tours/self-guided-tours-g3.jpg')"></div>
+      <button class="bsc-arrow bsc-prev" type="button" aria-label="Previous image">&#8249;</button>
+      <button class="bsc-arrow bsc-next" type="button" aria-label="Next image">&#8250;</button>
+      <div class="bsc-dots"></div>
     </div>
   </section>
 
-  <!-- Trending Experiences -->
-  <section class="ta-tours">
-    <h2 class="tours-title">Trending <span>Experiences</span></h2>
-    <p class="tours-sub">Our most-loved bike tours in Vilnius — rated by travellers on Tripadvisor.</p>
-    <div class="tour-grid">
-      <a class="tour-card" href="tours/city-bike-tours.html">
-        <div class="tc-media">
-          <div class="tc-ta"><span class="tc-bubbles">●●●●●</span><span class="tc-revs">174</span></div>
-          <div class="tc-img" style="background-image:url('media/sec1.jpg');"></div>
-          <div class="tc-rent"><span>Book</span></div>
-        </div>
-        <div class="tc-cap">
-          <span class="tc-cat">City tour</span>
-          <h3 class="tc-name">Regular City Bike Tour of Vilnius</h3>
-          <span class="tc-price">from €29</span>
-        </div>
-      </a>
+  
 
-      <a class="tour-card" href="tours/city-bike-tours.html">
-        <div class="tc-media">
-          <div class="tc-ta"><span class="tc-bubbles">●●●●●</span><span class="tc-revs">96</span></div>
-          <div class="tc-img" style="background-image:url('media/sec2.jpg');"></div>
-          <div class="tc-rent"><span>Book</span></div>
-        </div>
-        <div class="tc-cap">
-          <span class="tc-cat">City tour</span>
-          <h3 class="tc-name">City Bike Tour — Soviet Vilnius</h3>
-          <span class="tc-price">from €29</span>
-        </div>
-      </a>
-
-      <a class="tour-card" href="tours/city-bike-tours.html">
-        <div class="tc-media">
-          <div class="tc-ta"><span class="tc-bubbles">●●●●●</span><span class="tc-revs">58</span></div>
-          <div class="tc-img" style="background-image:url('media/tour-group.jpg');"></div>
-          <div class="tc-rent"><span>Book</span></div>
-        </div>
-        <div class="tc-cap">
-          <span class="tc-cat">Private tour</span>
-          <h3 class="tc-name">Private City Bike Tour</h3>
-          <span class="tc-price">from €99</span>
-        </div>
-      </a>
-
-      <a class="tour-card" href="tours/city-bike-tours.html">
-        <div class="tc-media">
-          <div class="tc-ta"><span class="tc-bubbles">●●●●●</span><span class="tc-revs">33</span></div>
-          <div class="tc-img" style="background-image:url('media/tour-square.jpg');"></div>
-          <div class="tc-rent"><span>Book</span></div>
-        </div>
-        <div class="tc-cap">
-          <span class="tc-cat">Private tour</span>
-          <h3 class="tc-name">Private City Bike Tour of Vilnius</h3>
-          <span class="tc-price">from €99</span>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- partners -->
   <!-- footer -->
-  <section class="partners">
-    <h2 class="partners-title">Our <span>partners</span></h2>
-    <div class="partners-marquee">
-      <div class="partners-track">
-      <a class="partner" href="#" aria-label="Baja Bikes"><img class="partner-logo" src="media/partners/baja-bikes.png" alt="Baja Bikes"></a>
-      <a class="partner" href="#" aria-label="Viator"><img class="partner-logo" src="media/partners/viator.png" alt="Viator"></a>
-      <a class="partner" href="#" aria-label="GetYourGuide"><img class="partner-logo" src="media/partners/getyourguide.png" alt="GetYourGuide"></a>
-      <a class="partner" href="#" aria-label="Civitatis"><img class="partner-logo" src="media/partners/civitatis.png" alt="Civitatis"></a>
-      <a class="partner" href="#" aria-label="Bike Baltic"><img class="partner-logo" src="media/partners/bike-baltic.png" alt="Bike Baltic"></a>
-      <a class="partner" href="#" aria-label="Decathlon"><img class="partner-logo" src="media/partners/decathlon.png" alt="Decathlon"></a>
-      <a class="partner" href="#" aria-label="Partner"><img class="partner-logo" src="media/partners/extra1.png" alt="Partner"></a>
-      <a class="partner" href="#" aria-label="Events"><img class="partner-logo" src="media/partners/extra2.png" alt="Events"></a>
-    
-      <a class="partner" href="#" aria-label="Baja Bikes"><img class="partner-logo" src="media/partners/baja-bikes.png" alt="Baja Bikes"></a>
-      <a class="partner" href="#" aria-label="Viator"><img class="partner-logo" src="media/partners/viator.png" alt="Viator"></a>
-      <a class="partner" href="#" aria-label="GetYourGuide"><img class="partner-logo" src="media/partners/getyourguide.png" alt="GetYourGuide"></a>
-      <a class="partner" href="#" aria-label="Civitatis"><img class="partner-logo" src="media/partners/civitatis.png" alt="Civitatis"></a>
-      <a class="partner" href="#" aria-label="Bike Baltic"><img class="partner-logo" src="media/partners/bike-baltic.png" alt="Bike Baltic"></a>
-      <a class="partner" href="#" aria-label="Decathlon"><img class="partner-logo" src="media/partners/decathlon.png" alt="Decathlon"></a>
-      <a class="partner" href="#" aria-label="Partner"><img class="partner-logo" src="media/partners/extra1.png" alt="Partner"></a>
-      <a class="partner" href="#" aria-label="Events"><img class="partner-logo" src="media/partners/extra2.png" alt="Events"></a>
-    
-      </div>
-    </div>
-  </section>
-
   <footer class="site-footer" id="contact">
     <div class="footer-head">
-      <p class="footer-mega">Let’s <em>ride</em>.</p>
-      <img class="footer-logo" src="media/logo.png" alt="Velotakas.lt">
+      <p class="footer-mega">iki <em>pasimatymo</em>!</p>
+      <img class="footer-logo" src="../../media/logo.png" alt="Velotakas.lt">
     </div>
     <div class="footer-grid">
       <div class="footer-right">
@@ -1103,23 +933,23 @@
           </ul>
         </div>
         <div class="fc-block">
-          <strong>Details</strong>
-          <p>Company code: 302643966<br>SEB Bankas, account No. LT48 7044 0600 0771 2383<br>SWIFT code: CBVILT2X</p>
+          <strong>Rekvizitai</strong>
+          <p>Įmonės kodas: 302643966<br>SEB Bankas, account No. LT48 7044 0600 0771 2383<br>SWIFT code: CBVILT2X</p>
         </div>
         <div class="fc-block">
-          <strong>Open hours · April 1 – October 31</strong>
-          <div class="fc-row"><span>Monday – Friday</span><span>10:00 – 19:00</span></div>
-          <div class="fc-row"><span>Saturday – Sunday</span><span>10:00 – 20:00</span></div>
+          <strong>Darbo laikas · Balandžio 1 – Spalio 31</strong>
+          <div class="fc-row"><span>Pirmadienis – Penktadienis</span><span>10:00 – 19:00</span></div>
+          <div class="fc-row"><span>Šeštadienis – Sekmadienis</span><span>10:00 – 20:00</span></div>
         </div>
       </div>
     </div>
     <div class="footer-undertext">
-      <p class="fc-note">Please book your bike or bike tour by phone <a href="tel:+37061845727">+370 618 45727</a> or online.</p>
+      <p class="fc-note">Rezervuokite dviratį ar ekskursiją telefonu <a href="tel:+37061845727">+370 618 45727</a> or online.</p>
       <p class="fc-baja">Baja Bikes Vilnius — <a href="tel:+37061845727">+370 618 45 727</a></p>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 — All rights reserved by Velotakas.lt</span>
-      <span>174 reviews · Tripadvisor</span>
+      <span>© 2026 — Visos teisės saugomos Velotakas.lt</span>
+      <span>174 atsiliepimai · Tripadvisor</span>
     </div>
   </footer>
 
@@ -1200,7 +1030,7 @@
     })();
 
     // hero card pops in from slightly smaller to normal size on load
-    gsap.from(".hero-card", { scale: 0.9, duration: 0.9, ease: "power3.out", stagger: 0.12, delay: 0.5 });
+    gsap.from(".hero-lead", { scale: 0.88, duration: 0.9, ease: "power3.out", delay: 0.5 });
 
     /* ===== custom cursor: spinning bike wheel on hover ===== */
     (function () {
@@ -1254,87 +1084,18 @@
       });
     });
 
-    // masked pop-up reveal of the hero card text (after the cyan blocks open)
+    // menu-style pop-up reveal of the hero text on load
     setTimeout(function () {
-      var hs = document.getElementById("heroSplit");
-      if (hs) hs.classList.add("revealed");
-    }, 500);
+      var cv = document.getElementById("cover"); if (cv) cv.classList.add("revealed");
+    }, 500);   // after the cyan blocks have opened
 
-    // scroll-driven spinning gallery under the hero
-    (function () {
-      var track = document.getElementById("spinTrack");
-      if (!track) return;
-      gsap.to(track, {
-        x: function () { return -(track.scrollWidth - window.innerWidth); },
-        rotation: -4,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".spin-gallery",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-    })();
-
-    // reveal the trending cards as they scroll into view
-    gsap.utils.toArray(".tour-card").forEach(function (card) {
+    // reveal the tour cards as they scroll into view
+    gsap.utils.toArray(".tour-card").forEach(function (card, i) {
       gsap.from(card, {
         opacity: 0, y: 30, duration: .6, ease: "power3.out",
         scrollTrigger: { trigger: card, start: "top 88%" },
       });
     });
-
-    // fullpage-style: one scroll gesture advances section by section (hero → tours → footer)
-    (function () {
-      var heroEl = document.querySelector(".hero-split");
-      var footerEl = document.querySelector(".site-footer");
-      var feats = gsap.utils.toArray(".feature");
-      if (!feats.length) return;
-      var menu = document.getElementById("menu");
-      var lock = false;
-
-      function maxScroll() { return document.documentElement.scrollHeight - window.innerHeight; }
-      function clamp(v) { return Math.max(0, Math.min(maxScroll(), v)); }
-      function topOf(el) { return el.getBoundingClientRect().top + window.scrollY; }
-      function centerOf(el) {
-        var r = el.getBoundingClientRect();
-        return window.scrollY + r.top + r.height / 2 - window.innerHeight / 2;
-      }
-      function targets() {
-        var t = [0];                                   // hero → page top
-        feats.forEach(function (f) { t.push(centerOf(f)); });
-        t.push(topOf(footerEl) - 90);                  // footer → near the top
-        return t.map(clamp);
-      }
-      function nearestIndex(t) {
-        var y = window.scrollY, best = 0, bd = Infinity;
-        for (var i = 0; i < t.length; i++) { var d = Math.abs(t[i] - y); if (d < bd) { bd = d; best = i; } }
-        return best;
-      }
-      function go(t, i) {
-        i = Math.max(0, Math.min(t.length - 1, i));
-        lock = true;
-        gsap.to(window, {
-          scrollTo: t[i], duration: 0.35, ease: "power2.inOut",
-          onComplete: function () { setTimeout(function () { lock = false; }, 70); },
-        });
-      }
-      window.addEventListener("wheel", function (e) {
-        if (menu && menu.classList.contains("open")) return;
-        var t = targets();
-        var idx = nearestIndex(t);
-        var dir = e.deltaY > 0 ? 1 : -1;
-        var aligned = Math.abs(t[idx] - window.scrollY) < 14;
-        // let the very ends behave natively (top of page / scrolling within a tall footer)
-        if (aligned && ((idx === 0 && dir < 0) || (idx === t.length - 1 && dir > 0))) return;
-        e.preventDefault();
-        if (lock) return;
-        go(t, aligned ? idx + dir : idx);   // align first, then advance one
-      }, { passive: false });
-    })();
-
 
   </script>
   <script>
@@ -1360,19 +1121,37 @@
     })();
   </script>
   <script>
+    /* tour gallery slideshow — slide + parallax (shared with bike pages) */
     (function () {
-      if (typeof gsap === 'undefined') return;
-      document.querySelectorAll('.ta-tours .tour-card').forEach(function (card) {
-        var img = card.querySelector('.tc-img');
-        var ov  = card.querySelector('.tc-rent');
-        var nm  = card.querySelector('.tc-name');
-        card.addEventListener('mouseenter', function () {
-          gsap.fromTo(ov, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: 'power2.out', overwrite: true });
-          gsap.fromTo(ov.querySelector('span'), { scale: 0.6 }, { scale: 1, duration: 0.45, ease: 'back.out(1.7)', overwrite: true });
+      if (typeof gsap === "undefined") return;
+      document.querySelectorAll(".td-slider").forEach(function (sl) {
+        var slides = sl.querySelectorAll(".bsc-slide");
+        var dotsWrap = sl.querySelector(".bsc-dots");
+        var prev = sl.querySelector(".bsc-prev"), next = sl.querySelector(".bsc-next");
+        if (slides.length <= 1) { sl.classList.add("single"); return; }
+        var i = 0, anim = false, P = 35;
+        gsap.set(slides, { xPercent: 100, backgroundPosition: "50% 50%" });
+        gsap.set(slides[0], { xPercent: 0 });
+        slides.forEach(function (_, k) {
+          var b = document.createElement("button"); b.type = "button";
+          if (k === 0) b.className = "is-on";
+          b.addEventListener("click", function () { go(k); });
+          dotsWrap.appendChild(b);
         });
-        card.addEventListener('mouseleave', function () {
-          gsap.to(ov, { autoAlpha: 0, duration: 0.25, ease: 'power2.in', overwrite: true });
-        });
+        var dots = dotsWrap.querySelectorAll("button");
+        function go(n, dir) {
+          n = (n + slides.length) % slides.length;
+          if (n === i || anim) return;
+          if (!dir) dir = n > i ? 1 : -1;
+          anim = true; var D = 0.85;
+          gsap.fromTo(slides[i], { xPercent: 0, backgroundPosition: "50% 50%" },
+            { xPercent: -100 * dir, backgroundPosition: (50 - P * dir) + "% 50%", duration: D, ease: "power3.inOut" });
+          gsap.fromTo(slides[n], { xPercent: 100 * dir, backgroundPosition: (50 + P * dir) + "% 50%" },
+            { xPercent: 0, backgroundPosition: "50% 50%", duration: D, ease: "power3.inOut", onComplete: function () { anim = false; } });
+          dots[i].classList.remove("is-on"); dots[n].classList.add("is-on"); i = n;
+        }
+        prev.addEventListener("click", function () { go(i - 1, -1); });
+        next.addEventListener("click", function () { go(i + 1, 1); });
       });
     })();
   </script>
