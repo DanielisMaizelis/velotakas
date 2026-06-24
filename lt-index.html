@@ -24,8 +24,10 @@
     .mmx-foot{ margin-top:auto; padding-top:18px; font-family:"Caveat",cursive; font-size:1.5rem; color:#8fc0c6; }
     .mmx-foot a{ color:#16bdcc; text-decoration:none; }
     body.mmx-lock{ overflow:hidden; }
-    @media (max-width:860px){
+    @media (max-width:1200px){
       .site-header .topnav{ display:none !important; }
+      .vertical-tag{ display:none !important; }
+      .page-transition{ display:none !important; }
       .site-top{ margin-top:8px; }
       .site-header .inner{ display:flex !important; align-items:center !important; height:60px !important; padding:0 16px !important; position:relative; }
       .site-header .brand{ display:inline-flex; align-items:center; }
@@ -33,15 +35,16 @@
       .site-header .years-badge{ font-size:1.1rem; left:-10px; bottom:-2px; }
       .mmx-btn{ display:inline-flex; margin-left:auto; align-items:center; gap:9px; height:42px; padding:0 18px; border:0;
         border-radius:999px; cursor:pointer; background:#06343a; color:#fff; box-shadow:0 8px 22px rgba(6,52,58,.4);
-        font-family:"Caveat",cursive; font-weight:700; font-size:1.5rem; line-height:1; white-space:nowrap; }
+        font-family:"Caveat",cursive; font-weight:700; font-size:clamp(1rem, 3.6vw, 1.5rem); line-height:1; white-space:nowrap; }
       .mmx-btn .bars{ display:inline-flex; flex-direction:column; gap:5px; }
       .mmx-btn .bars i{ width:20px; height:2px; background:#16bdcc; border-radius:2px; display:block; }
-      .mmx-lang{ display:inline-flex; align-items:center; gap:14px; font-size:1.5rem; line-height:1; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); }
+      .mmx-lang{ position:absolute; inset:0; margin:auto; width:-moz-fit-content; width:fit-content; height:-moz-fit-content; height:fit-content; display:flex; align-items:center; gap:14px; font-size:clamp(1.1rem, 4.2vw, 1.5rem); line-height:1; }
       .mmx-lang a{ text-decoration:none; color:inherit; }
       .subhead{ display:flex !important; flex-wrap:nowrap; justify-content:center; align-items:center; height:34px; position:fixed; top:116px; left:50%; right:auto; transform:translateX(-50%);
-        gap:11px; padding:0 14px; font-size:.8rem; max-width:calc(100vw - 10px); white-space:nowrap; z-index:10; }
+        gap:11px; padding:0 14px; font-size:clamp(.58rem, 2.3vw, .8rem); max-width:calc(100vw - 8px); white-space:nowrap; z-index:10; }
       .subhead > span{ display:inline-flex; align-items:center; line-height:1; }
-      .subhead .sh-social{ gap:11px; }
+      .subhead .sh-social{ display:none !important; }
+      .sh-emo{ display:inline-block; margin-right:5px; font-style:normal; }
       .subhead .sh-social svg{ width:16px; height:16px; }
       .subhead.hide{ transform:translateX(-50%) translateY(-280%); }
       .subhead > *:nth-child(4), .subhead > *:nth-child(5){ display:none; }

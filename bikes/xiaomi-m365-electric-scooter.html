@@ -346,9 +346,9 @@
       transform-origin: center; will-change: transform, opacity;
       z-index: 29;
     }
-    @media (max-width: 820px) { .menu-preview { right: calc(82vw + 24px); } }
+    @media (max-width: 1200px) { .menu-preview { right: calc(82vw + 24px); } }
 
-    @media (max-width: 820px) { .menu.open { width: 82vw; } }
+    @media (max-width: 1200px) { .menu.open { width: 82vw; } }
 
     .img-layer {
       position: absolute; inset: 0;
@@ -433,7 +433,7 @@
     .hero-split.revealed .hero-card:nth-child(1) .hc-cta.reveal-line > span { transition-delay: .18s; }
     .hero-split.revealed .hero-card:nth-child(2) h2.reveal-line > span     { transition-delay: .17s; }
     .hero-split.revealed .hero-card:nth-child(2) .hc-cta.reveal-line > span { transition-delay: .30s; }
-    @media (max-width: 820px) { .hero-split { flex-direction: column; } .hero-card { min-height: 44vh; } }
+    @media (max-width: 1200px) { .hero-split { flex-direction: column; } .hero-card { min-height: 44vh; } }
 
     .hero-lead {
       position: relative;
@@ -591,7 +591,7 @@
     }
     .quote-list .stars { color: #00aa6c; letter-spacing: 2px; margin-bottom: 16px; font-size: .85rem; }
     .quote-list cite { display: block; margin-top: 18px; font-style: normal; font-weight: 700; font-size: .85rem; color: #5b6573; }
-    @media (max-width: 900px) { .quote-list { grid-template-columns: 1fr; } }
+    @media (max-width: 1200px) { .quote-list { grid-template-columns: 1fr; } }
 
     /* ===== FAQ ===== */
     .faq { max-width: 1280px; margin: 0 auto; padding: 12vh 6vw; }
@@ -646,7 +646,7 @@
     .btn-outline:hover { background: #16bdcc; color: #06343a; }
     .fineprint { font-size: .85rem; color: #9aa3af; font-style: italic; }
     .contact-note { margin-top: 6vh; color: #6b7280; font-size: 1.05rem; }
-    @media (max-width: 820px) { .bike { grid-template-columns: 1fr; gap: 24px; } .bike.reverse .bike-media { order: 0; } }
+    @media (max-width: 1200px) { .bike { grid-template-columns: 1fr; gap: 24px; } .bike.reverse .bike-media { order: 0; } }
 
     /* City Bikes: pinned eBay-style layout — scrolling crossfades between bikes */
     .bikes-swap { position: relative; }
@@ -697,7 +697,7 @@
     .crumbs a:hover { color: #16bdcc; }
     .crumbs span { color: #16bdcc; font-weight: 600; }
     .scroll-hint { display: inline-block; margin-top: 22px; color: #16bdcc; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; }
-    @media (max-width: 820px) {
+    @media (max-width: 1200px) {
       .bike-slide { grid-template-columns: 1fr; gap: 18px; padding: 17vh 6vw 9vh; align-content: center; }
       .swap-media { height: 30vh; }
       .swap-info { max-width: none; }
@@ -743,7 +743,7 @@
     .footer-grid > div:last-child { display: flex; flex-direction: column; justify-content: space-between; }
     .fc-note { color: #ffffff; margin: 0; line-height: 1.75; font-size: 17px; }
     .fc-note a { color: #16bdcc; }
-    .fc-block { margin: 0; }
+    .fc-block { margin: 0 0 30px; }
     .footer-contact .fc-block:first-of-type { margin-top: 0; }
     .fc-block strong { display: block; color: #8a8275; text-transform: uppercase; font-size: 13px; letter-spacing: .2em; font-weight: 700; margin-bottom: 14px; }
     .fc-row { display: flex; justify-content: space-between; gap: 16px; color: #ffffff; font-size: 17px; padding: 3px 0; }
@@ -780,7 +780,7 @@
       font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #ffffff;
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 1200px) {
       .footer-grid { grid-template-columns: 1fr; gap: 28px; }
     }
     /* ===== single-bike split: tall photo + info panel ===== */
@@ -812,7 +812,7 @@
     .bsc-actions > a { flex: 1; min-width: 150px; text-align: center; }
     .bsc-req { display: inline-block; padding: 12px 18px; border-radius: 999px; border: 1.5px solid #16bdcc; color: #0e7c8f; background: #fff; font-weight: 700; text-decoration: none; transition: background .2s, color .2s; }
     .bsc-req:hover { background: #16bdcc; color: #fff; }
-    @media (max-width: 860px) { .bsc-split { grid-template-columns: 1fr; gap: 28px; } .bsc-photo { min-height: 52vh; } }
+    @media (max-width: 1200px) { .bsc-split { grid-template-columns: 1fr; gap: 28px; } .bsc-photo { min-height: 52vh; } }
 
   </style>
   <style>
@@ -827,7 +827,7 @@
     .subhead a { color: #111827; text-decoration: none; }
     .subhead .sh-lang { display: inline-flex; gap: 8px; font-size: 1.05rem; }
     .subhead.hide { transform: translateY(-220%); opacity: 0; pointer-events: none; }
-    @media (max-width: 760px) { .subhead { display: none; } }
+    @media (max-width: 1200px) { .subhead { display: none; } }
   </style>
   <style>
     .bike-showcase { position: relative; }
@@ -857,8 +857,10 @@
     .mmx-foot{ margin-top:auto; padding-top:18px; font-family:"Caveat",cursive; font-size:1.5rem; color:#8fc0c6; }
     .mmx-foot a{ color:#16bdcc; text-decoration:none; }
     body.mmx-lock{ overflow:hidden; }
-    @media (max-width:860px){
+    @media (max-width:1200px){
       .site-header .topnav{ display:none !important; }
+      .vertical-tag{ display:none !important; }
+      .page-transition{ display:none !important; }
       .site-top{ margin-top:8px; }
       .site-header .inner{ display:flex !important; align-items:center !important; height:60px !important; padding:0 16px !important; position:relative; }
       .site-header .brand{ display:inline-flex; align-items:center; }
@@ -866,15 +868,16 @@
       .site-header .years-badge{ font-size:1.1rem; left:-10px; bottom:-2px; }
       .mmx-btn{ display:inline-flex; margin-left:auto; align-items:center; gap:9px; height:42px; padding:0 18px; border:0;
         border-radius:999px; cursor:pointer; background:#06343a; color:#fff; box-shadow:0 8px 22px rgba(6,52,58,.4);
-        font-family:"Caveat",cursive; font-weight:700; font-size:1.5rem; line-height:1; white-space:nowrap; }
+        font-family:"Caveat",cursive; font-weight:700; font-size:clamp(1rem, 3.6vw, 1.5rem); line-height:1; white-space:nowrap; }
       .mmx-btn .bars{ display:inline-flex; flex-direction:column; gap:5px; }
       .mmx-btn .bars i{ width:20px; height:2px; background:#16bdcc; border-radius:2px; display:block; }
-      .mmx-lang{ display:inline-flex; align-items:center; gap:14px; font-size:1.5rem; line-height:1; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); }
+      .mmx-lang{ position:absolute; inset:0; margin:auto; width:-moz-fit-content; width:fit-content; height:-moz-fit-content; height:fit-content; display:flex; align-items:center; gap:14px; font-size:clamp(1.1rem, 4.2vw, 1.5rem); line-height:1; }
       .mmx-lang a{ text-decoration:none; color:inherit; }
       .subhead{ display:flex !important; flex-wrap:nowrap; justify-content:center; align-items:center; height:34px; position:fixed; top:116px; left:50%; right:auto; transform:translateX(-50%);
-        gap:11px; padding:0 14px; font-size:.8rem; max-width:calc(100vw - 10px); white-space:nowrap; z-index:10; }
+        gap:11px; padding:0 14px; font-size:clamp(.58rem, 2.3vw, .8rem); max-width:calc(100vw - 8px); white-space:nowrap; z-index:10; }
       .subhead > span{ display:inline-flex; align-items:center; line-height:1; }
-      .subhead .sh-social{ gap:11px; }
+      .subhead .sh-social{ display:none !important; }
+      .sh-emo{ display:inline-block; margin-right:5px; font-style:normal; }
       .subhead .sh-social svg{ width:16px; height:16px; }
       .subhead.hide{ transform:translateX(-50%) translateY(-280%); }
       .subhead > *:nth-child(4), .subhead > *:nth-child(5){ display:none; }
@@ -988,7 +991,7 @@
   </div>
 
   <!-- City Bikes: pinned eBay-style layout — scrolling crossfades between bikes -->
-  <style>@media (max-width: 820px) { .bsc-spacer { display: none; } }</style>
+  <style>@media (max-width: 1200px) { .bsc-spacer { display: none; } }</style>
   <section class="bike-showcase" id="bikeShowcase">
     <a class="bsc-back" href="bike-rent.html"><span class="arrow">&larr;</span> All bikes</a>
     <div class="bsc-split">
@@ -1083,7 +1086,7 @@
 
     // lightweight smooth scroll (Lenis), wired to ScrollTrigger + GSAP ticker
     (function () {
-      if (typeof Lenis === "undefined" || window.matchMedia("(max-width: 860px)").matches) return;   // no smooth scroll on mobile
+      if (typeof Lenis === "undefined" || window.matchMedia("(max-width: 1200px)").matches) return;   // no smooth scroll on mobile
       var lenis = new Lenis({ duration: 1.1, smoothWheel: true }); window.lenis = lenis;
       lenis.on("scroll", ScrollTrigger.update);
       gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
@@ -1179,6 +1182,7 @@
     // page transition: 3 rounded cyan blocks open on load, close on navigation
     (function () {
       var pt = document.getElementById("pageTransition");
+      if (pt && window.matchMedia("(max-width:1200px)").matches){ pt.style.display="none"; return; }
       var blocks = gsap.utils.toArray(".t-block");
       var cur = document.getElementById("cursor");
       if (cur) cur.style.opacity = "0";
